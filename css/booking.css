@@ -1,0 +1,701 @@
+/* ============================================================
+   VAULT 147 — BOOKING ENGINE & DIGITAL SESSION PASS STYLES
+   High-performance booking flow, dynamic price ticker & ticket pass
+   ============================================================ */
+
+.booking-view-section {
+  padding: 8rem 0 var(--space-5xl);
+  background-color: var(--bg-void);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* --- STEP 1: HORIZONTAL DATE SELECTOR --- */
+.date-selector-container {
+  margin-bottom: var(--space-2xl);
+  overflow-x: auto;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: none;
+}
+.date-selector-container::-webkit-scrollbar {
+  display: none;
+}
+
+.date-pills-strip {
+  display: flex;
+  gap: 0.75rem;
+  min-width: max-content;
+}
+
+.date-pill-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.4rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  min-width: 90px;
+  transition: all var(--duration-micro) var(--ease-fast);
+}
+
+.date-pill-btn:hover {
+  border-color: var(--border-strong);
+  background-color: var(--bg-surface-hover);
+}
+
+.date-pill-btn.is-active {
+  background-color: var(--crimson);
+  border-color: var(--crimson-bright);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.35);
+  transform: translateY(-2px);
+}
+
+.date-pill-day {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.date-pill-num {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.date-pill-month {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.date-pill-btn.is-active .date-pill-day,
+.date-pill-btn.is-active .date-pill-num,
+.date-pill-btn.is-active .date-pill-month {
+  color: #ffffff;
+}
+
+/* --- STEP 2: GAME CATEGORY FILTER --- */
+.game-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--space-3xl);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.filter-tab-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid transparent;
+  transition: all var(--duration-micro) var(--ease-fast);
+}
+
+.filter-tab-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.filter-tab-btn.is-active {
+  color: var(--crimson-bright);
+  background-color: var(--crimson-subtle);
+  border-color: var(--crimson-border);
+}
+
+/* --- STEP 3: BOOKABLE UNITS GRID --- */
+.units-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .units-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .units-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.unit-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: border-color var(--duration-ui) var(--ease-fast),
+              transform var(--duration-ui) var(--ease-fast);
+}
+
+.unit-card:hover {
+  border-color: var(--border-medium);
+}
+
+.unit-card.is-selected {
+  border-color: var(--crimson-bright);
+  box-shadow: 0 0 24px rgba(220, 38, 38, 0.25);
+}
+
+.unit-card-img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background-color: #0c0c10;
+}
+
+.unit-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-fast);
+}
+
+.unit-card:hover .unit-card-img {
+  transform: scale(1.04);
+}
+
+.unit-status-tag {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-xs);
+  backdrop-filter: blur(8px);
+}
+
+.unit-status-tag.available {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.unit-status-tag.booked {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.unit-card-body {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.unit-game-category {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--crimson-bright);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.unit-name {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.unit-specs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.unit-specs-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.unit-specs-item::before {
+  content: '▪';
+  color: var(--crimson);
+}
+
+.unit-card-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.unit-price-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.unit-price-rate {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.unit-price-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- STEP 4: CONFIGURATION MODAL / DRAWER --- */
+#booking-config-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(6, 6, 8, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-ui) var(--ease-fast),
+              visibility var(--duration-ui);
+}
+
+#booking-config-modal.modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.config-modal-box {
+  background-color: #0d0d12;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xs);
+  width: 100%;
+  max-width: 820px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  transform: translateY(20px);
+  transition: transform var(--duration-ui) var(--ease-fast);
+}
+
+#booking-config-modal.modal-open .config-modal-box {
+  transform: translateY(0);
+}
+
+.config-modal-header {
+  padding: var(--space-xl);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: #0d0d12;
+  z-index: 10;
+}
+
+.config-close-btn {
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-xs);
+  transition: color var(--duration-micro) ease;
+}
+
+.config-close-btn:hover {
+  color: var(--crimson-bright);
+}
+
+.config-modal-content {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+/* Selected Unit Overview */
+.config-unit-banner {
+  display: flex;
+  gap: var(--space-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-md);
+  align-items: center;
+}
+
+.config-unit-thumb {
+  width: 100px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+.config-unit-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Duration & Player Selectors */
+.config-group-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.duration-selector-row, .players-selector-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice-chip-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border-radius: var(--radius-xs);
+  transition: all var(--duration-micro) var(--ease-fast);
+}
+
+.choice-chip-btn:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.choice-chip-btn.is-active {
+  background: var(--crimson);
+  border-color: var(--crimson-bright);
+  color: #fff;
+}
+
+/* Time Slots Matrix */
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 0.6rem;
+}
+
+.time-slot-btn {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all var(--duration-micro) var(--ease-fast);
+}
+
+.time-slot-btn:hover:not(:disabled) {
+  border-color: var(--crimson-bright);
+  background: var(--bg-surface-hover);
+}
+
+.time-slot-btn.is-active {
+  background: var(--crimson);
+  border-color: var(--crimson-bright);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+}
+
+.time-slot-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Live Booking Price Summary & Odometer */
+.booking-live-summary {
+  background: #08080b;
+  border: 1px solid var(--crimson-border);
+  border-radius: var(--radius-xs);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-calc-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.total-label {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.total-price-animated {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--crimson-bright);
+  letter-spacing: -0.02em;
+}
+
+/* --- STEP 5: CUSTOMER DETAILS FORM --- */
+.customer-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 600px) {
+  .customer-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-full-col {
+    grid-column: span 2;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.form-input, .form-textarea {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.85rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-micro) var(--ease-fast);
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--crimson-bright);
+  background: #14141a;
+}
+
+.form-error-msg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--crimson-bright);
+  display: none;
+}
+
+.form-group.has-error .form-input {
+  border-color: var(--crimson-bright);
+}
+
+.form-group.has-error .form-error-msg {
+  display: block;
+}
+
+/* --- STEP 6: DIGITAL VIP SESSION PASS (CONFIRMATION TICKET) --- */
+#booking-confirmation-view {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl) var(--container-padding);
+}
+
+#booking-confirmation-view.is-visible {
+  display: flex;
+}
+
+.session-pass-card {
+  background: #0d0d12;
+  border: 1px solid var(--crimson-border);
+  border-radius: var(--radius-xs);
+  width: 100%;
+  max-width: 540px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85),
+              0 0 30px rgba(220, 38, 38, 0.15);
+}
+
+/* Ticket Notch Cutouts */
+.session-pass-card::before,
+.session-pass-card::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: var(--bg-void);
+  border-radius: 50%;
+  top: 55%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.session-pass-card::before {
+  left: -12px;
+  border-right: 1px solid var(--crimson-border);
+}
+
+.session-pass-card::after {
+  right: -12px;
+  border-left: 1px solid var(--crimson-border);
+}
+
+.pass-header {
+  background: linear-gradient(180deg, rgba(220, 38, 38, 0.2) 0%, transparent 100%);
+  padding: var(--space-xl);
+  border-bottom: 1px dashed var(--border-medium);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pass-brand-title {
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.pass-booking-id {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--crimson-bright);
+  font-weight: 700;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid var(--crimson-border);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-xs);
+}
+
+.pass-body {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.pass-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.pass-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.pass-meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.pass-meta-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pass-footer {
+  padding: var(--space-xl);
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px dashed var(--border-medium);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.pass-barcode-graphic {
+  height: 38px;
+  width: 100%;
+  opacity: 0.65;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #fff,
+    #fff 2px,
+    transparent 2px,
+    transparent 5px,
+    #fff 5px,
+    #fff 8px,
+    transparent 8px,
+    transparent 10px
+  );
+}
+
+.pass-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

@@ -1,0 +1,106 @@
+/* ============================================================
+   VAULT 147 — PRECISION MAGNETIC CURSOR
+   Desktop-only precision tracking instrument with contextual tags
+   ============================================================ */
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  mix-blend-mode: normal;
+  will-change: transform;
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .custom-cursor {
+    display: block;
+  }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--crimson-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
+  box-shadow: 0 0 10px var(--crimson);
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.25s var(--ease-fast),
+              height 0.25s var(--ease-fast),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              opacity 0.2s ease;
+  backdrop-filter: blur(2px);
+}
+
+.cursor-follower-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.2s ease, transform 0.2s var(--ease-fast);
+  white-space: nowrap;
+}
+
+/* Hovering interactive elements */
+body.cursor-hover .cursor-follower {
+  width: 52px;
+  height: 52px;
+  border-color: var(--crimson-bright);
+  background-color: rgba(220, 38, 38, 0.15);
+}
+
+body.cursor-hover .cursor-dot {
+  opacity: 0.4;
+}
+
+/* Contextual labeled states */
+body.cursor-view .cursor-follower,
+body.cursor-book .cursor-follower,
+body.cursor-select .cursor-follower,
+body.cursor-drag .cursor-follower {
+  width: 72px;
+  height: 72px;
+  background-color: var(--crimson);
+  border-color: var(--crimson-bright);
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
+}
+
+body.cursor-view .cursor-follower-label,
+body.cursor-book .cursor-follower-label,
+body.cursor-select .cursor-follower-label,
+body.cursor-drag .cursor-follower-label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+body.cursor-hidden .cursor-dot,
+body.cursor-hidden .cursor-follower {
+  opacity: 0;
+}
