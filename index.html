@@ -17,10 +17,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/images/snooker-arena-3tables.jpg" />
 
-  <!-- Google Fonts: Oswald (Display), Plus Jakarta Sans (Body), JetBrains Mono (Technical) -->
+  <!-- Google Fonts: Outfit (Display Grotesk), Plus Jakarta Sans (Editorial Body), JetBrains Mono (Technical Telemetry) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/variables.css" />
@@ -34,9 +34,10 @@
   <link rel="stylesheet" href="css/gallery.css" />
   <link rel="stylesheet" href="css/contact.css" />
 
-  <!-- GSAP, Lenis & Razorpay SDKs -->
+  <!-- GSAP, ScrollTrigger, Flip, Lenis & Razorpay SDKs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
@@ -86,6 +87,7 @@
 
       <nav class="nav-menu-desktop" aria-label="Main Navigation">
         <a href="#home" class="nav-link active">HOME</a>
+        <a href="#experience" class="nav-link">EXPERIENCE</a>
         <a href="#about" class="nav-link">ABOUT</a>
         <a href="#booking" class="nav-link">GAMES</a>
         <a href="#gallery" class="nav-link">GALLERY</a>
@@ -117,21 +119,25 @@
         <span>HOME</span>
         <span class="nav-num">[01]</span>
       </a>
+      <a href="#experience" class="mobile-nav-link">
+        <span>EXPERIENCE</span>
+        <span class="nav-num">[02]</span>
+      </a>
       <a href="#about" class="mobile-nav-link">
         <span>ABOUT</span>
-        <span class="nav-num">[02]</span>
+        <span class="nav-num">[03]</span>
       </a>
       <a href="#booking" class="mobile-nav-link">
         <span>GAMES & BOOKING</span>
-        <span class="nav-num">[03]</span>
+        <span class="nav-num">[04]</span>
       </a>
       <a href="#gallery" class="mobile-nav-link">
         <span>GALLERY</span>
-        <span class="nav-num">[04]</span>
+        <span class="nav-num">[05]</span>
       </a>
       <a href="#contact" class="mobile-nav-link">
         <span>CONTACT</span>
-        <span class="nav-num">[05]</span>
+        <span class="nav-num">[06]</span>
       </a>
     </nav>
     <div class="mobile-drawer-bottom">
@@ -208,67 +214,123 @@
     </section>
 
     <!-- ============================================================
-         HOME — EXPERIENCE SECTION ("ENTER THE VAULT.")
+         THE SIGNATURE VAULT APERTURE
          ============================================================ -->
-    <section class="experience-section">
-      <div class="container">
-        <div class="section-head-wrap">
-          <span class="section-indicator">[ 01 // EXPERIENCE ]</span>
-          <h2 class="section-title-large">ENTER THE VAULT.</h2>
-          <p class="section-desc">
-            Step into a space built around the game — premium tournament snooker tables, immersive PlayStation 5 battle stations, and an atmosphere designed for competition and unforgettable sessions.
+    <section class="vault-aperture-section" aria-label="Vault Aperture Transition">
+      <div class="aperture-frame" id="vault-aperture-frame">
+        <span class="aperture-corner aperture-corner-tl"></span>
+        <span class="aperture-corner aperture-corner-tr"></span>
+        <span class="aperture-corner aperture-corner-bl"></span>
+        <span class="aperture-corner aperture-corner-br"></span>
+        <img src="assets/images/vault147-panorama-lounge.webp?v=2" alt="Vault 147 Arena Interior" class="aperture-inner-img" />
+        <div class="aperture-content-overlay">
+          <span class="meta-tag">[ VAULT 147 // ARCHITECTURAL APERTURE ]</span>
+          <h3 style="font-size:var(--text-3xl);color:#fff;margin:0;">STEP INTO THE UNDERGROUND</h3>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);max-width:540px;margin:0;">
+            Where private club discretion meets uncompromising competitive snooker and PlayStation 5 match play.
           </p>
         </div>
+      </div>
+    </section>
 
-        <div class="experience-grid">
-          <!-- 01 SNOOKER -->
-          <article class="experience-card" data-cursor="view">
-            <div class="experience-image-wrap">
-              <img src="assets/images/snooker-arena-3tables.jpg?v=2" alt="Championship Snooker Arena" class="experience-img" loading="lazy" />
-              <span class="experience-badge">[01] SNOOKER</span>
+    <!-- ============================================================
+         HOME — HORIZONTAL STORYTELLING ("THE VAULT EXPERIENCE")
+         ============================================================ -->
+    <section id="experience" class="experience-horizontal-container" aria-label="The Vault Experience">
+      <div class="experience-track" id="experience-track">
+        
+        <!-- PANEL 01: SNOOKER ARENA -->
+        <article class="experience-story-panel" data-panel="01">
+          <div class="story-panel-grid">
+            <div class="story-panel-media" data-cursor="view">
+              <img src="assets/images/snooker-arena-3tables.jpg?v=2" alt="Championship Snooker Arena" class="story-panel-img" loading="lazy" />
+              <span class="story-panel-badge">[01 / 47] SNOOKER ARENA</span>
             </div>
-            <div class="experience-info">
-              <div>
-                <h3 class="experience-card-title">SNOOKER</h3>
-                <p class="experience-card-desc">
-                  Championship red-cloth tables illuminated with anti-glare drop cones and Aramith tournament balls.
-                </p>
+            <div class="story-panel-info">
+              <span class="meta-tag">[ TOURNAMENT STANDARDS ]</span>
+              <h2 class="story-panel-title">CHAMPIONSHIP SNOOKER</h2>
+              <p class="story-panel-desc">
+                Full-size championship tables finished with premium tournament red cloth, precision overhead anti-glare cone lamps, weighted match cues, and Aramith tournament balls.
+              </p>
+              <div class="story-panel-specs">
+                <div class="spec-item">
+                  <span class="spec-label">TABLE CONFIG</span>
+                  <span class="spec-val">3 FULL-SIZE TABLES</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">OFFICIAL RATE</span>
+                  <span class="spec-val">₹250 / HOUR</span>
+                </div>
               </div>
             </div>
-          </article>
+          </div>
+        </article>
 
-          <!-- 02 PLAYSTATION 5 -->
-          <article class="experience-card" data-cursor="view">
-            <div class="experience-image-wrap">
-              <img src="assets/images/ps5-racing-cockpit.jpg?v=2" alt="PlayStation 5 Racing Station" class="experience-img" loading="lazy" />
-              <span class="experience-badge">[02] PLAYSTATION 5</span>
+        <!-- PANEL 02: PLAYSTATION 5 -->
+        <article class="experience-story-panel" data-panel="02">
+          <div class="story-panel-grid">
+            <div class="story-panel-media" data-cursor="view">
+              <img src="assets/images/ps5-racing-cockpit.jpg?v=2" alt="PlayStation 5 Racing Cockpit" class="story-panel-img" loading="lazy" />
+              <span class="story-panel-badge">[02 / 47] PS5 GAMING</span>
             </div>
-            <div class="experience-info">
-              <div>
-                <h3 class="experience-card-title">PLAYSTATION 5</h3>
-                <p class="experience-card-desc">
-                  Logitech force-feedback racing rigs, EA FC 25 showdowns, and low-latency 4K HDR displays.
-                </p>
+            <div class="story-panel-info">
+              <span class="meta-tag">[ HIGH-PERFORMANCE CONSOLE RIGS ]</span>
+              <h2 class="story-panel-title">PLAYSTATION 5 BATTLE STATIONS</h2>
+              <p class="story-panel-desc">
+                Dedicated Logitech force-feedback racing wheel cockpits, low-latency 4K HDR screens, and up to 4 DualSense controllers for EA FC 25 and fighting title tournaments.
+              </p>
+              <div class="story-panel-specs">
+                <div class="spec-item">
+                  <span class="spec-label">CONTROLLERS</span>
+                  <span class="spec-val">UP TO 4 DUALSENSE</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">OFFICIAL RATE</span>
+                  <span class="spec-val">FROM ₹150 / HOUR</span>
+                </div>
               </div>
             </div>
-          </article>
+          </div>
+        </article>
 
-          <!-- 03 THE LOUNGE -->
-          <article class="experience-card" data-cursor="view">
-            <div class="experience-image-wrap">
-              <img src="assets/images/ps5-lounge-beanbags.jpg?v=2" alt="VAULT 147 Lounge Suite" class="experience-img" loading="lazy" />
-              <span class="experience-badge">[03] THE LOUNGE</span>
+        <!-- PANEL 03: THE LOUNGE -->
+        <article class="experience-story-panel" data-panel="03">
+          <div class="story-panel-grid">
+            <div class="story-panel-media" data-cursor="view">
+              <img src="assets/images/ps5-lounge-beanbags.jpg?v=2" alt="VAULT 147 Squad Lounge" class="story-panel-img" loading="lazy" />
+              <span class="story-panel-badge">[03 / 47] THE LOUNGE</span>
             </div>
-            <div class="experience-info">
-              <div>
-                <h3 class="experience-card-title">THE LOUNGE</h3>
-                <p class="experience-card-desc">
-                  Deep crimson LED backlighting paired with ergonomic plush beanbag seating for friends and squads.
-                </p>
+            <div class="story-panel-info">
+              <span class="meta-tag">[ AMBIENT SANCTUARY ]</span>
+              <h2 class="story-panel-title">THE SQUAD LOUNGE</h2>
+              <p class="story-panel-desc">
+                Ergonomic red and black leather beanbag suites bathed in deep crimson ambient backlighting — engineered for intense multiplayer squad showdowns and relaxed post-match breakdowns.
+              </p>
+              <div class="story-panel-specs">
+                <div class="spec-item">
+                  <span class="spec-label">SEATING</span>
+                  <span class="spec-val">LEATHER BEANBAGS</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">LIGHTING</span>
+                  <span class="spec-val">CRIMSON HALO LED</span>
+                </div>
               </div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VISUAL PAUSE — THE VAULT PHILOSOPHY
+         ============================================================ -->
+    <section class="visual-pause-section" aria-label="Vault 147 Philosophy">
+      <div class="container pause-inner">
+        <span class="meta-tag">[ VAULT 147 CORE ETHOS ]</span>
+        <h2 class="pause-headline">PRECISION. FOCUS. CONTROL.</h2>
+        <p class="pause-location">9/1 MAHALINGAM STREET · ROYAPURAM, CHENNAI</p>
       </div>
     </section>
 

@@ -39,11 +39,11 @@
   --status-booked-border: rgba(239, 68, 68, 0.3);
 
   /* --- TYPOGRAPHY (3 DISTINCT FAMILIES) --- */
-  /* 1. Display: Premium condensed modern editorial grotesk */
-  --font-display: 'Oswald', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  /* 2. Body & UI: Clean, modern, highly legible */
+  /* 1. Display: Premium modern architectural grotesk */
+  --font-display: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* 2. Body & UI: Clean, contemporary editorial grotesk */
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  /* 3. Technical: Metadata, timecodes, pricing, telemetry only */
+  /* 3. Technical: Telemetry, timecodes, pricing, coordinates */
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Typography Scales */

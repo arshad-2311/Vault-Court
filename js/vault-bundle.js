@@ -1250,18 +1250,35 @@
       container.querySelectorAll('.gallery-item').forEach((item) => {
         item.addEventListener('click', () => {
           const index = parseInt(item.getAttribute('data-index'), 10) || 0;
-          this.openLightbox(index);
+          this.openLightbox(index, item);
         });
       });
     }
 
-    openLightbox(index) {
+    openLightbox(index, clickedElement = null) {
       this.currentIndex = index;
       const modal = document.getElementById('gallery-lightbox');
       if (!modal) return;
       this.updateLightboxContent();
       modal.classList.add('lightbox-open');
       document.body.style.overflow = 'hidden';
+
+      if (typeof Flip !== 'undefined' && clickedElement) {
+        const activeImg = document.getElementById('lightbox-active-img');
+        const clickedImg = clickedElement.querySelector('img') || clickedElement;
+        if (activeImg && clickedImg) {
+          try {
+            const state = Flip.getState(clickedImg);
+            Flip.from(state, {
+              targets: activeImg,
+              duration: 0.45,
+              ease: 'power3.out'
+            });
+          } catch (err) {
+            // Graceful fallback if Flip encounters layout transition
+          }
+        }
+      }
     }
 
     updateLightboxContent() {
@@ -1336,7 +1353,7 @@
      ============================================================ */
   class ViewRouter {
     constructor() {
-      this.validRoutes = ['home', 'about', 'booking', 'gallery', 'contact'];
+      this.validRoutes = ['home', 'experience', 'about', 'booking', 'gallery', 'contact'];
     }
 
     init() {
@@ -1433,7 +1450,88 @@
   }
 
   /* ============================================================
-     7. INITIALIZATION BOOTSTRAP
+     7. SCROLLTRIGGER & MOTION SYSTEM
+     ============================================================ */
+  function initScrollTriggers() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Vault Aperture Frame Transition
+    const apertureFrame = document.getElementById('vault-aperture-frame');
+    if (apertureFrame) {
+      gsap.fromTo(apertureFrame,
+        { scale: 0.92, opacity: 0.75 },
+        {
+          scale: 1.0,
+          opacity: 1.0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.vault-aperture-section',
+            start: 'top 85%',
+            end: 'center center',
+            scrub: 0.6
+          }
+        }
+      );
+    }
+
+    // 2. Horizontal Story Track on Desktop (>= 992px)
+    const experienceTrack = document.getElementById('experience-track');
+    const experienceSection = document.getElementById('experience');
+    if (experienceTrack && experienceSection && window.innerWidth >= 992) {
+      gsap.to(experienceTrack, {
+        xPercent: -66.666,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: experienceSection,
+          pin: true,
+          scrub: 0.8,
+          start: 'top top',
+          end: () => '+=' + (window.innerWidth * 1.5),
+          invalidateOnRefresh: true
+        }
+      });
+    }
+
+    // 3. Visual Pause Scale Reveal
+    const pauseHeadline = document.querySelector('.pause-headline');
+    if (pauseHeadline) {
+      gsap.fromTo(pauseHeadline,
+        { opacity: 0, y: 25, letterSpacing: '0.12em' },
+        {
+          opacity: 1,
+          y: 0,
+          letterSpacing: '0.06em',
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.visual-pause-section',
+            start: 'top 75%'
+          }
+        }
+      );
+    }
+
+    // 4. Section Titles Entrance
+    document.querySelectorAll('.section-title-large').forEach((title) => {
+      gsap.fromTo(title,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 88%'
+          }
+        }
+      );
+    });
+  }
+
+  /* ============================================================
+     8. INITIALIZATION BOOTSTRAP
      ============================================================ */
   function bootstrapApp() {
     initLenis();
