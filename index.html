@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!-- SEO & Social Metadata -->
+  <title>VAULT 147 — Premium Snooker & PlayStation 5 Gaming Lounge | Royapuram, Chennai</title>
+  <meta name="description" content="Championship snooker tables and 4K PlayStation 5 stations by the hour at VAULT 147. A premium underground gaming arena in Royapuram, Chennai." />
+  <meta name="keywords" content="Vault 147, Snooker Chennai, PS5 Gaming Lounge Chennai, Billiards Royapuram, Console Gaming, EA FC 25, Gran Turismo Cockpit" />
+  <meta name="theme-color" content="#070709" />
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:title" content="VAULT 147 — Premium Snooker & PS5 Gaming Lounge" />
+  <meta property="og:description" content="Championship snooker tables and 4K PS5 gaming stations by the hour. 9/1 Mahalingam St, Royapuram, Chennai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/snooker-arena-3tables.jpg" />
+
+  <!-- Google Fonts: Oswald (Display), Plus Jakarta Sans (Body), JetBrains Mono (Technical) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/cursor.css" />
+  <link rel="stylesheet" href="css/loader.css" />
+  <link rel="stylesheet" href="css/nav-footer.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/booking.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+
+  <!-- GSAP, Lenis & Razorpay SDKs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Texture & Top Scroll Progress Bar -->
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
+  <div class="arena-ambient-grain" aria-hidden="true"></div>
+
+  <!-- Precision Desktop Context Cursor -->
+  <div class="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-follower">
+      <span class="cursor-follower-label"></span>
+    </div>
+  </div>
+
+  <!-- THE VAULT PROLOGUE (CINEMATIC LOADER) -->
+  <div id="vault-prologue" role="dialog" aria-modal="true" aria-label="Loading Vault 147 Arena">
+    <div class="prologue-content">
+      <svg class="prologue-emblem-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 8 L90 30 L90 70 L50 92 L10 70 L10 30 Z" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M36 34 L36 66 M50 34 L50 66 M64 34 L64 66" stroke="#dc2626" stroke-width="2" stroke-linecap="round" />
+        <path d="M26 50 L74 50" stroke="#dc2626" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <div class="prologue-title">VAULT 147</div>
+      <div class="prologue-subtitle">PREMIUM SNOOKER & PS5 ARENA</div>
+      <div class="prologue-telemetry">
+        <span>[STATUS: ONLINE]</span>
+        <span>CHENNAI</span>
+      </div>
+      <div class="prologue-bar-track">
+        <div class="prologue-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL STICKY HEADER -->
+  <header id="site-header">
+    <div class="nav-container">
+      <a href="#home" class="brand-logo" aria-label="VAULT 147 Home">
+        <svg class="brand-emblem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 22 7 22 17 12 22 2 17 2 7 12 2" />
+        </svg>
+        <span>VAULT <span class="brand-147">147</span></span>
+      </a>
+
+      <nav class="nav-menu-desktop" aria-label="Main Navigation">
+        <a href="#home" class="nav-link active">HOME</a>
+        <a href="#about" class="nav-link">ABOUT</a>
+        <a href="#booking" class="nav-link">GAMES</a>
+        <a href="#gallery" class="nav-link">GALLERY</a>
+        <a href="#contact" class="nav-link">CONTACT</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#booking" class="btn btn-primary nav-book-btn" data-magnetic data-cursor="book">
+          <span>BOOK A SESSION</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+
+        <button id="mobile-drawer-toggle" class="mobile-toggle-btn" aria-label="Toggle Navigation Drawer" aria-expanded="false">
+          <span class="mobile-toggle-line"></span>
+          <span class="mobile-toggle-line"></span>
+          <span class="mobile-toggle-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE FULLSCREEN DRAWER -->
+  <div id="mobile-drawer" role="dialog" aria-modal="true" aria-label="Navigation Menu">
+    <nav class="mobile-nav-links">
+      <a href="#home" class="mobile-nav-link">
+        <span>HOME</span>
+        <span class="nav-num">[01]</span>
+      </a>
+      <a href="#about" class="mobile-nav-link">
+        <span>ABOUT</span>
+        <span class="nav-num">[02]</span>
+      </a>
+      <a href="#booking" class="mobile-nav-link">
+        <span>GAMES & BOOKING</span>
+        <span class="nav-num">[03]</span>
+      </a>
+      <a href="#gallery" class="mobile-nav-link">
+        <span>GALLERY</span>
+        <span class="nav-num">[04]</span>
+      </a>
+      <a href="#contact" class="mobile-nav-link">
+        <span>CONTACT</span>
+        <span class="nav-num">[05]</span>
+      </a>
+    </nav>
+    <div class="mobile-drawer-bottom">
+      <a href="#booking" class="btn btn-primary" style="width:100%;">
+        <span>BOOK A SESSION</span>
+      </a>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">
+        9/1 MAHALINGAM ST, ROYAPURAM, CHENNAI
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE STICKY BOTTOM BAR -->
+  <div id="mobile-sticky-cta">
+    <div class="mobile-sticky-info">
+      <span class="mobile-sticky-title">VAULT 147</span>
+      <span class="mobile-sticky-sub">OPEN DAILY · FROM ₹150 / HOUR</span>
+    </div>
+    <a href="#booking" class="btn btn-primary" style="padding:0.6rem 1.2rem;font-size:11px;">
+      BOOK NOW
+    </a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         1. HOME / CINEMATIC HERO SECTION
+         ============================================================ -->
+    <section id="home" class="hero-section">
+      <div class="hero-video-wrapper">
+        <video 
+          id="hero-bg-video" 
+          class="hero-video" 
+          autoplay 
+          muted 
+          loop 
+          playsinline 
+          preload="metadata"
+          poster="assets/images/snooker-solo-table.jpg"
+          aria-hidden="true"
+        >
+          <source src="assets/video/vault147-hero.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-overlay-gradient"></div>
+      </div>
+
+      <div class="container hero-content">
+        <div class="meta-tag hero-brand-tag">[ARENA NOW OPEN · ROYAPURAM CHENNAI]</div>
+        <h1 class="hero-headline">
+          SNOOKER. <span class="text-crimson">PS5.</span><br />
+          THE GAME STARTS HERE.
+        </h1>
+        <p class="hero-subtext">
+          A premium gaming and snooker experience built for players who want more than just a game. Tournament-grade tables, 4K PS5 stations, and pure competitive focus.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#booking" class="btn btn-primary" data-magnetic data-cursor="book">
+            <span>BOOK A SESSION</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#about" class="btn btn-secondary" data-magnetic>
+            <span>EXPLORE THE VAULT</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <span class="scroll-indicator-arrow">↓</span>
+        <span>SCROLL TO ENTER</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOME — EXPERIENCE SECTION ("ENTER THE VAULT.")
+         ============================================================ -->
+    <section class="experience-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 01 // EXPERIENCE ]</span>
+          <h2 class="section-title-large">ENTER THE VAULT.</h2>
+          <p class="section-desc">
+            Step into a space built around the game — premium tournament snooker tables, immersive PlayStation 5 battle stations, and an atmosphere designed for competition and unforgettable sessions.
+          </p>
+        </div>
+
+        <div class="experience-grid">
+          <!-- 01 SNOOKER -->
+          <article class="experience-card" data-cursor="view">
+            <div class="experience-image-wrap">
+              <img src="assets/images/snooker-arena-3tables.jpg?v=2" alt="Championship Snooker Arena" class="experience-img" loading="lazy" />
+              <span class="experience-badge">[01] SNOOKER</span>
+            </div>
+            <div class="experience-info">
+              <div>
+                <h3 class="experience-card-title">SNOOKER</h3>
+                <p class="experience-card-desc">
+                  Championship red-cloth tables illuminated with anti-glare drop cones and Aramith tournament balls.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 02 PLAYSTATION 5 -->
+          <article class="experience-card" data-cursor="view">
+            <div class="experience-image-wrap">
+              <img src="assets/images/ps5-racing-cockpit.jpg?v=2" alt="PlayStation 5 Racing Station" class="experience-img" loading="lazy" />
+              <span class="experience-badge">[02] PLAYSTATION 5</span>
+            </div>
+            <div class="experience-info">
+              <div>
+                <h3 class="experience-card-title">PLAYSTATION 5</h3>
+                <p class="experience-card-desc">
+                  Logitech force-feedback racing rigs, EA FC 25 showdowns, and low-latency 4K HDR displays.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- 03 THE LOUNGE -->
+          <article class="experience-card" data-cursor="view">
+            <div class="experience-image-wrap">
+              <img src="assets/images/ps5-lounge-beanbags.jpg?v=2" alt="VAULT 147 Lounge Suite" class="experience-img" loading="lazy" />
+              <span class="experience-badge">[03] THE LOUNGE</span>
+            </div>
+            <div class="experience-info">
+              <div>
+                <h3 class="experience-card-title">THE LOUNGE</h3>
+                <p class="experience-card-desc">
+                  Deep crimson LED backlighting paired with ergonomic plush beanbag seating for friends and squads.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOME — WHY VISIT ("YOUR SESSION. YOUR RULES.")
+         ============================================================ -->
+    <section class="rules-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 02 // DYNAMIC DURATION ]</span>
+          <h2 class="section-title-large">YOUR SESSION. YOUR RULES.</h2>
+          <p class="section-desc">
+            Direct hourly access with 1 to 4 hour sessions. Pick your table or console, lock your duration, and play.
+          </p>
+        </div>
+
+        <div class="rules-grid">
+          <div class="rule-step-card">
+            <span class="rule-step-num">01</span>
+            <h3 class="rule-step-title">PICK YOUR GAME</h3>
+            <p class="rule-step-desc">
+              Choose between tournament-grade snooker tables or high-performance PlayStation 5 stations.
+            </p>
+          </div>
+
+          <div class="rule-step-card">
+            <span class="rule-step-num">02</span>
+            <h3 class="rule-step-title">SELECT DURATION</h3>
+            <p class="rule-step-desc">
+              Select your start time and choose between 1, 2, 3, or 4 hours with live interval verification.
+            </p>
+          </div>
+
+          <div class="rule-step-card">
+            <span class="rule-step-num">03</span>
+            <h3 class="rule-step-title">SHOW UP & PLAY</h3>
+            <p class="rule-step-desc">
+              Receive your digital VIP session pass instantly and enter the arena ready for game time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOME — CHOOSE YOUR GAME PREVIEW
+         ============================================================ -->
+    <section class="games-preview-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 03 // CHOOSE YOUR GAME ]</span>
+          <h2 class="section-title-large">SELECT AN ARENA.</h2>
+          <p class="section-desc">
+            Verified official hourly rates with zero hidden charges.
+          </p>
+        </div>
+
+        <div class="games-preview-grid">
+          <article class="game-preview-card">
+            <div class="game-preview-img-wrap">
+              <img src="assets/images/snooker-table-cues.jpg?v=2" alt="Championship Snooker Table" class="game-preview-img" loading="lazy" />
+            </div>
+            <div class="game-preview-content">
+              <div class="meta-tag">SNOOKER & BILLIARDS</div>
+              <h3 style="font-size:var(--text-2xl);color:#fff;">TOURNAMENT SNOOKER TABLES</h3>
+              <p style="font-size:var(--text-sm);color:var(--text-secondary);">
+                Full-size tournament red cloth tables, precision pendant lighting, weighted cues, and spectator seating.
+              </p>
+              <div class="game-pricing-badge">
+                <span class="game-price-val">₹250</span>
+                <span>/ HOUR (1 TO 4 HOURS)</span>
+              </div>
+              <a href="#booking" class="btn btn-primary" style="margin-top:0.5rem;" data-cursor="book">
+                <span>BOOK SNOOKER</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="game-preview-card">
+            <div class="game-preview-img-wrap">
+              <img src="assets/images/ps5-eafc-station.jpg?v=2" alt="PlayStation 5 Gaming Station" class="game-preview-img" loading="lazy" />
+            </div>
+            <div class="game-preview-content">
+              <div class="meta-tag">CONSOLE GAMING</div>
+              <h3 style="font-size:var(--text-2xl);color:#fff;">PLAYSTATION 5 STATIONS</h3>
+              <p style="font-size:var(--text-sm);color:var(--text-secondary);">
+                4K HDR gaming screens, DualSense controllers, Gran Turismo racing wheel setup, and squad beanbag lounge.
+              </p>
+              <div class="game-pricing-badge">
+                <span class="game-price-val">FROM ₹150</span>
+                <span>/ HOUR (1 TO 4 PLAYERS)</span>
+              </div>
+              <a href="#booking" class="btn btn-primary" style="margin-top:0.5rem;" data-cursor="book">
+                <span>BOOK PS5</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. ABOUT VIEW ("MORE THAN A GAME.")
+         ============================================================ -->
+    <section id="about" class="about-view-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 04 // ABOUT THE VAULT ]</span>
+          <h2 class="section-title-large">MORE THAN A GAME.</h2>
+        </div>
+
+        <div class="about-hero-grid">
+          <div class="about-hero-text">
+            <p class="about-lead-copy">
+              VAULT 147 is built for players who come to play, compete, and unwind.
+            </p>
+            <p class="about-sub-copy">
+              Whether you're here for a focused snooker session dialing in your highest break or a high-stakes PS5 battle with friends, every part of the experience is designed around the game.
+            </p>
+            <p class="about-sub-copy">
+              Located in the heart of Royapuram, Chennai, the arena combines the discretion of a private club with the raw energy of modern console competition.
+            </p>
+            <div style="margin-top:1rem;">
+              <a href="#booking" class="btn btn-primary" data-cursor="book">
+                <span>RESERVE YOUR TABLE</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="about-hero-img-wrap" data-cursor="view">
+            <img src="assets/images/vault147-panorama-lounge.webp?v=2" alt="VAULT 147 Arena Panorama" class="about-hero-img" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="pillars-section">
+          <div class="section-head-wrap">
+            <span class="section-indicator">[ CORE VALUES ]</span>
+            <h3 style="font-size:var(--text-3xl);color:#fff;">WHY VAULT 147?</h3>
+          </div>
+
+          <div class="pillars-grid">
+            <div class="pillar-card">
+              <span class="pillar-num">01</span>
+              <h4 class="pillar-title">PREMIUM EXPERIENCE</h4>
+              <p class="pillar-desc">
+                Tournament specification cloth, weighted cues, Logitech racing cockpit, and low-latency 4K displays.
+              </p>
+            </div>
+
+            <div class="pillar-card">
+              <span class="pillar-num">02</span>
+              <h4 class="pillar-title">PRIVATE ATMOSPHERE</h4>
+              <p class="pillar-desc">
+                Atmospheric dark carbon walls with warm overhead lamps and crimson LED ambient backlighting.
+              </p>
+            </div>
+
+            <div class="pillar-card">
+              <span class="pillar-num">03</span>
+              <h4 class="pillar-title">DYNAMIC DURATION</h4>
+              <p class="pillar-desc">
+                Play for 1, 2, 3, or 4 hours with transparent hourly rates and zero subscription commitments.
+              </p>
+            </div>
+
+            <div class="pillar-card">
+              <span class="pillar-num">04</span>
+              <h4 class="pillar-title">BUILT FOR SQUADS</h4>
+              <p class="pillar-desc">
+                Ergonomic red and black beanbags, multi-controller setups, and room to celebrate every victory.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. GAMES & BOOKING VIEW (INTERACTIVE BOOKING ENGINE)
+         ============================================================ -->
+    <section id="booking" class="booking-view-section">
+      <div class="container" id="booking-main-content">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 05 // BOOKING ENGINE ]</span>
+          <h2 class="section-title-large">BOOK YOUR SESSION.</h2>
+          <p class="section-desc">
+            Select your date, choose a table or console station, select your start time and duration, and receive your digital session pass.
+          </p>
+        </div>
+
+        <!-- STEP 1: HORIZONTAL DATE SELECTOR -->
+        <div class="date-selector-container">
+          <div class="section-indicator" style="margin-bottom:0.5rem;">[ STEP 01 — SELECT DATE ]</div>
+          <div id="date-pills-container" class="date-pills-strip"></div>
+        </div>
+
+        <!-- STEP 2: GAME CATEGORY FILTER -->
+        <div class="game-filter-bar" role="tablist" aria-label="Game Filter">
+          <button class="filter-tab-btn is-active" data-filter="all" role="tab">ALL UNITS</button>
+          <button class="filter-tab-btn" data-filter="snooker" role="tab">SNOOKER TABLES</button>
+          <button class="filter-tab-btn" data-filter="ps5" role="tab">PLAYSTATION 5</button>
+        </div>
+
+        <!-- STEP 3: AVAILABLE UNITS GRID -->
+        <div class="section-indicator" style="margin-bottom:1rem;">[ STEP 02 — CHOOSE YOUR TABLE / STATION ]</div>
+        <div id="booking-units-grid" class="units-grid"></div>
+      </div>
+
+      <!-- STEP 7: DIGITAL VIP SESSION PASS (CONFIRMATION SCREEN) -->
+      <div id="booking-confirmation-view">
+        <div class="session-pass-card">
+          <div class="pass-header">
+            <div>
+              <div class="meta-tag">[SESSION CONFIRMED]</div>
+              <div class="pass-brand-title">VAULT 147</div>
+            </div>
+            <div id="pass-id-val" class="pass-booking-id">V147-8492</div>
+          </div>
+
+          <div class="pass-body">
+            <div class="pass-meta-grid">
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">UNIT</span>
+                <span id="pass-unit-val" class="pass-meta-val">SNOOKER TABLE 01</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">DATE</span>
+                <span id="pass-date-val" class="pass-meta-val">TODAY</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">TIME INTERVAL</span>
+                <span id="pass-time-val" class="pass-meta-val">07:00 PM — 09:00 PM</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">DURATION</span>
+                <span id="pass-duration-val" class="pass-meta-val" style="color:#ffffff;">2 HOURS</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">PLAYER</span>
+                <span id="pass-name-val" class="pass-meta-val">PLAYER NAME</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">TOTAL TARIFF</span>
+                <span id="pass-total-val" class="pass-meta-val" style="color:var(--crimson-bright);">₹500</span>
+              </div>
+              <div class="pass-meta-item">
+                <span class="pass-meta-label">PAYMENT STATUS</span>
+                <span class="pass-meta-val" style="color:var(--status-available);">PAID (ONLINE)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pass-footer">
+            <div class="pass-barcode-graphic"></div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">
+              PRESENT THIS PASS OR WHATSAPP UPON ARRIVAL AT 9/1 MAHALINGAM ST, ROYAPURAM
+            </div>
+            <div class="pass-action-buttons">
+              <a id="pass-whatsapp-dispatch-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width:100%;">
+                <span>CONFIRM VIA WHATSAPP</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+              </a>
+              <button id="pass-book-another-btn" class="btn btn-secondary" style="width:100%;">
+                <span>BOOK ANOTHER SESSION</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4, 5 & 6: CONFIGURATOR MODAL -->
+      <div id="booking-config-modal" role="dialog" aria-modal="true" aria-labelledby="modal-unit-heading" data-lenis-prevent>
+        <div class="config-modal-box" data-lenis-prevent>
+          <div class="config-modal-header">
+            <div>
+              <span class="meta-tag">[SESSION CONFIGURATOR]</span>
+              <h3 id="modal-unit-heading" style="font-size:var(--text-xl);color:#fff;margin-top:4px;">RESERVE YOUR TIME SLOT</h3>
+            </div>
+            <button class="config-close-btn" aria-label="Close Configurator">&times;</button>
+          </div>
+
+          <div class="config-modal-content" data-lenis-prevent>
+            <div class="config-unit-banner">
+              <img src="" alt="Selected Unit" class="config-unit-thumb" />
+              <div class="config-unit-details">
+                <span class="config-modal-unit-cat meta-tag"></span>
+                <h4 class="config-modal-unit-name" style="font-size:var(--text-lg);color:#fff;"></h4>
+                <span class="config-modal-date-display" style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);"></span>
+              </div>
+            </div>
+
+            <!-- Start Time Selection -->
+            <div>
+              <div class="config-group-title">[ 01 — SELECT START TIME ]</div>
+              <div id="modal-time-slots-grid" class="time-slots-grid"></div>
+              <div id="slot-error-msg" style="display:none;font-family:var(--font-mono);font-size:11px;color:var(--crimson-bright);margin-top:6px;">
+                * Please select a start time to proceed.
+              </div>
+            </div>
+
+            <!-- Smart Dynamic Duration Selector (1–4 Hours) -->
+            <div id="config-duration-group" style="display:none;">
+              <div class="config-group-title">[ 02 — SELECT DURATION ]</div>
+              <div id="duration-chips-container" class="duration-chips-grid"></div>
+              <div id="modal-selected-slot-banner" class="selected-slot-banner" style="display:none;"></div>
+            </div>
+
+            <!-- Player Count (For PS5 Only) -->
+            <div class="config-players-group" style="display:none;">
+              <div class="config-group-title">[ 03 — NUMBER OF PLAYERS (PS5 TARIFF) ]</div>
+              <div class="players-selector-row">
+                <button type="button" class="choice-chip-btn player-choice is-active" data-players="1">1 PLAYER (₹150/h)</button>
+                <button type="button" class="choice-chip-btn player-choice" data-players="2">2 PLAYERS (₹300/h)</button>
+                <button type="button" class="choice-chip-btn player-choice" data-players="3">3 PLAYERS (₹400/h)</button>
+                <button type="button" class="choice-chip-btn player-choice" data-players="4">4 PLAYERS (₹500/h)</button>
+              </div>
+            </div>
+
+            <!-- Live Summary -->
+            <div class="booking-live-summary">
+              <div class="summary-calc-row">
+                <span>RATE:</span>
+                <span id="summary-hourly-rate">₹250 / HOUR</span>
+              </div>
+              <div class="summary-calc-row">
+                <span>DURATION:</span>
+                <span id="summary-duration-display">1 HOUR</span>
+              </div>
+              <div class="summary-total-row">
+                <span class="total-label">TOTAL PAYABLE:</span>
+                <span id="summary-total-price" class="total-price-animated">₹250</span>
+              </div>
+            </div>
+
+            <!-- Customer Details Form -->
+            <form id="booking-customer-form" class="customer-form-grid" novalidate>
+              <div class="form-group">
+                <label for="cust-name" class="form-label">FULL NAME *</label>
+                <input type="text" id="cust-name" class="form-input" placeholder="Your full name" required />
+                <span class="form-error-msg">Please enter your name</span>
+              </div>
+
+              <div class="form-group">
+                <label for="cust-phone" class="form-label">PHONE / WHATSAPP *</label>
+                <input type="tel" id="cust-phone" class="form-input" placeholder="e.g. 9876543210" required />
+                <span class="form-error-msg">Please enter a valid phone number</span>
+              </div>
+
+              <div class="form-group form-full-col">
+                <label for="cust-email" class="form-label">EMAIL ADDRESS (OPTIONAL)</label>
+                <input type="email" id="cust-email" class="form-input" placeholder="name@domain.com" />
+                <span class="form-error-msg">Please enter a valid email address</span>
+              </div>
+
+              <div class="form-group form-full-col">
+                <label for="cust-notes" class="form-label">SPECIAL REQUESTS / NOTES</label>
+                <textarea id="cust-notes" class="form-textarea" rows="2" placeholder="e.g. Preferred cue weight, specific game title..."></textarea>
+              </div>
+
+              <div class="form-full-col" style="margin-top:0.75rem;">
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                  <span>PAY & RESERVE VIA RAZORPAY / UPI</span>
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. EDITORIAL GALLERY VIEW
+         ============================================================ -->
+    <section id="gallery" class="gallery-view-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 06 // VISUAL PORTFOLIO ]</span>
+          <h2 class="section-title-large">ARENA GALLERY.</h2>
+          <p class="section-desc">
+            Authentic photography from VAULT 147 — our championship snooker tables, PS5 setups, and private lounge.
+          </p>
+        </div>
+
+        <div class="gallery-filter-bar" role="tablist" aria-label="Gallery Categories">
+          <button class="filter-tab-btn is-active" data-filter="all" role="tab">ALL PHOTOGRAPHY</button>
+          <button class="filter-tab-btn" data-filter="snooker" role="tab">SNOOKER ARENA</button>
+          <button class="filter-tab-btn" data-filter="ps5" role="tab">PS5 RIGS</button>
+          <button class="filter-tab-btn" data-filter="the-lounge" role="tab">THE LOUNGE</button>
+        </div>
+
+        <div id="gallery-masonry-grid" class="gallery-grid"></div>
+      </div>
+
+      <!-- FULLSCREEN LIGHTBOX VIEWER -->
+      <div id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Image Lightbox Viewer">
+        <button class="lightbox-close-btn" aria-label="Close Lightbox">&times;</button>
+        <div class="lightbox-stage">
+          <button class="lightbox-nav-btn lightbox-prev" aria-label="Previous Image">&larr;</button>
+          <img id="lightbox-active-img" src="" alt="Active View" class="lightbox-img-active" />
+          <button class="lightbox-nav-btn lightbox-next" aria-label="Next Image">&rarr;</button>
+        </div>
+        <div class="lightbox-footer-info">
+          <span id="lightbox-index-val" class="lightbox-meta-index"></span>
+          <span id="lightbox-title-val" class="lightbox-meta-title"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. CONTACT & LOCATION VIEW ("FIND THE VAULT.")
+         ============================================================ -->
+    <section id="contact" class="contact-view-section">
+      <div class="container">
+        <div class="section-head-wrap">
+          <span class="section-indicator">[ 07 // LOCATION & ACCESS ]</span>
+          <h2 class="section-title-large">FIND THE VAULT.</h2>
+          <p class="section-desc">
+            Conveniently located in Royapuram, Chennai. Walk in or reserve your session in advance.
+          </p>
+        </div>
+
+        <div class="contact-grid-main">
+          <div class="contact-info-col">
+            <div class="contact-detail-card">
+              <div class="contact-detail-header">
+                <div class="contact-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="contact-card-title">LOCATION ADDRESS</span>
+              </div>
+              <div class="contact-main-text">9/1, Mahalingam Street</div>
+              <div class="contact-sub-text">Royapuram, Chennai, Tamil Nadu</div>
+            </div>
+
+            <div class="contact-detail-card">
+              <div class="contact-detail-header">
+                <div class="contact-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <span class="contact-card-title">OPERATING HOURS</span>
+              </div>
+              <div class="contact-main-text">10:00 AM – 12:00 AM (Midnight)</div>
+              <div class="contact-sub-text">Open 7 Days a Week (Monday – Sunday)</div>
+            </div>
+
+            <div class="contact-detail-card">
+              <div class="contact-detail-header">
+                <div class="contact-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <span class="contact-card-title">PHONE & WHATSAPP</span>
+              </div>
+              <div class="contact-main-text">+91 8807500147</div>
+              <div class="contact-sub-text">Call or message for instantaneous bookings</div>
+            </div>
+
+            <div class="contact-actions-grid">
+              <a href="https://maps.google.com/?q=9/1+Mahalingam+Street+Royapuram+Chennai" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-magnetic>
+                <span>DIRECTIONS</span>
+              </a>
+              <a href="tel:+918807500147" class="btn btn-secondary" data-magnetic>
+                <span>CALL NOW</span>
+              </a>
+              <a href="https://wa.me/918807500147" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-magnetic>
+                <span>WHATSAPP</span>
+              </a>
+              <a href="https://instagram.com/vault.147" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-magnetic>
+                <span>INSTAGRAM</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-map-card">
+            <div class="map-embed-container">
+              <iframe 
+                title="VAULT 147 Location Map"
+                src="https://maps.google.com/maps?q=9/1+Mahalingam+Street+Royapuram+Chennai&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <div class="map-overlay-badge">
+                <span>VAULT 147 · 9/1 MAHALINGAM ST, ROYAPURAM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MONOLITHIC FOOTER -->
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="footer-logo-big">VAULT <span class="text-crimson">147</span></div>
+          <div class="footer-tagline">PLAY. COMPETE. UNWIND.</div>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);max-width:320px;">
+            A premium underground gaming arena for championship snooker and PlayStation 5 sessions in Royapuram, Chennai.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">NAVIGATION</div>
+          <ul class="footer-link-list">
+            <li><a href="#home" class="footer-link">Home</a></li>
+            <li><a href="#about" class="footer-link">About the Arena</a></li>
+            <li><a href="#booking" class="footer-link">Games & Pricing</a></li>
+            <li><a href="#gallery" class="footer-link">Photo Gallery</a></li>
+            <li><a href="#contact" class="footer-link">Contact & Location</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">OFFICIAL RATES</div>
+          <ul class="footer-link-list">
+            <li><span class="footer-link">Snooker: ₹250 / Hour</span></li>
+            <li><span class="footer-link">PS5 (1 Player): ₹150 / Hour</span></li>
+            <li><span class="footer-link">PS5 (2 Players): ₹300 / Hour</span></li>
+            <li><span class="footer-link">PS5 (3 Players): ₹400 / Hour</span></li>
+            <li><span class="footer-link">PS5 (4 Players): ₹500 / Hour</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">HOURS & SOCIAL</div>
+          <div class="footer-hours-badge" style="margin-bottom:1rem;">
+            <div>MONDAY – SUNDAY</div>
+            <div style="color:var(--crimson-bright);">10:00 AM – 12:00 AM</div>
+          </div>
+          <a href="https://instagram.com/vault.147" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size:11px;padding:0.5rem 1rem;">
+            <span>@VAULT.147 ON INSTAGRAM</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 VAULT 147. ALL RIGHTS RESERVED.</div>
+        <div>DESIGNED AS A BESPOKE ARENA EXPERIENCE</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/vault-bundle.js"></script>
+</body>
+</html>

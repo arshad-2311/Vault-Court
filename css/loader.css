@@ -17,12 +17,27 @@
   justify-content: center;
   overflow: hidden;
   transition: opacity 0.8s var(--ease-cinematic), visibility 0.8s;
+  /* Bulletproof CSS fallback animation: automatically dismisses even if JS is blocked */
+  animation: autoDismissLoader 0.6s cubic-bezier(0.77, 0, 0.175, 1) 1.6s forwards;
+  pointer-events: none;
 }
 
 #vault-prologue.prologue-complete {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+@keyframes autoDismissLoader {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .prologue-content {
@@ -48,7 +63,7 @@
   stroke-dasharray: 400;
   stroke-dashoffset: 400;
   fill: transparent;
-  animation: emblemDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: emblemDraw 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 @keyframes emblemDraw {
@@ -75,7 +90,7 @@
   margin-bottom: var(--space-xs);
   opacity: 0;
   transform: translateY(8px);
-  animation: prologueFadeUp 0.8s 0.3s var(--ease-fast) forwards;
+  animation: prologueFadeUp 0.6s 0.2s var(--ease-fast) forwards;
 }
 
 .prologue-subtitle {
@@ -87,7 +102,7 @@
   margin-bottom: var(--space-xl);
   opacity: 0;
   transform: translateY(8px);
-  animation: prologueFadeUp 0.8s 0.45s var(--ease-fast) forwards;
+  animation: prologueFadeUp 0.6s 0.35s var(--ease-fast) forwards;
 }
 
 .prologue-telemetry {
@@ -102,7 +117,7 @@
   color: var(--crimson-bright);
   letter-spacing: 0.08em;
   opacity: 0;
-  animation: prologueFadeUp 0.8s 0.6s var(--ease-fast) forwards;
+  animation: prologueFadeUp 0.6s 0.5s var(--ease-fast) forwards;
 }
 
 .prologue-bar-track {
@@ -121,7 +136,7 @@
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--crimson-dark), var(--crimson-bright));
-  animation: prologueProgress 1.6s ease-in-out forwards;
+  animation: prologueProgress 1.4s ease-in-out forwards;
 }
 
 @keyframes prologueFadeUp {
