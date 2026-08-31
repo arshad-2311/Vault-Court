@@ -544,7 +544,7 @@ export class BookingEngine {
         `*Payment:* PAID (Verified Online)\n\n` +
         `*Name:* ${payload.customerName}\n` +
         `*Phone:* ${payload.customerPhone}\n\n` +
-        `Please confirm my reservation at 9/1 Mahalingam St, Royapuram.`
+        `Please confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
       );
 
       const waBtn = document.getElementById('pass-whatsapp-dispatch-btn');

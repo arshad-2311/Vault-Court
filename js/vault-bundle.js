@@ -14,19 +14,20 @@
     tagline: 'SNOOKER. PS5. THE GAME STARTS HERE.',
     subTagline: 'A premium gaming and snooker experience built for players who want more than just a game.',
     address: {
-      line1: '9/1, Mahalingam Street',
+      line1: 'Mannarsamy 6/1, Somu Nagar',
       locality: 'Royapuram',
       city: 'Chennai',
       state: 'Tamil Nadu',
-      full: '9/1, Mahalingam Street, Royapuram, Chennai'
+      pincode: '600013',
+      full: 'Mannarsamy 6/1, Somu Nagar, Royapuram, Chennai, Tamil Nadu 600013'
     },
     contact: {
-      phone: '+91 8807500147',
-      phoneRaw: '8807500147',
-      whatsapp: '8807500147',
+      phone: '+91 88259 75491',
+      phoneRaw: '8825975491',
+      whatsapp: '8825975491',
       instagram: 'vault.147',
       instagramUrl: 'https://instagram.com/vault.147',
-      mapsUrl: 'https://maps.google.com/?q=9/1+Mahalingam+Street+Royapuram+Chennai'
+      mapsUrl: 'https://maps.google.com/?q=Mannarsamy+6/1+Somu+Nagar+Royapuram+Chennai+600013'
     },
     hours: {
       days: 'Monday – Sunday',
@@ -1179,7 +1180,7 @@
           `*Payment:* PAID (Verified Online)\n\n` +
           `*Name:* ${payload.customerName}\n` +
           `*Phone:* ${payload.customerPhone}\n\n` +
-          `Please confirm my reservation at 9/1 Mahalingam St, Royapuram.`
+          `Please confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
         );
 
         const waBtn = document.getElementById('pass-whatsapp-dispatch-btn');
