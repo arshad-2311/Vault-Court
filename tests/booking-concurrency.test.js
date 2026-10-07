@@ -93,7 +93,7 @@ class DynamicIntervalTestEngine {
 
       // Expire stale holds
       for (const bkg of this.bookings.values()) {
-        if (bkg.status === 'PENDING_PAYMENT' && new Date(bkg.hold_expires_at) < now) {
+        if (bkg.hold_expires_at && new Date(bkg.hold_expires_at) < now) {
           bkg.status = 'EXPIRED';
         }
       }
@@ -105,7 +105,7 @@ class DynamicIntervalTestEngine {
           const bkgEnd = this.parseTimeToMinutes(bkg.end_time);
 
           if (bkgStart < reqEndMin && bkgEnd > reqStartMin) {
-            if (bkg.status === 'CONFIRMED' || (bkg.status === 'PENDING_PAYMENT' && new Date(bkg.hold_expires_at) > now)) {
+            if ((bkg.status === 'CONFIRMED' && !bkg.hold_expires_at) || (bkg.hold_expires_at && new Date(bkg.hold_expires_at) > now)) {
               return {
                 status: 409,
                 error: 'SLOT_ALREADY_RESERVED',
@@ -119,8 +119,6 @@ class DynamicIntervalTestEngine {
       const bookingId = `V147-${Math.floor(1000 + Math.random() * 9000)}`;
       const priceObj = this.calculateServerPrice(unitId, duration, playerCount);
       const endTime = this.calculateEndTime(startTime, duration);
-      const holdExpiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-      const razorpayOrderId = `order_${bookingId.replace('-', '_')}`;
 
       const newBooking = {
         booking_id: bookingId,
@@ -135,11 +133,11 @@ class DynamicIntervalTestEngine {
         hourly_rate: priceObj.hourlyRate,
         amount: priceObj.total,
         currency: 'INR',
-        status: 'PENDING_PAYMENT',
-        payment_status: 'PENDING',
-        booking_source: source,
-        hold_expires_at: holdExpiresAt,
-        razorpay_order_id: razorpayOrderId,
+        status: 'CONFIRMED',
+        payment_status: 'PAY_AT_COUNTER',
+        payment_method: 'COUNTER',
+        booking_source: source || 'COUNTER_RESERVATION',
+        hold_expires_at: null,
         created_at: new Date().toISOString()
       };
 
@@ -149,43 +147,27 @@ class DynamicIntervalTestEngine {
         status: 201,
         success: true,
         bookingId,
-        razorpayOrderId,
+        paymentMethod: 'COUNTER',
+        status_text: 'CONFIRMED',
+        paymentStatus: 'PAY_AT_COUNTER',
         hourlyRate: priceObj.hourlyRate,
         amount: priceObj.total,
         durationHours: duration,
         currency: 'INR',
         startTime,
-        endTime,
-        holdExpiresAt
+        endTime
       };
     } finally {
       this.advisoryLocks.delete(lockKey);
     }
   }
 
-  async verifyPayment({ bookingId, razorpayOrderId, razorpayPaymentId, razorpaySignature }) {
+  async verifyPayment({ bookingId }) {
     const bkg = this.bookings.get(bookingId);
     if (!bkg) return { status: 404, error: 'BOOKING_NOT_FOUND' };
 
     bkg.status = 'CONFIRMED';
-    bkg.payment_status = 'PAID';
-    bkg.razorpay_payment_id = razorpayPaymentId;
-    bkg.razorpay_signature = razorpaySignature;
-    bkg.hold_expires_at = null;
-
-    this.payments.set(razorpayPaymentId, {
-      booking_id: bookingId,
-      amount: bkg.amount,
-      status: 'PAID'
-    });
-
-    if (bkg.booking_source === 'ONLINE') {
-      this.platformBilling.set(bookingId, {
-        booking_id: bookingId,
-        fee_amount: 10
-      });
-    }
-
+    bkg.payment_status = 'PAY_AT_COUNTER';
     return { status: 200, success: true, bookingId, status_text: 'CONFIRMED' };
   }
 
@@ -263,10 +245,7 @@ async function runTests() {
       customerPhone: '9876543210'
     });
     await engine.verifyPayment({
-      bookingId: resA.bookingId,
-      razorpayOrderId: resA.razorpayOrderId,
-      razorpayPaymentId: 'pay_test_A',
-      razorpaySignature: 'sig_ok'
+      bookingId: resA.bookingId
     });
 
     const resB = await engine.createBookingHold({
@@ -292,10 +271,7 @@ async function runTests() {
       customerPhone: '9876543210'
     });
     await engine.verifyPayment({
-      bookingId: resA.bookingId,
-      razorpayOrderId: resA.razorpayOrderId,
-      razorpayPaymentId: 'pay_test_A',
-      razorpaySignature: 'sig_ok'
+      bookingId: resA.bookingId
     });
 
     const resB = await engine.createBookingHold({
@@ -440,10 +416,7 @@ async function runTests() {
       customerPhone: '9876543210'
     });
     await engine.verifyPayment({
-      bookingId: midRes.bookingId,
-      razorpayOrderId: midRes.razorpayOrderId,
-      razorpayPaymentId: 'pay_mid',
-      razorpaySignature: 'sig_ok'
+      bookingId: midRes.bookingId
     });
 
     const maxConsecutive = engine.getAvailableConsecutiveHours('snooker-01', '2026-08-31', '07:00 PM');

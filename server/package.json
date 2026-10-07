@@ -1,7 +1,7 @@
 {
   "name": "vault147-backend-server",
   "version": "1.0.0",
-  "description": "Production Supabase and Razorpay booking backend for VAULT 147",
+  "description": "Production Supabase and Resend booking backend for VAULT 147",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -14,6 +14,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "razorpay": "^2.9.5"
+    "resend": "^6.32.0"
   }
 }

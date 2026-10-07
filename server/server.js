@@ -1,16 +1,19 @@
 /**
- * VAULT 147 — PRODUCTION BOOKING & PAYMENT SERVER
- * Supabase PostgreSQL + Razorpay Online Payments (Dynamic Duration 1–4 Hours)
+ * VAULT 147 — PRODUCTION COUNTER BOOKING SERVER
+ * In-Person Counter Payments + Automated Resend Customer & Manager Notifications
  */
 
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import crypto from 'crypto';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
-import Razorpay from 'razorpay';
+import { sendBookingConfirmationEmails } from './mailer.js';
 
-dotenv.config();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,21 +30,6 @@ if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
   supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     auth: { persistSession: false }
   });
-}
-
-// 2. Razorpay Initialization
-const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || 'rzp_test_vault147';
-const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || 'vault147_secret_test';
-const RAZORPAY_WEBHOOK_SECRET = process.env.RAZORPAY_WEBHOOK_SECRET || 'vault147_webhook_secret';
-
-let razorpay = null;
-try {
-  razorpay = new Razorpay({
-    key_id: RAZORPAY_KEY_ID,
-    key_secret: RAZORPAY_KEY_SECRET
-  });
-} catch (e) {
-  console.warn('[Razorpay] Initialized in test mode');
 }
 
 // --- TIME & INTERVAL HELPERS ---
@@ -226,7 +214,7 @@ app.get('/api/bookings/availability', async (req, res) => {
 
 /**
  * POST /api/bookings/create-hold
- * Atomically validates interval overlap, calculates price, and creates hold + Razorpay Order
+ * Atomically validates interval overlap, calculates price, and creates confirmed Counter reservation
  */
 app.post('/api/bookings/create-hold', async (req, res) => {
   const {
@@ -238,8 +226,7 @@ app.post('/api/bookings/create-hold', async (req, res) => {
     customerName,
     customerPhone,
     customerEmail = '',
-    notes = '',
-    source = 'ONLINE'
+    notes = ''
   } = req.body;
 
   if (!unitId || !date || !startTime || !customerName || !customerPhone) {
@@ -277,7 +264,7 @@ app.post('/api/bookings/create-hold', async (req, res) => {
         p_customer_phone: customerPhone,
         p_customer_email: customerEmail,
         p_notes: notes,
-        p_source: source
+        p_source: 'COUNTER_RESERVATION'
       });
 
       if (error) {
@@ -292,42 +279,43 @@ app.post('/api/bookings/create-hold', async (req, res) => {
 
       if (data && data[0] && data[0].success) {
         const holdRecord = data[0];
-        let razorpayOrderId = `order_${holdRecord.booking_id.replace('-', '_')}`;
 
-        if (razorpay) {
-          try {
-            const rzpOrder = await razorpay.orders.create({
-              amount: holdRecord.total_amount * 100, // paise
-              currency: 'INR',
-              receipt: holdRecord.booking_id,
-              notes: {
-                booking_id: holdRecord.booking_id,
-                unit_id: unitId,
-                date,
-                start_time: startTime,
-                duration_hours: duration
-              }
-            });
-            razorpayOrderId = rzpOrder.id;
+        await supabase.from('bookings').update({
+          status: 'CONFIRMED',
+          payment_status: 'PAY_AT_COUNTER',
+          payment_method: 'COUNTER',
+          hold_expires_at: null
+        }).eq('booking_id', holdRecord.booking_id);
 
-            await supabase.from('bookings').update({ razorpay_order_id: razorpayOrderId }).eq('booking_id', holdRecord.booking_id);
-          } catch (rzpErr) {
-            console.warn('[Razorpay] Order notice:', rzpErr.message);
-          }
-        }
+        sendBookingConfirmationEmails({
+          bookingId: holdRecord.booking_id,
+          customerName,
+          customerPhone,
+          customerEmail,
+          unitId,
+          date,
+          startTime,
+          endTime: holdRecord.end_time,
+          durationHours: duration,
+          playerCount,
+          notes,
+          amount: holdRecord.total_amount,
+          paymentMethod: 'COUNTER',
+          paymentStatus: 'PAY_AT_COUNTER'
+        }).catch(err => console.error('[Resend Mailer Error]:', err));
 
         return res.status(201).json({
           success: true,
           bookingId: holdRecord.booking_id,
-          razorpayOrderId,
-          razorpayKeyId: RAZORPAY_KEY_ID,
+          paymentMethod: 'COUNTER',
+          status: 'CONFIRMED',
+          paymentStatus: 'PAY_AT_COUNTER',
           hourlyRate: holdRecord.hourly_rate,
           amount: holdRecord.total_amount,
           durationHours: duration,
           currency: 'INR',
           startTime,
-          endTime: holdRecord.end_time,
-          holdExpiresAt: holdRecord.hold_expires_at
+          endTime: holdRecord.end_time
         });
       }
     } catch (e) {
@@ -344,7 +332,7 @@ app.post('/api/bookings/create-hold', async (req, res) => {
   // 2. In-Memory Concurrency & Interval Overlap Check
   const now = new Date();
 
-  // Expire stale holds
+  // Expire stale holds if any
   for (const bkg of inMemoryBookings.values()) {
     if (bkg.status === 'PENDING_PAYMENT' && new Date(bkg.hold_expires_at) < now) {
       bkg.status = 'EXPIRED';
@@ -369,8 +357,6 @@ app.post('/api/bookings/create-hold', async (req, res) => {
   }
 
   const bookingId = `V147-${Math.floor(1000 + Math.random() * 9000)}`;
-  const holdExpiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-  const razorpayOrderId = `order_${bookingId.replace('-', '_')}_mock`;
 
   inMemoryBookings.set(bookingId, {
     booking_id: bookingId,
@@ -385,81 +371,67 @@ app.post('/api/bookings/create-hold', async (req, res) => {
     hourly_rate: priceObj.hourlyRate,
     amount: priceObj.total,
     currency: 'INR',
-    status: 'PENDING_PAYMENT',
-    payment_status: 'PENDING',
-    booking_source: source,
-    hold_expires_at: holdExpiresAt,
-    razorpay_order_id: razorpayOrderId,
+    status: 'CONFIRMED',
+    payment_status: 'PAY_AT_COUNTER',
+    payment_method: 'COUNTER',
+    booking_source: 'COUNTER_RESERVATION',
+    hold_expires_at: null,
     created_at: new Date().toISOString()
   });
+
+  sendBookingConfirmationEmails({
+    bookingId,
+    customerName,
+    customerPhone,
+    customerEmail,
+    unitId,
+    date,
+    startTime,
+    endTime,
+    durationHours: duration,
+    playerCount,
+    notes,
+    amount: priceObj.total,
+    paymentMethod: 'COUNTER',
+    paymentStatus: 'PAY_AT_COUNTER'
+  }).catch(err => console.error('[Resend Mailer Error]:', err));
 
   res.status(201).json({
     success: true,
     bookingId,
-    razorpayOrderId,
-    razorpayKeyId: RAZORPAY_KEY_ID,
+    paymentMethod: 'COUNTER',
+    status: 'CONFIRMED',
+    paymentStatus: 'PAY_AT_COUNTER',
     hourlyRate: priceObj.hourlyRate,
     amount: priceObj.total,
     durationHours: duration,
     currency: 'INR',
     startTime,
-    endTime,
-    holdExpiresAt
+    endTime
   });
 });
 
 /**
- * POST /api/bookings/verify-payment
- * Verifies Razorpay HMAC-SHA256 signature and confirms booking
+ * POST /api/bookings/confirm-counter
+ * Confirms a held booking for direct in-person payment at the arena counter
  */
-app.post('/api/bookings/verify-payment', async (req, res) => {
-  const {
-    bookingId,
-    razorpayOrderId,
-    razorpayPaymentId,
-    razorpaySignature,
-    paymentMethod = 'upi'
-  } = req.body;
+app.post('/api/bookings/confirm-counter', async (req, res) => {
+  const { bookingId } = req.body;
 
-  if (!bookingId || !razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
-    return res.status(400).json({ error: 'Missing payment signature verification parameters' });
-  }
-
-  const expectedSignature = crypto
-    .createHmac('sha256', RAZORPAY_KEY_SECRET)
-    .update(`${razorpayOrderId}|${razorpayPaymentId}`)
-    .digest('hex');
-
-  const isSignatureValid = (expectedSignature === razorpaySignature) || razorpaySignature.startsWith('sim_sig_');
-
-  if (!isSignatureValid) {
-    return res.status(400).json({
-      success: false,
-      error: 'INVALID_SIGNATURE',
-      message: 'Payment signature mismatch.'
-    });
+  if (!bookingId) {
+    return res.status(400).json({ error: 'Missing bookingId' });
   }
 
   if (supabase) {
     try {
-      const { data, error } = await supabase.rpc('fn_confirm_booking_payment', {
-        p_booking_id: bookingId,
-        p_razorpay_order_id: razorpayOrderId,
-        p_razorpay_payment_id: razorpayPaymentId,
-        p_razorpay_signature: razorpaySignature,
-        p_payment_method: paymentMethod
-      });
-
-      if (!error && data && data[0] && data[0].success) {
-        return res.json({
-          success: true,
-          bookingId,
-          status: 'CONFIRMED',
-          paymentStatus: 'PAID'
-        });
-      }
+      await supabase.from('bookings').update({
+        status: 'CONFIRMED',
+        payment_status: 'PAY_AT_COUNTER',
+        payment_method: 'COUNTER',
+        hold_expires_at: null
+      }).eq('booking_id', bookingId);
     } catch (e) {
-      console.warn('[Supabase] Confirm payment fallback:', e.message);
+      console.warn('[Supabase] Confirm counter fallback:', e.message);
     }
   }
 
@@ -469,54 +441,33 @@ app.post('/api/bookings/verify-payment', async (req, res) => {
   }
 
   bkg.status = 'CONFIRMED';
-  bkg.payment_status = 'PAID';
-  bkg.razorpay_payment_id = razorpayPaymentId;
-  bkg.razorpay_signature = razorpaySignature;
+  bkg.payment_status = 'PAY_AT_COUNTER';
+  bkg.payment_method = 'COUNTER';
   bkg.hold_expires_at = null;
+
+  sendBookingConfirmationEmails({
+    bookingId: bkg.booking_id,
+    customerName: bkg.customer_name,
+    customerPhone: bkg.customer_phone,
+    customerEmail: bkg.customer_email,
+    unitId: bkg.unit_id,
+    date: bkg.booking_date,
+    startTime: bkg.start_time,
+    endTime: bkg.end_time,
+    durationHours: bkg.duration_hours,
+    playerCount: bkg.player_count,
+    notes: bkg.notes,
+    amount: bkg.amount,
+    paymentMethod: 'COUNTER',
+    paymentStatus: 'PAY_AT_COUNTER'
+  }).catch(err => console.error('[Resend Mailer Error]:', err));
 
   res.json({
     success: true,
     bookingId,
     status: 'CONFIRMED',
-    paymentStatus: 'PAID'
+    paymentStatus: 'PAY_AT_COUNTER'
   });
-});
-
-/**
- * POST /api/webhooks/razorpay
- */
-app.post('/api/webhooks/razorpay', async (req, res) => {
-  const webhookSignature = req.headers['x-razorpay-signature'];
-  if (webhookSignature) {
-    const expected = crypto.createHmac('sha256', RAZORPAY_WEBHOOK_SECRET).update(JSON.stringify(req.body)).digest('hex');
-    if (expected !== webhookSignature) {
-      return res.status(400).json({ error: 'Invalid webhook signature' });
-    }
-  }
-
-  const event = req.body.event;
-  const paymentEntity = req.body?.payload?.payment?.entity;
-  const bookingId = paymentEntity?.notes?.booking_id;
-
-  if (event === 'payment.captured' || event === 'order.paid') {
-    if (bookingId) {
-      if (supabase) {
-        await supabase.rpc('fn_confirm_booking_payment', {
-          p_booking_id: bookingId,
-          p_razorpay_order_id: paymentEntity.order_id,
-          p_razorpay_payment_id: paymentEntity.id,
-          p_razorpay_signature: 'webhook_verified',
-          p_payment_method: paymentEntity.method || 'upi'
-        });
-      } else if (inMemoryBookings.has(bookingId)) {
-        const b = inMemoryBookings.get(bookingId);
-        b.status = 'CONFIRMED';
-        b.payment_status = 'PAID';
-      }
-    }
-  }
-
-  res.status(200).json({ status: 'ok', received: true });
 });
 
 app.listen(PORT, () => {

@@ -1,86 +1,100 @@
 /* ============================================================
-   VAULT 147 — DESIGN SYSTEM & TOKENS (REFINED)
-   Premium Modern Grotesk · Sports Editorial & Arena Club Aesthetics
+   VAULT 147 — HIGH-END ARCHITECTURAL DESIGN SYSTEM & TOKENS
+   Awwwards-Level Digital Experience · Carbon, Graphite & Controlled Crimson
    ============================================================ */
 
 :root {
-  /* --- PALETTE (Restrained Carbon & Crimson) --- */
-  --bg-void: #070709;          /* Deepest Charcoal/Carbon Base */
-  --bg-sub: #0c0c10;           /* Sub-surface elevation */
-  --bg-surface: #131318;       /* Elevated cards & modules */
-  --bg-surface-hover: #181820; /* Card hover */
-  --bg-surface-glass: rgba(19, 19, 24, 0.88);
+  /* --- PALETTE (Authentic Carbon, Graphite & Restrained Crimson) --- */
+  --bg-void: #050507;           /* Deepest Obsidian Carbon Base */
+  --bg-void-rgb: 5, 5, 7;
+  --bg-sub: #0a0a0e;            /* Sub-surface elevation */
+  --bg-sub-rgb: 10, 10, 14;
+  --bg-surface: #111116;        /* Elevated architectural modules */
+  --bg-surface-elevated: #16161d;
+  --bg-surface-hover: #1b1b24;  /* Card & module hover */
+  --bg-surface-glass: rgba(17, 17, 22, 0.82);
 
-  /* High Contrast Typography & Borders */
-  --text-primary: #ffffff;     /* Crisp white */
-  --text-secondary: #a1a1aa;   /* Refined editorial subtext */
-  --text-muted: #666672;       /* Subtle metadata */
+  /* High Precision Typography & Hairlines */
+  --text-primary: #f5f5f7;      /* Warm white - avoids harsh glare */
+  --text-secondary: #9b9ba8;    /* Refined editorial subtext */
+  --text-muted: #5c5c68;        /* Subtle technical telemetry */
+  --text-crimson: #e11d2a;
+
+  /* Architectural Hairlines */
   --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.14);
-  --border-strong: rgba(255, 255, 255, 0.25);
+  --border-medium: rgba(255, 255, 255, 0.13);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --border-focus: rgba(255, 255, 255, 0.38);
 
-  /* Signature Crimson Accent (Used with restraint: ~3-5% of visual field) */
-  --crimson: #dc2626;          /* Official Vault 147 Crimson */
-  --crimson-bright: #ef4444;   /* Active highlight */
-  --crimson-dark: #991b1b;     /* Deep burgundy shadow */
-  --crimson-glow: rgba(220, 38, 38, 0.22);
-  --crimson-subtle: rgba(220, 38, 38, 0.10);
-  --crimson-border: rgba(220, 38, 38, 0.35);
+  /* Signature Vault Crimson (Restrained & Strategic: ~3-5% of visual field) */
+  --crimson: #dc2626;           /* Official Vault 147 Crimson */
+  --crimson-rgb: 220, 38, 38;
+  --crimson-bright: #ef4444;    /* Active highlight */
+  --crimson-dark: #991b1b;      /* Deep burgundy shadow */
+  --crimson-glow: rgba(220, 38, 38, 0.18);
+  --crimson-subtle: rgba(220, 38, 38, 0.08);
+  --crimson-border: rgba(220, 38, 38, 0.32);
 
   /* Status Colors */
   --status-available: #10b981;
-  --status-available-bg: rgba(16, 185, 129, 0.12);
-  --status-available-border: rgba(16, 185, 129, 0.3);
+  --status-available-bg: rgba(16, 185, 129, 0.10);
+  --status-available-border: rgba(16, 185, 129, 0.28);
   --status-held: #f59e0b;
-  --status-held-bg: rgba(245, 158, 11, 0.12);
-  --status-held-border: rgba(245, 158, 11, 0.3);
+  --status-held-bg: rgba(245, 158, 11, 0.10);
+  --status-held-border: rgba(245, 158, 11, 0.28);
   --status-booked: #ef4444;
-  --status-booked-bg: rgba(239, 68, 68, 0.12);
-  --status-booked-border: rgba(239, 68, 68, 0.3);
+  --status-booked-bg: rgba(239, 68, 68, 0.10);
+  --status-booked-border: rgba(239, 68, 68, 0.28);
 
-  /* --- TYPOGRAPHY (3 DISTINCT FAMILIES) --- */
-  /* 1. Display: Premium modern architectural grotesk */
-  --font-display: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  /* 2. Body & UI: Clean, contemporary editorial grotesk */
+  /* --- TYPOGRAPHY (3 DISTINCT FAMILIES ONLY) --- */
+  /* 1. DISPLAY: Muscular, architectural neo-grotesk with high-tension letterforms */
+  --font-display: 'Cabinet Grotesk', 'Barlow Semi Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* 2. BODY: Clean, contemporary editorial sans */
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  /* 3. Technical: Telemetry, timecodes, pricing, coordinates */
+  /* 3. TECHNICAL: Coordinates, telemetry, prices, timers, pass barcodes */
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Typography Scales */
+  /* Typographic Scales */
+  --text-2xs: 0.6875rem; /* 11px */
   --text-xs: 0.75rem;    /* 12px */
   --text-sm: 0.875rem;   /* 14px */
   --text-base: 1rem;     /* 16px */
   --text-lg: 1.125rem;   /* 18px */
   --text-xl: 1.25rem;    /* 20px */
   --text-2xl: 1.5rem;    /* 24px */
-  --text-3xl: 1.875rem;  /* 30px */
-  --text-4xl: 2.25rem;   /* 36px */
-  --text-5xl: 3rem;      /* 48px */
-  --text-6xl: 3.75rem;   /* 60px */
-  --text-hero: clamp(3rem, 7.5vw, 6.5rem);
+  --text-3xl: 2rem;      /* 32px */
+  --text-4xl: 2.5rem;    /* 40px */
+  --text-5xl: 3.5rem;    /* 56px */
+  --text-6xl: 4.5rem;    /* 72px */
+  --text-hero: clamp(3.5rem, 8.5vw, 8rem);
+  --text-massive: clamp(4.5rem, 14vw, 13rem);
 
-  /* --- GEOMETRY & SPACING --- */
+  /* --- GEOMETRY & ARCHITECTURAL RADII --- */
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 6px;
+  --radius-lg: 8px;
 
+  /* Spacing Rhythm */
+  --space-2xs: 0.125rem; /* 2px */
   --space-xs: 0.25rem;   /* 4px */
   --space-sm: 0.5rem;    /* 8px */
   --space-md: 1rem;      /* 16px */
   --space-lg: 1.5rem;    /* 24px */
   --space-xl: 2rem;      /* 32px */
-  --space-2xl: 3rem;     /* 48px */
-  --space-3xl: 4.5rem;   /* 72px */
-  --space-4xl: 6rem;     /* 96px */
+  --space-2xl: 3.5rem;   /* 56px */
+  --space-3xl: 5.5rem;   /* 88px */
+  --space-4xl: 8rem;     /* 128px */
 
-  --container-max: 1280px;
-  --container-padding: clamp(1.25rem, 4vw, 3rem);
+  --container-max: 1360px;
+  --container-padding: clamp(1.25rem, 4.5vw, 3.5rem);
 
-  /* --- MOTION --- */
-  --duration-micro: 0.2s;
-  --duration-ui: 0.35s;
-  --duration-cinematic: 0.8s;
-  --ease-fast: cubic-bezier(0.16, 1, 0.3, 1);
+  /* --- MOTION HIERARCHY --- */
+  --duration-micro: 0.2s;      /* 150-250ms */
+  --duration-ui: 0.4s;         /* 300-500ms */
+  --duration-cinematic: 0.9s;  /* 600-1100ms */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Z-Index Hierarchy */

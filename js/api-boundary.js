@@ -215,7 +215,6 @@ export const BookingAPI = {
     }
 
     const bookingId = `V147-${Math.floor(1000 + Math.random() * 9000)}`;
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
     const priceObj = this.calculateSessionPrice(
       { basePrice: 250, category: payload.unitId.startsWith('ps5') ? 'ps5' : 'snooker' },
       duration,
@@ -224,8 +223,10 @@ export const BookingAPI = {
 
     localHoldCache.set(bookingId, {
       bookingId,
-      status: 'PENDING_PAYMENT',
-      expiresAt,
+      status: 'CONFIRMED',
+      paymentStatus: 'PAY_AT_COUNTER',
+      paymentMethod: 'COUNTER',
+      expiresAt: null,
       amount: priceObj.total,
       payload
     });
@@ -233,24 +234,24 @@ export const BookingAPI = {
     return {
       success: true,
       bookingId,
-      razorpayOrderId: `order_${bookingId.replace('-', '_')}_mock`,
-      razorpayKeyId: 'rzp_test_vault147',
+      paymentMethod: 'COUNTER',
+      status: 'CONFIRMED',
+      paymentStatus: 'PAY_AT_COUNTER',
       hourlyRate: priceObj.hourlyRate,
       amount: priceObj.total,
       durationHours: duration,
       currency: 'INR',
       startTime: payload.startTime,
-      endTime: calculateEndTime(payload.startTime, duration),
-      holdExpiresAt: expiresAt
+      endTime: calculateEndTime(payload.startTime, duration)
     };
   },
 
-  async verifyPayment(verificationPayload) {
+  async confirmCounterPayment(payload) {
     try {
-      const res = await fetchWithQuickTimeout(`${API_BASE_URL}/bookings/verify-payment`, {
+      const res = await fetchWithQuickTimeout(`${API_BASE_URL}/bookings/confirm-counter`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(verificationPayload)
+        body: JSON.stringify(payload)
       }, 800);
 
       if (res.ok) {
@@ -258,17 +259,18 @@ export const BookingAPI = {
       }
     } catch (e) {}
 
-    const item = localHoldCache.get(verificationPayload.bookingId);
+    const item = localHoldCache.get(payload.bookingId);
     if (item) {
       item.status = 'CONFIRMED';
-      item.paymentStatus = 'PAID';
+      item.paymentStatus = 'PAY_AT_COUNTER';
+      item.paymentMethod = 'COUNTER';
     }
 
     return {
       success: true,
-      bookingId: verificationPayload.bookingId,
+      bookingId: payload.bookingId,
       status: 'CONFIRMED',
-      paymentStatus: 'PAID'
+      paymentStatus: 'PAY_AT_COUNTER'
     };
   }
 };

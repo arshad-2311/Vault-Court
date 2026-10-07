@@ -1,6 +1,6 @@
 /**
  * VAULT 147 — BOOKING ENGINE CONTROLLER
- * Zero-Lag Modal Opening (0ms) · Dynamic Duration (1–4 Hours) · Razorpay Online Checkout
+ * Zero-Lag Modal Opening (0ms) · Dynamic Duration (1–4 Hours) · Counter Settlement & Resend Dispatch
  */
 
 import { BOOKING_UNITS, VENUE_INFO } from './data.js';
@@ -18,7 +18,8 @@ export class BookingEngine {
       currentPrice: 250,
       activeHold: null,
       isSubmitting: false,
-      slotsData: []
+      slotsData: [],
+      paymentMethod: 'counter'
     };
     this.datesList = [];
   }
@@ -101,11 +102,14 @@ export class BookingEngine {
       ? BOOKING_UNITS
       : BOOKING_UNITS.filter(u => u.category === this.state.activeCategory);
 
-    container.innerHTML = filtered.map((unit) => `
+    container.innerHTML = filtered.map((unit, idx) => `
       <article class="unit-card" data-unit-id="${unit.id}">
         <div class="unit-card-img-wrap">
           <img src="${unit.image}" alt="${unit.name}" class="unit-card-img" loading="lazy" />
-          <span class="unit-status-tag ${unit.status.toLowerCase()}">${unit.status}</span>
+          <div class="unit-card-header-bar">
+            <span class="unit-id-badge">[0${idx + 1} // ${unit.category === 'snooker' ? 'SNOOKER' : 'PS5'}]</span>
+            <span class="unit-status-tag ${unit.status.toLowerCase()}">${unit.status}</span>
+          </div>
         </div>
         <div class="unit-card-body">
           <span class="unit-game-category">${unit.categoryLabel}</span>
@@ -113,8 +117,8 @@ export class BookingEngine {
           <p class="unit-desc-oneline">${unit.oneLineDesc}</p>
           <div class="unit-card-footer">
             <span class="unit-price-rate">${unit.priceLabel}</span>
-            <button type="button" class="btn btn-primary unit-select-btn" data-unit-id="${unit.id}" data-cursor="select">
-              SELECT →
+            <button type="button" class="btn btn-secondary unit-select-btn" data-unit-id="${unit.id}" data-cursor="select">
+              <span>SELECT UNIT →</span>
             </button>
           </div>
         </div>
@@ -168,6 +172,20 @@ export class BookingEngine {
     modal.querySelectorAll('.player-choice').forEach((c, idx) => {
       c.classList.toggle('is-active', idx === 0);
     });
+
+    this.state.paymentMethod = 'counter';
+    modal.querySelectorAll('.payment-method-card').forEach((c) => {
+      c.classList.toggle('is-active', true);
+    });
+
+    const submitBtnText = document.getElementById('booking-submit-btn-text');
+    if (submitBtnText) submitBtnText.textContent = 'CONFIRM RESERVATION & PAY AT COUNTER';
+
+    const pmNotice = document.getElementById('payment-method-notice');
+    if (pmNotice) {
+      pmNotice.textContent = '✓ Reserved immediately. Pay at reception counter upon arrival via Cash or UPI.';
+      pmNotice.style.color = '#fbbf24';
+    }
 
     const durationGroup = document.getElementById('config-duration-group');
     if (durationGroup) durationGroup.style.display = 'none';
@@ -297,6 +315,11 @@ export class BookingEngine {
     if (rateEl) rateEl.textContent = `₹${priceObj.hourlyRate} / HOUR`;
     if (durEl) durEl.textContent = `${this.state.durationHours} ${this.state.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
     if (totalEl) totalEl.textContent = `₹${priceObj.total}`;
+
+    const pmNotice = document.getElementById('payment-method-notice');
+    if (pmNotice) {
+      pmNotice.textContent = `* Slot locked immediately. Settle ₹${this.state.currentPrice} via Cash or UPI at front reception counter.`;
+    }
   }
 
   bindModalEvents() {
@@ -377,12 +400,28 @@ export class BookingEngine {
         phoneInput.closest('.form-group').classList.remove('has-error');
       }
 
+      const emailVal = emailInput ? emailInput.value.trim() : '';
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        if (emailInput && emailInput.closest('.form-group')) {
+          emailInput.closest('.form-group').classList.add('has-error');
+        }
+        hasError = true;
+      } else {
+        if (emailInput && emailInput.closest('.form-group')) {
+          emailInput.closest('.form-group').classList.remove('has-error');
+        }
+      }
+
       if (hasError) return;
 
       this.state.isSubmitting = true;
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.querySelector('span').textContent = 'SECURING SLOT...';
+        const btnTextEl = document.getElementById('booking-submit-btn-text') || submitBtn.querySelector('span');
+        if (btnTextEl) {
+          btnTextEl.textContent = 'SECURING YOUR RESERVATION...';
+        }
       }
 
       try {
@@ -394,9 +433,10 @@ export class BookingEngine {
           playerCount: this.state.playerCount,
           customerName: nameInput.value.trim(),
           customerPhone: phoneVal,
-          customerEmail: emailInput.value.trim(),
+          customerEmail: emailVal,
           notes: notesInput ? notesInput.value.trim() : '',
-          source: 'ONLINE'
+          source: 'COUNTER_RESERVATION',
+          paymentMethod: 'COUNTER'
         };
 
         const holdResult = await BookingAPI.createBookingHold(holdPayload);
@@ -414,19 +454,18 @@ export class BookingEngine {
 
         this.state.activeHold = holdResult;
 
-        await this.launchRazorpayCheckout({
-          bookingId: holdResult.bookingId,
-          razorpayOrderId: holdResult.razorpayOrderId,
-          razorpayKeyId: holdResult.razorpayKeyId || 'rzp_test_vault147',
-          amount: holdResult.amount,
+        this.closeConfigModal();
+        this.renderConfirmationScreen(holdResult.bookingId, {
+          unitName: this.state.selectedUnit.name,
+          date: this.state.selectedDate.fullDateStr,
+          timeRange: `${holdResult.startTime} — ${holdResult.endTime}`,
           durationHours: this.state.durationHours,
-          currency: holdResult.currency || 'INR',
+          totalPrice: `₹${holdResult.amount}`,
           customerName: nameInput.value.trim(),
           customerPhone: phoneVal,
-          customerEmail: emailInput.value.trim(),
-          unitName: this.state.selectedUnit.name,
-          dateFormatted: this.state.selectedDate.fullDateStr,
-          timeRange: `${holdResult.startTime} — ${holdResult.endTime}`
+          customerEmail: emailVal,
+          paymentMethod: 'COUNTER',
+          players: this.state.selectedUnit.category === 'ps5' ? `${this.state.playerCount} Player(s)` : 'N/A'
         });
 
       } catch (err) {
@@ -436,84 +475,13 @@ export class BookingEngine {
         this.state.isSubmitting = false;
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.querySelector('span').textContent = 'LOCK SESSION & GENERATE PASS';
+          const btnTextEl = document.getElementById('booking-submit-btn-text') || submitBtn.querySelector('span');
+          if (btnTextEl) {
+            btnTextEl.textContent = 'CONFIRM RESERVATION & PAY AT COUNTER';
+          }
         }
       }
     });
-  }
-
-  async launchRazorpayCheckout(orderInfo) {
-    const self = this;
-
-    if (typeof window.Razorpay !== 'undefined') {
-      const options = {
-        key: orderInfo.razorpayKeyId,
-        amount: orderInfo.amount * 100,
-        currency: orderInfo.currency,
-        name: 'VAULT 147',
-        description: `${orderInfo.unitName} (${orderInfo.timeRange} · ${orderInfo.durationHours}h)`,
-        order_id: orderInfo.razorpayOrderId,
-        prefill: {
-          name: orderInfo.customerName,
-          contact: orderInfo.customerPhone,
-          email: orderInfo.customerEmail
-        },
-        theme: {
-          color: '#dc2626'
-        },
-        handler: async function (response) {
-          const verification = await BookingAPI.verifyPayment({
-            bookingId: orderInfo.bookingId,
-            razorpayOrderId: response.razorpay_order_id || orderInfo.razorpayOrderId,
-            razorpayPaymentId: response.razorpay_payment_id,
-            razorpaySignature: response.razorpay_signature,
-            paymentMethod: 'upi'
-          });
-
-          if (verification.success) {
-            self.closeConfigModal();
-            self.renderConfirmationScreen(orderInfo.bookingId, {
-              unitName: orderInfo.unitName,
-              date: orderInfo.dateFormatted,
-              timeRange: orderInfo.timeRange,
-              durationHours: orderInfo.durationHours,
-              totalPrice: `₹${orderInfo.amount}`,
-              customerName: orderInfo.customerName,
-              customerPhone: orderInfo.customerPhone,
-              players: self.state.selectedUnit.category === 'ps5' ? `${self.state.playerCount} Player(s)` : 'N/A'
-            });
-          } else {
-            alert('Payment verification failed. Please contact support.');
-          }
-        }
-      };
-
-      const rzpInstance = new window.Razorpay(options);
-      rzpInstance.open();
-    } else {
-      const simPaymentId = `pay_sim_${Math.floor(100000 + Math.random() * 900000)}`;
-      const verification = await BookingAPI.verifyPayment({
-        bookingId: orderInfo.bookingId,
-        razorpayOrderId: orderInfo.razorpayOrderId,
-        razorpayPaymentId: simPaymentId,
-        razorpaySignature: `sim_sig_${simPaymentId}`,
-        paymentMethod: 'upi'
-      });
-
-      if (verification.success) {
-        self.closeConfigModal();
-        self.renderConfirmationScreen(orderInfo.bookingId, {
-          unitName: orderInfo.unitName,
-          date: orderInfo.dateFormatted,
-          timeRange: orderInfo.timeRange,
-          durationHours: orderInfo.durationHours,
-          totalPrice: `₹${orderInfo.amount}`,
-          customerName: orderInfo.customerName,
-          customerPhone: orderInfo.customerPhone,
-          players: self.state.selectedUnit.category === 'ps5' ? `${self.state.playerCount} Player(s)` : 'N/A'
-        });
-      }
-    }
   }
 
   renderConfirmationScreen(bookingId, payload) {
@@ -524,27 +492,65 @@ export class BookingEngine {
     if (confirmView) {
       confirmView.classList.add('is-visible');
 
-      document.getElementById('pass-id-val').textContent = bookingId;
-      document.getElementById('pass-unit-val').textContent = payload.unitName;
-      document.getElementById('pass-date-val').textContent = payload.date;
-      document.getElementById('pass-time-val').textContent = payload.timeRange;
-      document.getElementById('pass-duration-val').textContent = `${payload.durationHours} ${payload.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
-      document.getElementById('pass-total-val').textContent = payload.totalPrice;
-      document.getElementById('pass-name-val').textContent = payload.customerName;
+      const statusPill = document.getElementById('pass-status-pill');
+      if (statusPill) {
+        statusPill.textContent = '[SLOT RESERVED · PAY AT COUNTER]';
+        statusPill.style.color = '#f59e0b';
+      }
+
+      const idEl = document.getElementById('pass-id-val');
+      if (idEl) idEl.textContent = bookingId;
+
+      const unitEl = document.getElementById('pass-unit-val');
+      if (unitEl) unitEl.textContent = payload.unitName;
+
+      const dateEl = document.getElementById('pass-date-val');
+      if (dateEl) dateEl.textContent = payload.date;
+
+      const timeEl = document.getElementById('pass-time-val');
+      if (timeEl) timeEl.textContent = payload.timeRange;
+
+      const durEl = document.getElementById('pass-duration-val');
+      if (durEl) durEl.textContent = `${payload.durationHours} ${payload.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
+
+      const totalEl = document.getElementById('pass-total-val');
+      if (totalEl) {
+        totalEl.textContent = `${payload.totalPrice} (Due on Arrival)`;
+      }
+
+      const nameEl = document.getElementById('pass-name-val');
+      if (nameEl) nameEl.textContent = payload.customerName;
+
+      const emailEl = document.getElementById('pass-email-val');
+      if (emailEl) {
+        emailEl.textContent = payload.customerEmail ? `SENT TO ${payload.customerEmail}` : 'SENT TO GUEST EMAIL';
+      }
+
+      const payStatusEl = document.getElementById('pass-payment-status-val');
+      if (payStatusEl) {
+        payStatusEl.textContent = 'PAY AT COUNTER (DUE ON ARRIVAL)';
+        payStatusEl.style.color = '#f59e0b';
+      }
+
+      const instructEl = document.getElementById('pass-instruction-text');
+      if (instructEl) {
+        instructEl.textContent = 'PRESENT THIS PASS AT THE VAULT 147 FRONT COUNTER TO SETTLE PAYMENT & ACCESS YOUR UNIT.';
+      }
 
       const waMsg = encodeURIComponent(
-        `*VAULT 147 BOOKING CONFIRMATION*\n\n` +
+        `*VAULT 147 RESERVATION CONFIRMATION*\n\n` +
         `*Booking ID:* ${bookingId}\n` +
         `*Game:* ${payload.unitName}\n` +
         `*Date:* ${payload.date}\n` +
         `*Time:* ${payload.timeRange}\n` +
         `*Duration:* ${payload.durationHours} Hour(s)\n` +
         (payload.players !== 'N/A' ? `*Players:* ${payload.players}\n` : '') +
-        `*Total:* ${payload.totalPrice}\n` +
-        `*Payment:* PAID (Verified Online)\n\n` +
+        `*Total Tariff:* ${payload.totalPrice}\n` +
+        `*Payment:* PAY AT COUNTER DIRECTLY (Due upon arrival)\n\n` +
         `*Name:* ${payload.customerName}\n` +
-        `*Phone:* ${payload.customerPhone}\n\n` +
-        `Please confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
+        `*Phone:* ${payload.customerPhone}\n` +
+        (payload.customerEmail ? `*Email:* ${payload.customerEmail}\n` : '') +
+        `\nPlease confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
       );
 
       const waBtn = document.getElementById('pass-whatsapp-dispatch-btn');

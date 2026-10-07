@@ -1,9 +1,10 @@
 /* ============================================================
-   VAULT 147 — ABOUT VIEW STYLES (REFINED)
+   VAULT 147 — ABOUT VIEW & ARENA ETHOS
+   Architectural Split · Pure Verified Standards · Hairline Pillars
    ============================================================ */
 
 .about-view-section {
-  padding: 6rem 0 var(--space-4xl);
+  padding: var(--space-4xl) 0;
   background-color: var(--bg-void);
   min-height: 100vh;
   border-top: 1px solid var(--border-subtle);
@@ -11,15 +12,16 @@
 
 .about-hero-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-2xl);
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-3xl);
   align-items: center;
   margin-bottom: var(--space-4xl);
 }
 
-@media (min-width: 992px) {
+@media (max-width: 991px) {
   .about-hero-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
   }
 }
 
@@ -30,32 +32,41 @@
 }
 
 .about-lead-copy {
-  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.4;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
 .about-sub-copy {
-  font-size: var(--text-base);
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
   color: var(--text-secondary);
   line-height: 1.7;
 }
 
 .about-hero-img-wrap {
   position: relative;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-xs);
   overflow: hidden;
-  height: 420px;
-  background-color: #0c0c10;
+  height: 480px;
+  background-color: var(--bg-sub);
+}
+
+@media (max-width: 900px) {
+  .about-hero-img-wrap {
+    height: 340px;
+  }
 }
 
 .about-hero-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease-fast);
+  transition: transform var(--duration-cinematic) var(--ease-out-expo);
 }
 
 .about-hero-img-wrap:hover .about-hero-img {
@@ -70,20 +81,20 @@
 
 .pillars-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-lg);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
   margin-top: var(--space-2xl);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1100px) {
   .pillars-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 640px) {
   .pillars-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -91,29 +102,38 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xs);
-  padding: var(--space-xl);
+  padding: var(--space-2xl) var(--space-xl);
   display: flex;
   flex-direction: column;
+  transition: border-color var(--duration-ui) var(--ease-out-expo), transform var(--duration-ui) var(--ease-out-expo);
+}
+
+.pillar-card:hover {
+  border-color: var(--border-medium);
+  transform: translateY(-3px);
 }
 
 .pillar-num {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--crimson);
-  line-height: 1;
-  margin-bottom: var(--space-sm);
+  color: var(--crimson-bright);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-md);
+  display: block;
 }
 
 .pillar-title {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: #ffffff;
   margin-bottom: var(--space-xs);
+  letter-spacing: 0.01em;
 }
 
 .pillar-desc {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }

@@ -1,11 +1,13 @@
 /**
- * VAULT 147 — ARENA DATA REPOSITORY & ASSET CATALOG
+ * VAULT 147 — ARENA DATA REPOSITORY & ASSET CATALOG (AUTHENTIC & VERIFIED)
  * Official Rates, Dynamic Duration Rules, 1-Hour Slot Intervals
+ * Pure verified information — no invented specs or equipment.
  */
 
 export const VENUE_INFO = {
   name: 'VAULT 147',
-  tagline: 'PREMIUM SNOOKER & PLAYSTATION 5 LOUNGE',
+  tagline: 'SNOOKER. PS5. THE GAME STARTS HERE.',
+  subTagline: 'A premium gaming and snooker experience built for players who want more than just a game.',
   location: {
     line1: 'Mannarsamy 6/1, Somu Nagar',
     area: 'Royapuram',
@@ -17,7 +19,8 @@ export const VENUE_INFO = {
   contact: {
     phone: '+91 88259 75491',
     phoneRaw: '8825975491',
-    whatsapp: '8825975491',
+    phoneFormatted: '088259 75491',
+    whatsapp: '918825975491',
     instagram: 'vault.147',
     instagramUrl: 'https://instagram.com/vault.147',
     mapsUrl: 'https://maps.google.com/?q=Mannarsamy+6/1+Somu+Nagar+Royapuram+Chennai+600013'
@@ -48,66 +51,66 @@ export const BOOKING_UNITS = [
     id: 'snooker-01',
     name: 'SNOOKER TABLE 01',
     category: 'snooker',
-    categoryLabel: 'SNOOKER',
-    image: 'assets/images/snooker-arena-3tables.jpg?v=2',
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-arena-3tables.jpg',
     basePrice: 250,
     priceLabel: '₹250 / HOUR',
-    oneLineDesc: 'Championship red cloth table with precision overhead drop lighting and Aramith tournament balls.',
+    oneLineDesc: 'Full-size championship table with tournament red cloth, overhead match lighting, and Aramith match balls.',
     status: 'AVAILABLE'
   },
   {
     id: 'snooker-02',
     name: 'SNOOKER TABLE 02',
     category: 'snooker',
-    categoryLabel: 'SNOOKER',
-    image: 'assets/images/snooker-table-cues.jpg?v=2',
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-table-cues.jpg',
     basePrice: 250,
     priceLabel: '₹250 / HOUR',
-    oneLineDesc: 'Tournament-spec table with anti-glare cone lamps and weighted match cues.',
+    oneLineDesc: 'Championship-specification table equipped with anti-glare cone lamps and balanced match cues.',
     status: 'AVAILABLE'
   },
   {
     id: 'snooker-03',
     name: 'SNOOKER TABLE 03',
     category: 'snooker',
-    categoryLabel: 'SNOOKER',
-    image: 'assets/images/snooker-solo-table.jpg?v=2',
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-solo-table.jpg',
     basePrice: 250,
     priceLabel: '₹250 / HOUR',
-    oneLineDesc: 'Low-key isolated accent lighting designed for high-focus 1v1 match play.',
+    oneLineDesc: 'Dedicated match table featuring focused overhead illumination engineered for 1v1 match play.',
     status: 'AVAILABLE'
   },
   {
     id: 'ps5-01',
-    name: 'PS5 COCKPIT STATION 01',
+    name: 'PLAYSTATION 5 STATION 01',
     category: 'ps5',
-    categoryLabel: 'PS5 CONSOLE',
-    image: 'assets/images/ps5-racing-cockpit.jpg?v=2',
+    categoryLabel: 'PS5 ARENA',
+    image: 'assets/images/ps5-eafc-station.jpg',
     basePrice: 150,
     priceLabel: 'FROM ₹150 / HOUR',
-    oneLineDesc: 'Logitech G-Series force-feedback racing wheel, pedals, and 4K HDR display.',
+    oneLineDesc: 'PlayStation 5 console station with high-refresh display and DualSense wireless controllers.',
     status: 'AVAILABLE'
   },
   {
     id: 'ps5-02',
-    name: 'PS5 DUALSENSE ARENA 02',
+    name: 'PLAYSTATION 5 STATION 02',
     category: 'ps5',
-    categoryLabel: 'PS5 CONSOLE',
-    image: 'assets/images/ps5-eafc-station.jpg?v=2',
+    categoryLabel: 'PS5 ARENA',
+    image: 'assets/images/vault147-panorama-lounge.webp',
     basePrice: 150,
     priceLabel: 'FROM ₹150 / HOUR',
-    oneLineDesc: 'EA FC 25, Mortal Kombat & top action titles with up to 4 DualSense wireless controllers.',
+    oneLineDesc: 'Multiplayer battle station supporting 1 to 4 players for EA Sports FC and head-to-head competition.',
     status: 'AVAILABLE'
   },
   {
     id: 'ps5-03',
-    name: 'PS5 SQUAD LOUNGE 03',
+    name: 'PLAYSTATION 5 STATION 03',
     category: 'ps5',
-    categoryLabel: 'PS5 CONSOLE',
-    image: 'assets/images/ps5-lounge-beanbags.jpg?v=2',
+    categoryLabel: 'PS5 ARENA',
+    image: 'assets/images/ps5-eafc-station.jpg',
     basePrice: 150,
     priceLabel: 'FROM ₹150 / HOUR',
-    oneLineDesc: 'Plush red and black beanbag lounge setup engineered for squad sessions and weekend battles.',
+    oneLineDesc: 'Console station with comfortable squad seating and signature ambient crimson lighting.',
     status: 'AVAILABLE'
   }
 ];
@@ -132,74 +135,66 @@ export const TIME_SLOTS = [
 export const GALLERY_CATALOG = [
   {
     id: 'g-01',
-    title: '3-Table Tournament Arena',
+    title: 'Championship 3-Table Arena',
     category: 'snooker',
-    categoryLabel: 'Snooker Arena',
-    image: 'assets/images/snooker-arena-3tables.jpg?v=2',
-    spanClass: 'span-2-row'
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-arena-3tables.jpg',
+    spanClass: 'span-col-8'
   },
   {
     id: 'g-02',
-    title: 'Gran Turismo Racing Cockpit',
-    category: 'ps5',
-    categoryLabel: 'PS5 Rig',
-    image: 'assets/images/ps5-racing-cockpit.jpg?v=2',
-    spanClass: ''
+    title: 'Match Cues & Precision Rails',
+    category: 'snooker',
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-table-cues.jpg',
+    spanClass: 'span-col-4'
   },
   {
     id: 'g-03',
-    title: 'Crimson Tournament Ball Rack',
+    title: 'Aramith Crimson Ball Rack',
     category: 'snooker',
-    categoryLabel: 'Snooker Arena',
-    image: 'assets/images/snooker-balls-racked.jpg?v=2',
-    spanClass: ''
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-balls-racked.jpg',
+    spanClass: 'span-col-4'
   },
   {
     id: 'g-04',
-    title: 'Championship Cue Setup',
-    category: 'snooker',
-    categoryLabel: 'Snooker Arena',
-    image: 'assets/images/snooker-table-cues.jpg?v=2',
-    spanClass: ''
+    title: 'PlayStation 5 Competitive Station',
+    category: 'ps5',
+    categoryLabel: 'PS5 ARENA',
+    image: 'assets/images/ps5-eafc-station.jpg',
+    spanClass: 'span-col-8'
   },
   {
     id: 'g-05',
-    title: 'Squad Lounge & Beanbag Suite',
+    title: 'Arena Perspective Panorama',
     category: 'the-lounge',
-    categoryLabel: 'The Lounge',
-    image: 'assets/images/ps5-lounge-beanbags.jpg?v=2',
-    spanClass: 'span-2-col'
+    categoryLabel: 'THE LOUNGE',
+    image: 'assets/images/vault147-panorama-lounge.webp',
+    spanClass: 'span-col-7'
   },
   {
     id: 'g-06',
-    title: 'Solo Illuminated Match Table',
+    title: 'Solo Match Table Illumination',
     category: 'snooker',
-    categoryLabel: 'Snooker Arena',
-    image: 'assets/images/snooker-solo-table.jpg?v=2',
-    spanClass: ''
+    categoryLabel: 'SNOOKER ARENA',
+    image: 'assets/images/snooker-solo-table.jpg',
+    spanClass: 'span-col-5'
   },
   {
     id: 'g-07',
-    title: 'EA FC Competitive Showdown',
-    category: 'ps5',
-    categoryLabel: 'PS5 Rig',
-    image: 'assets/images/ps5-eafc-station.jpg?v=2',
-    spanClass: ''
+    title: 'Official Royapuram Venue Details',
+    category: 'the-lounge',
+    categoryLabel: 'THE LOUNGE',
+    image: 'assets/images/vault147-flyer.jpg',
+    spanClass: 'span-col-6'
   },
   {
     id: 'g-08',
-    title: 'Arena Perspective Panorama',
+    title: 'Official Arena Tariff & Pricing',
     category: 'the-lounge',
-    categoryLabel: 'The Lounge',
-    image: 'assets/images/vault147-panorama-lounge.webp?v=2',
-    spanClass: 'span-2-row'
-  },
-  {
-    id: 'g-09',
-    title: 'Official Royapuram Venue Details',
-    category: 'the-lounge',
-    categoryLabel: 'The Lounge',
-    image: 'assets/images/vault147-flyer.jpg?v=2',
-    spanClass: ''
+    categoryLabel: 'THE LOUNGE',
+    image: 'assets/images/vault147-tariff.jpg',
+    spanClass: 'span-col-6'
   }
 ];

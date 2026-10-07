@@ -45,6 +45,7 @@ class GalleryEngine {
           <span class="gallery-tag">${item.categoryLabel}</span>
           <span class="gallery-caption">${item.title}</span>
         </div>
+        <div class="gallery-view-hover-badge">[ VIEW ]</div>
       </div>
     `).join('');
 

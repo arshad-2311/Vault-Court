@@ -1,13 +1,14 @@
 /**
- * VAULT 147 — PRODUCTION UNIVERSAL JAVASCRIPT BUNDLE
- * Instantaneous Modal (0ms) · Dynamic Duration (1–4 Hours) · Razorpay Online Checkout
+ * VAULT 147 — HIGH-END ARCHITECTURAL JAVASCRIPT BUNDLE (AWWWARDS TIER)
+ * Cinematic Aperture · Horizontal Storytelling · Dynamic Duration · GSAP Flip Gallery
  */
 
 (function () {
   'use strict';
 
   /* ============================================================
-     1. DATA REPOSITORY & CATALOG
+     1. AUTHENTIC VENUE REPOSITORY & CATALOG
+     Pure verified venue information — zero unverified claims.
      ============================================================ */
   const VENUE_INFO = {
     name: 'VAULT 147',
@@ -24,7 +25,8 @@
     contact: {
       phone: '+91 88259 75491',
       phoneRaw: '8825975491',
-      whatsapp: '8825975491',
+      phoneFormatted: '088259 75491',
+      whatsapp: '918825975491',
       instagram: 'vault.147',
       instagramUrl: 'https://instagram.com/vault.147',
       mapsUrl: 'https://maps.google.com/?q=Mannarsamy+6/1+Somu+Nagar+Royapuram+Chennai+600013'
@@ -42,10 +44,10 @@
       unit: 'hour'
     },
     ps5: {
-      1: 150,
-      2: 300,
-      3: 400,
-      4: 500
+      1: 150, // 1 Player: ₹150 / hr
+      2: 300, // 2 Players: ₹300 / hr
+      3: 400, // 3 Players: ₹400 / hr
+      4: 500  // 4 Players: ₹500 / hr
     },
     durationOptions: [1, 2, 3, 4]
   };
@@ -55,66 +57,66 @@
       id: 'snooker-01',
       name: 'SNOOKER TABLE 01',
       category: 'snooker',
-      categoryLabel: 'SNOOKER',
-      image: 'assets/images/snooker-arena-3tables.jpg?v=2',
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-arena-3tables.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Championship red cloth table with precision overhead drop lighting and Aramith tournament balls.',
+      oneLineDesc: 'Full-size championship table with tournament red cloth, overhead match lighting, and Aramith match balls.',
       status: 'AVAILABLE'
     },
     {
       id: 'snooker-02',
       name: 'SNOOKER TABLE 02',
       category: 'snooker',
-      categoryLabel: 'SNOOKER',
-      image: 'assets/images/snooker-table-cues.jpg?v=2',
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-table-cues.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Tournament-spec table with anti-glare cone lamps and weighted match cues.',
+      oneLineDesc: 'Championship-specification table equipped with anti-glare cone lamps and balanced match cues.',
       status: 'AVAILABLE'
     },
     {
       id: 'snooker-03',
       name: 'SNOOKER TABLE 03',
       category: 'snooker',
-      categoryLabel: 'SNOOKER',
-      image: 'assets/images/snooker-solo-table.jpg?v=2',
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-solo-table.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Low-key isolated accent lighting designed for high-focus 1v1 match play.',
+      oneLineDesc: 'Dedicated match table featuring focused overhead illumination engineered for 1v1 match play.',
       status: 'AVAILABLE'
     },
     {
       id: 'ps5-01',
-      name: 'PS5 COCKPIT STATION 01',
+      name: 'PLAYSTATION 5 STATION 01',
       category: 'ps5',
-      categoryLabel: 'PS5 CONSOLE',
-      image: 'assets/images/ps5-racing-cockpit.jpg?v=2',
+      categoryLabel: 'PS5 ARENA',
+      image: 'assets/images/ps5-eafc-station.jpg',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'Logitech G-Series force-feedback racing wheel, pedals, and 4K HDR display.',
+      oneLineDesc: 'PlayStation 5 console station with high-refresh display and DualSense wireless controllers.',
       status: 'AVAILABLE'
     },
     {
       id: 'ps5-02',
-      name: 'PS5 DUALSENSE ARENA 02',
+      name: 'PLAYSTATION 5 STATION 02',
       category: 'ps5',
-      categoryLabel: 'PS5 CONSOLE',
-      image: 'assets/images/ps5-eafc-station.jpg?v=2',
+      categoryLabel: 'PS5 ARENA',
+      image: 'assets/images/vault147-panorama-lounge.webp',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'EA FC 25, Mortal Kombat & top action titles with up to 4 DualSense wireless controllers.',
+      oneLineDesc: 'Multiplayer battle station supporting 1 to 4 players for EA Sports FC and head-to-head competition.',
       status: 'AVAILABLE'
     },
     {
       id: 'ps5-03',
-      name: 'PS5 SQUAD LOUNGE 03',
+      name: 'PLAYSTATION 5 STATION 03',
       category: 'ps5',
-      categoryLabel: 'PS5 CONSOLE',
-      image: 'assets/images/ps5-lounge-beanbags.jpg?v=2',
+      categoryLabel: 'PS5 ARENA',
+      image: 'assets/images/ps5-eafc-station.jpg',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'Plush red and black beanbag lounge setup engineered for squad sessions and weekend battles.',
+      oneLineDesc: 'Console station with comfortable squad seating and signature ambient crimson lighting.',
       status: 'AVAILABLE'
     }
   ];
@@ -139,75 +141,67 @@
   const GALLERY_CATALOG = [
     {
       id: 'g-01',
-      title: '3-Table Tournament Arena',
+      title: 'Championship 3-Table Arena',
       category: 'snooker',
-      categoryLabel: 'Snooker Arena',
-      image: 'assets/images/snooker-arena-3tables.jpg?v=2',
-      spanClass: 'span-2-row'
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-arena-3tables.jpg',
+      spanClass: 'span-col-8'
     },
     {
       id: 'g-02',
-      title: 'Gran Turismo Racing Cockpit',
-      category: 'ps5',
-      categoryLabel: 'PS5 Rig',
-      image: 'assets/images/ps5-racing-cockpit.jpg?v=2',
-      spanClass: ''
+      title: 'Match Cues & Precision Rails',
+      category: 'snooker',
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-table-cues.jpg',
+      spanClass: 'span-col-4'
     },
     {
       id: 'g-03',
-      title: 'Crimson Tournament Ball Rack',
+      title: 'Aramith Crimson Ball Rack',
       category: 'snooker',
-      categoryLabel: 'Snooker Arena',
-      image: 'assets/images/snooker-balls-racked.jpg?v=2',
-      spanClass: ''
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-balls-racked.jpg',
+      spanClass: 'span-col-4'
     },
     {
       id: 'g-04',
-      title: 'Championship Cue Setup',
-      category: 'snooker',
-      categoryLabel: 'Snooker Arena',
-      image: 'assets/images/snooker-table-cues.jpg?v=2',
-      spanClass: ''
+      title: 'PlayStation 5 Competitive Station',
+      category: 'ps5',
+      categoryLabel: 'PS5 ARENA',
+      image: 'assets/images/ps5-eafc-station.jpg',
+      spanClass: 'span-col-8'
     },
     {
       id: 'g-05',
-      title: 'Squad Lounge & Beanbag Suite',
+      title: 'Arena Perspective Panorama',
       category: 'the-lounge',
-      categoryLabel: 'The Lounge',
-      image: 'assets/images/ps5-lounge-beanbags.jpg?v=2',
-      spanClass: 'span-2-col'
+      categoryLabel: 'THE LOUNGE',
+      image: 'assets/images/vault147-panorama-lounge.webp',
+      spanClass: 'span-col-7'
     },
     {
       id: 'g-06',
-      title: 'Solo Illuminated Match Table',
+      title: 'Solo Match Table Illumination',
       category: 'snooker',
-      categoryLabel: 'Snooker Arena',
-      image: 'assets/images/snooker-solo-table.jpg?v=2',
-      spanClass: ''
+      categoryLabel: 'SNOOKER ARENA',
+      image: 'assets/images/snooker-solo-table.jpg',
+      spanClass: 'span-col-5'
     },
     {
       id: 'g-07',
-      title: 'EA FC Competitive Showdown',
-      category: 'ps5',
-      categoryLabel: 'PS5 Rig',
-      image: 'assets/images/ps5-eafc-station.jpg?v=2',
-      spanClass: ''
+      title: 'Official Royapuram Venue Details',
+      category: 'the-lounge',
+      categoryLabel: 'THE LOUNGE',
+      image: 'assets/images/vault147-flyer.jpg',
+      spanClass: 'span-col-6'
     },
     {
       id: 'g-08',
-      title: 'Arena Perspective Panorama',
+      title: 'Official Arena Tariff & Pricing',
       category: 'the-lounge',
-      categoryLabel: 'The Lounge',
-      image: 'assets/images/vault147-panorama-lounge.webp?v=2',
-      spanClass: 'span-2-row'
-    },
-    {
-      id: 'g-09',
-      title: 'Official Royapuram Venue Details',
-      category: 'the-lounge',
-      categoryLabel: 'The Lounge',
-      image: 'assets/images/vault147-flyer.jpg?v=2',
-      spanClass: ''
+      categoryLabel: 'THE LOUNGE',
+      image: 'assets/images/vault147-tariff.jpg',
+      spanClass: 'span-col-6'
     }
   ];
 
@@ -249,6 +243,7 @@
 
   /* ============================================================
      2. ISOLATED BOOKING API PROVIDER
+     Zero-lag fallback cache with authoritative server-side math
      ============================================================ */
   const API_BASE_URL = window.VAULT_API_URL || 'http://localhost:5000/api';
   const localHoldCache = new Map();
@@ -417,7 +412,8 @@
       }
 
       const bookingId = `V147-${Math.floor(1000 + Math.random() * 9000)}`;
-      const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+      const isCounter = payload.paymentMethod === 'COUNTER';
+      const expiresAt = isCounter ? null : new Date(Date.now() + 10 * 60 * 1000).toISOString();
       const priceObj = this.calculateSessionPrice(
         { basePrice: 250, category: payload.unitId.startsWith('ps5') ? 'ps5' : 'snooker' },
         duration,
@@ -426,8 +422,10 @@
 
       localHoldCache.set(bookingId, {
         bookingId,
-        status: 'PENDING_PAYMENT',
-        expiresAt,
+        status: 'CONFIRMED',
+        paymentStatus: 'PAY_AT_COUNTER',
+        paymentMethod: 'COUNTER',
+        expiresAt: null,
         amount: priceObj.total,
         payload
       });
@@ -435,24 +433,24 @@
       return {
         success: true,
         bookingId,
-        razorpayOrderId: `order_${bookingId.replace('-', '_')}_mock`,
-        razorpayKeyId: 'rzp_test_vault147',
+        paymentMethod: 'COUNTER',
+        status: 'CONFIRMED',
+        paymentStatus: 'PAY_AT_COUNTER',
         hourlyRate: priceObj.hourlyRate,
         amount: priceObj.total,
         durationHours: duration,
         currency: 'INR',
         startTime: payload.startTime,
-        endTime: calculateEndTime(payload.startTime, duration),
-        holdExpiresAt: expiresAt
+        endTime: calculateEndTime(payload.startTime, duration)
       };
     },
 
-    async verifyPayment(verificationPayload) {
+    async confirmCounterPayment(payload) {
       try {
-        const res = await fetchWithQuickTimeout(`${API_BASE_URL}/bookings/verify-payment`, {
+        const res = await fetchWithQuickTimeout(`${API_BASE_URL}/bookings/confirm-counter`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(verificationPayload)
+          body: JSON.stringify(payload)
         }, 800);
 
         if (res.ok) {
@@ -460,23 +458,24 @@
         }
       } catch (e) {}
 
-      const item = localHoldCache.get(verificationPayload.bookingId);
+      const item = localHoldCache.get(payload.bookingId);
       if (item) {
         item.status = 'CONFIRMED';
-        item.paymentStatus = 'PAID';
+        item.paymentStatus = 'PAY_AT_COUNTER';
+        item.paymentMethod = 'COUNTER';
       }
 
       return {
         success: true,
-        bookingId: verificationPayload.bookingId,
+        bookingId: payload.bookingId,
         status: 'CONFIRMED',
-        paymentStatus: 'PAID'
+        paymentStatus: 'PAY_AT_COUNTER'
       };
     }
   };
 
   /* ============================================================
-     3. MOTION UTILITIES & LENIS
+     3. LENIS, MOTION RESTRICTIONS & PRECISION CURSOR
      ============================================================ */
   const isReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouchDevice = () => ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
@@ -502,7 +501,7 @@
 
     try {
       lenisInstance = new window.Lenis({
-        duration: 1.1,
+        duration: 1.15,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
         smoothWheel: true,
@@ -535,8 +534,8 @@
 
     const dotX = window.gsap.quickTo(cursorDot, 'x', { duration: 0.1, ease: 'power2.out' });
     const dotY = window.gsap.quickTo(cursorDot, 'y', { duration: 0.1, ease: 'power2.out' });
-    const folX = window.gsap.quickTo(cursorFollower, 'x', { duration: 0.25, ease: 'power2.out' });
-    const folY = window.gsap.quickTo(cursorFollower, 'y', { duration: 0.25, ease: 'power2.out' });
+    const folX = window.gsap.quickTo(cursorFollower, 'x', { duration: 0.22, ease: 'power2.out' });
+    const folY = window.gsap.quickTo(cursorFollower, 'y', { duration: 0.22, ease: 'power2.out' });
 
     window.addEventListener('mousemove', (e) => {
       document.body.classList.remove('cursor-hidden');
@@ -590,10 +589,10 @@
         const rect = el.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        const deltaX = (e.clientX - centerX) * 0.25;
-        const deltaY = (e.clientY - centerY) * 0.25;
+        const deltaX = (e.clientX - centerX) * 0.22;
+        const deltaY = (e.clientY - centerY) * 0.22;
 
-        window.gsap.to(el, { x: deltaX, y: deltaY, duration: 0.3, ease: 'power2.out' });
+        window.gsap.to(el, { x: deltaX, y: deltaY, duration: 0.25, ease: 'power2.out' });
       });
 
       el.addEventListener('mouseleave', () => {
@@ -602,45 +601,8 @@
     });
   }
 
-  function initScrollTriggers() {
-    if (isReducedMotion() || typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') return;
-    const { gsap } = window;
-
-    const heroVideo = document.querySelector('.hero-video');
-    if (heroVideo) {
-      gsap.to(heroVideo, {
-        scrollTrigger: {
-          trigger: '.hero-section',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        },
-        scale: 1.05,
-        y: '8%',
-        opacity: 0.4,
-        ease: 'none'
-      });
-    }
-
-    const expCards = document.querySelectorAll('.experience-card');
-    if (expCards.length > 0) {
-      gsap.from(expCards, {
-        scrollTrigger: {
-          trigger: '.experience-grid',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
-        },
-        y: 35,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: 'power3.out'
-      });
-    }
-  }
-
   /* ============================================================
-     4. BOOKING ENGINE (DYNAMIC DURATION & RAZORPAY CHECKOUT)
+     4. BOOKING ENGINE (DYNAMIC DURATION & COUNTER PAYMENT)
      ============================================================ */
   class BookingManager {
     constructor() {
@@ -654,7 +616,8 @@
         currentPrice: 250,
         activeHold: null,
         isSubmitting: false,
-        slotsData: []
+        slotsData: [],
+        paymentMethod: 'counter'
       };
       this.datesList = [];
     }
@@ -737,11 +700,14 @@
         ? BOOKING_UNITS
         : BOOKING_UNITS.filter(u => u.category === this.state.activeCategory);
 
-      container.innerHTML = filtered.map((unit) => `
+      container.innerHTML = filtered.map((unit, idx) => `
         <article class="unit-card" data-unit-id="${unit.id}">
           <div class="unit-card-img-wrap">
             <img src="${unit.image}" alt="${unit.name}" class="unit-card-img" loading="lazy" />
-            <span class="unit-status-tag ${unit.status.toLowerCase()}">${unit.status}</span>
+            <div class="unit-card-header-bar">
+              <span class="unit-id-badge">[0${idx + 1} // ${unit.category === 'snooker' ? 'SNOOKER' : 'PS5'}]</span>
+              <span class="unit-status-tag ${unit.status.toLowerCase()}">${unit.status}</span>
+            </div>
           </div>
           <div class="unit-card-body">
             <span class="unit-game-category">${unit.categoryLabel}</span>
@@ -749,8 +715,8 @@
             <p class="unit-desc-oneline">${unit.oneLineDesc}</p>
             <div class="unit-card-footer">
               <span class="unit-price-rate">${unit.priceLabel}</span>
-              <button type="button" class="btn btn-primary unit-select-btn" data-unit-id="${unit.id}" data-cursor="select">
-                SELECT →
+              <button type="button" class="btn btn-secondary unit-select-btn" data-unit-id="${unit.id}" data-cursor="select">
+                <span>SELECT UNIT →</span>
               </button>
             </div>
           </div>
@@ -785,7 +751,7 @@
         lenisInstance.stop();
       }
 
-      // 2. Populate Header & Details
+      // 2. Populate Unit Details
       const thumbEl = modal.querySelector('.config-unit-thumb');
       const nameEl = modal.querySelector('.config-modal-unit-name');
       const catEl = modal.querySelector('.config-modal-unit-cat');
@@ -805,6 +771,20 @@
         c.classList.toggle('is-active', idx === 0);
       });
 
+      this.state.paymentMethod = 'counter';
+      modal.querySelectorAll('.payment-method-card').forEach((c) => {
+        c.classList.toggle('is-active', true);
+      });
+
+      const submitBtnText = document.getElementById('booking-submit-btn-text');
+      if (submitBtnText) submitBtnText.textContent = 'CONFIRM RESERVATION & PAY AT COUNTER';
+
+      const pmNotice = document.getElementById('payment-method-notice');
+      if (pmNotice) {
+        pmNotice.textContent = '✓ Reserved immediately. Pay at reception counter upon arrival via Cash or UPI.';
+        pmNotice.style.color = '#fbbf24';
+      }
+
       const durationGroup = document.getElementById('config-duration-group');
       if (durationGroup) durationGroup.style.display = 'none';
 
@@ -813,7 +793,7 @@
 
       this.updatePriceCalculations();
 
-      // 3. Load slots without blocking modal appearance
+      // 3. Load slots asynchronously without blocking modal appearance
       this.loadTimeSlots(unit.id);
     }
 
@@ -879,7 +859,7 @@
             type="button" 
             class="choice-chip-btn duration-choice ${isSelected ? 'is-active' : ''} ${!isPossible ? 'is-disabled' : ''}" 
             data-duration="${h}"
-            ${!isPossible ? 'disabled title="Not enough consecutive availability"' : ''}
+            ${!isPossible ? 'disabled title="Not enough consecutive hours available"' : ''}
           >
             <span class="duration-num-label">${h} ${h === 1 ? 'HOUR' : 'HOURS'}</span>
             ${!isPossible ? '<span class="duration-unavail-badge">UNAVAILABLE</span>' : ''}
@@ -910,7 +890,7 @@
         selectedBanner.style.display = 'flex';
         selectedBanner.innerHTML = `
           <span>SESSION: <strong>${startTime} — ${endTime}</strong> (${duration} ${duration === 1 ? 'HOUR' : 'HOURS'})</span>
-          <span style="color:var(--status-available);font-size:11px;">[SLOT RESERVABLE]</span>
+          <span style="color:var(--status-available);font-size:11px;">[INTERVAL AVAILABLE]</span>
         `;
       }
     }
@@ -933,6 +913,11 @@
       if (rateEl) rateEl.textContent = `₹${priceObj.hourlyRate} / HOUR`;
       if (durEl) durEl.textContent = `${this.state.durationHours} ${this.state.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
       if (totalEl) totalEl.textContent = `₹${priceObj.total}`;
+
+      const pmNotice = document.getElementById('payment-method-notice');
+      if (pmNotice) {
+        pmNotice.textContent = `* Slot locked immediately. Settle ₹${this.state.currentPrice} via Cash or UPI at front reception counter.`;
+      }
     }
 
     bindModalEvents() {
@@ -1013,12 +998,28 @@
           phoneInput.closest('.form-group').classList.remove('has-error');
         }
 
+        const emailVal = emailInput ? emailInput.value.trim() : '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailVal || !emailRegex.test(emailVal)) {
+          if (emailInput && emailInput.closest('.form-group')) {
+            emailInput.closest('.form-group').classList.add('has-error');
+          }
+          hasError = true;
+        } else {
+          if (emailInput && emailInput.closest('.form-group')) {
+            emailInput.closest('.form-group').classList.remove('has-error');
+          }
+        }
+
         if (hasError) return;
 
         this.state.isSubmitting = true;
         if (submitBtn) {
           submitBtn.disabled = true;
-          submitBtn.querySelector('span').textContent = 'SECURING SLOT...';
+          const btnTextEl = document.getElementById('booking-submit-btn-text') || submitBtn.querySelector('span');
+          if (btnTextEl) {
+            btnTextEl.textContent = 'SECURING YOUR RESERVATION...';
+          }
         }
 
         try {
@@ -1030,9 +1031,10 @@
             playerCount: this.state.playerCount,
             customerName: nameInput.value.trim(),
             customerPhone: phoneVal,
-            customerEmail: emailInput.value.trim(),
+            customerEmail: emailVal,
             notes: notesInput ? notesInput.value.trim() : '',
-            source: 'ONLINE'
+            source: 'COUNTER_RESERVATION',
+            paymentMethod: 'COUNTER'
           };
 
           const holdResult = await BookingAPI.createBookingHold(holdPayload);
@@ -1050,19 +1052,18 @@
 
           this.state.activeHold = holdResult;
 
-          await this.launchRazorpayCheckout({
-            bookingId: holdResult.bookingId,
-            razorpayOrderId: holdResult.razorpayOrderId,
-            razorpayKeyId: holdResult.razorpayKeyId || 'rzp_test_vault147',
-            amount: holdResult.amount,
+          this.closeConfigModal();
+          this.renderConfirmationScreen(holdResult.bookingId, {
+            unitName: this.state.selectedUnit.name,
+            date: this.state.selectedDate.fullDateStr,
+            timeRange: `${holdResult.startTime} — ${holdResult.endTime}`,
             durationHours: this.state.durationHours,
-            currency: holdResult.currency || 'INR',
+            totalPrice: `₹${holdResult.amount}`,
             customerName: nameInput.value.trim(),
             customerPhone: phoneVal,
-            customerEmail: emailInput.value.trim(),
-            unitName: this.state.selectedUnit.name,
-            dateFormatted: this.state.selectedDate.fullDateStr,
-            timeRange: `${holdResult.startTime} — ${holdResult.endTime}`
+            customerEmail: emailVal,
+            paymentMethod: 'COUNTER',
+            players: this.state.selectedUnit.category === 'ps5' ? `${this.state.playerCount} Player(s)` : 'N/A'
           });
 
         } catch (err) {
@@ -1072,84 +1073,13 @@
           this.state.isSubmitting = false;
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.querySelector('span').textContent = 'LOCK SESSION & GENERATE PASS';
+            const btnTextEl = document.getElementById('booking-submit-btn-text') || submitBtn.querySelector('span');
+            if (btnTextEl) {
+              btnTextEl.textContent = 'CONFIRM RESERVATION & PAY AT COUNTER';
+            }
           }
         }
       });
-    }
-
-    async launchRazorpayCheckout(orderInfo) {
-      const self = this;
-
-      if (typeof window.Razorpay !== 'undefined') {
-        const options = {
-          key: orderInfo.razorpayKeyId,
-          amount: orderInfo.amount * 100,
-          currency: orderInfo.currency,
-          name: 'VAULT 147',
-          description: `${orderInfo.unitName} (${orderInfo.timeRange} · ${orderInfo.durationHours}h)`,
-          order_id: orderInfo.razorpayOrderId,
-          prefill: {
-            name: orderInfo.customerName,
-            contact: orderInfo.customerPhone,
-            email: orderInfo.customerEmail
-          },
-          theme: {
-            color: '#dc2626'
-          },
-          handler: async function (response) {
-            const verification = await BookingAPI.verifyPayment({
-              bookingId: orderInfo.bookingId,
-              razorpayOrderId: response.razorpay_order_id || orderInfo.razorpayOrderId,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-              paymentMethod: 'upi'
-            });
-
-            if (verification.success) {
-              self.closeConfigModal();
-              self.renderConfirmationScreen(orderInfo.bookingId, {
-                unitName: orderInfo.unitName,
-                date: orderInfo.dateFormatted,
-                timeRange: orderInfo.timeRange,
-                durationHours: orderInfo.durationHours,
-                totalPrice: `₹${orderInfo.amount}`,
-                customerName: orderInfo.customerName,
-                customerPhone: orderInfo.customerPhone,
-                players: self.state.selectedUnit.category === 'ps5' ? `${self.state.playerCount} Player(s)` : 'N/A'
-              });
-            } else {
-              alert('Payment verification failed. Please contact support.');
-            }
-          }
-        };
-
-        const rzpInstance = new window.Razorpay(options);
-        rzpInstance.open();
-      } else {
-        const simPaymentId = `pay_sim_${Math.floor(100000 + Math.random() * 900000)}`;
-        const verification = await BookingAPI.verifyPayment({
-          bookingId: orderInfo.bookingId,
-          razorpayOrderId: orderInfo.razorpayOrderId,
-          razorpayPaymentId: simPaymentId,
-          razorpaySignature: `sim_sig_${simPaymentId}`,
-          paymentMethod: 'upi'
-        });
-
-        if (verification.success) {
-          self.closeConfigModal();
-          self.renderConfirmationScreen(orderInfo.bookingId, {
-            unitName: orderInfo.unitName,
-            date: orderInfo.dateFormatted,
-            timeRange: orderInfo.timeRange,
-            durationHours: orderInfo.durationHours,
-            totalPrice: `₹${orderInfo.amount}`,
-            customerName: orderInfo.customerName,
-            customerPhone: orderInfo.customerPhone,
-            players: self.state.selectedUnit.category === 'ps5' ? `${self.state.playerCount} Player(s)` : 'N/A'
-          });
-        }
-      }
     }
 
     renderConfirmationScreen(bookingId, payload) {
@@ -1160,27 +1090,65 @@
       if (confirmView) {
         confirmView.classList.add('is-visible');
 
-        document.getElementById('pass-id-val').textContent = bookingId;
-        document.getElementById('pass-unit-val').textContent = payload.unitName;
-        document.getElementById('pass-date-val').textContent = payload.date;
-        document.getElementById('pass-time-val').textContent = payload.timeRange;
-        document.getElementById('pass-duration-val').textContent = `${payload.durationHours} ${payload.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
-        document.getElementById('pass-total-val').textContent = payload.totalPrice;
-        document.getElementById('pass-name-val').textContent = payload.customerName;
+        const statusPill = document.getElementById('pass-status-pill');
+        if (statusPill) {
+          statusPill.textContent = '[SLOT RESERVED · PAY AT COUNTER]';
+          statusPill.style.color = '#f59e0b';
+        }
+
+        const idEl = document.getElementById('pass-id-val');
+        if (idEl) idEl.textContent = bookingId;
+
+        const unitEl = document.getElementById('pass-unit-val');
+        if (unitEl) unitEl.textContent = payload.unitName;
+
+        const dateEl = document.getElementById('pass-date-val');
+        if (dateEl) dateEl.textContent = payload.date;
+
+        const timeEl = document.getElementById('pass-time-val');
+        if (timeEl) timeEl.textContent = payload.timeRange;
+
+        const durEl = document.getElementById('pass-duration-val');
+        if (durEl) durEl.textContent = `${payload.durationHours} ${payload.durationHours === 1 ? 'HOUR' : 'HOURS'}`;
+
+        const totalEl = document.getElementById('pass-total-val');
+        if (totalEl) {
+          totalEl.textContent = `${payload.totalPrice} (Due on Arrival)`;
+        }
+
+        const nameEl = document.getElementById('pass-name-val');
+        if (nameEl) nameEl.textContent = payload.customerName;
+
+        const emailEl = document.getElementById('pass-email-val');
+        if (emailEl) {
+          emailEl.textContent = payload.customerEmail ? `SENT TO ${payload.customerEmail}` : 'SENT TO GUEST EMAIL';
+        }
+
+        const payStatusEl = document.getElementById('pass-payment-status-val');
+        if (payStatusEl) {
+          payStatusEl.textContent = 'PAY AT COUNTER (DUE ON ARRIVAL)';
+          payStatusEl.style.color = '#f59e0b';
+        }
+
+        const instructEl = document.getElementById('pass-instruction-text');
+        if (instructEl) {
+          instructEl.textContent = 'PRESENT THIS PASS AT THE VAULT 147 FRONT COUNTER TO SETTLE PAYMENT & ACCESS YOUR UNIT.';
+        }
 
         const waMsg = encodeURIComponent(
-          `*VAULT 147 BOOKING CONFIRMATION*\n\n` +
+          `*VAULT 147 RESERVATION CONFIRMATION*\n\n` +
           `*Booking ID:* ${bookingId}\n` +
           `*Game:* ${payload.unitName}\n` +
           `*Date:* ${payload.date}\n` +
           `*Time:* ${payload.timeRange}\n` +
           `*Duration:* ${payload.durationHours} Hour(s)\n` +
           (payload.players !== 'N/A' ? `*Players:* ${payload.players}\n` : '') +
-          `*Total:* ${payload.totalPrice}\n` +
-          `*Payment:* PAID (Verified Online)\n\n` +
+          `*Total Tariff:* ${payload.totalPrice}\n` +
+          `*Payment:* PAY AT COUNTER DIRECTLY (Due upon arrival)\n\n` +
           `*Name:* ${payload.customerName}\n` +
-          `*Phone:* ${payload.customerPhone}\n\n` +
-          `Please confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
+          `*Phone:* ${payload.customerPhone}\n` +
+          (payload.customerEmail ? `*Email:* ${payload.customerEmail}\n` : '') +
+          `\nPlease confirm my reservation at Mannarsamy 6/1, Somu Nagar, Royapuram.`
         );
 
         const waBtn = document.getElementById('pass-whatsapp-dispatch-btn');
@@ -1203,7 +1171,7 @@
   }
 
   /* ============================================================
-     5. EDITORIAL GALLERY & LIGHTBOX
+     5. EDITORIAL GALLERY & GSAP FLIP FULLSCREEN LIGHTBOX
      ============================================================ */
   class GalleryManager {
     constructor() {
@@ -1245,6 +1213,7 @@
             <span class="gallery-tag">${item.categoryLabel}</span>
             <span class="gallery-caption">${item.title}</span>
           </div>
+          <div class="gallery-view-hover-badge">[ VIEW ]</div>
         </div>
       `).join('');
 
@@ -1264,20 +1233,18 @@
       modal.classList.add('lightbox-open');
       document.body.style.overflow = 'hidden';
 
-      if (typeof Flip !== 'undefined' && clickedElement) {
+      if (typeof window.Flip !== 'undefined' && clickedElement) {
         const activeImg = document.getElementById('lightbox-active-img');
         const clickedImg = clickedElement.querySelector('img') || clickedElement;
         if (activeImg && clickedImg) {
           try {
-            const state = Flip.getState(clickedImg);
-            Flip.from(state, {
+            const state = window.Flip.getState(clickedImg);
+            window.Flip.from(state, {
               targets: activeImg,
               duration: 0.45,
               ease: 'power3.out'
             });
-          } catch (err) {
-            // Graceful fallback if Flip encounters layout transition
-          }
+          } catch (err) {}
         }
       }
     }
@@ -1372,7 +1339,7 @@
       if (!targetSection) return;
 
       if (lenisInstance && smooth) {
-        lenisInstance.scrollTo(targetSection, { offset: -60, duration: 1.1 });
+        lenisInstance.scrollTo(targetSection, { offset: -60, duration: 1.15 });
       } else {
         targetSection.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
       }
@@ -1451,17 +1418,37 @@
   }
 
   /* ============================================================
-     7. SCROLLTRIGGER & MOTION SYSTEM
+     7. GSAP SCROLLTRIGGER & MOTION ARCHITECTURE
+     Signature Vault Aperture · Horizontal Story Track · Subtle Parallax
      ============================================================ */
   function initScrollTriggers() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || isReducedMotion()) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Vault Aperture Frame Transition
+    // 1. Hero Video subtle parallax
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+      gsap.to(heroVideo, {
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        },
+        y: '10%',
+        scale: 1.06,
+        opacity: 0.35,
+        ease: 'none'
+      });
+    }
+
+    // 2. SIGNATURE VAULT APERTURE TRANSITION
+    // The hero visually opens into the next section as if entering an architectural vault
     const apertureFrame = document.getElementById('vault-aperture-frame');
+    const apertureInnerImg = document.querySelector('.aperture-inner-img');
     if (apertureFrame) {
       gsap.fromTo(apertureFrame,
-        { scale: 0.92, opacity: 0.75 },
+        { scale: 0.88, opacity: 0.55 },
         {
           scale: 1.0,
           opacity: 1.0,
@@ -1470,13 +1457,28 @@
             trigger: '.vault-aperture-section',
             start: 'top 85%',
             end: 'center center',
-            scrub: 0.6
+            scrub: 0.8
+          }
+        }
+      );
+    }
+    if (apertureInnerImg) {
+      gsap.fromTo(apertureInnerImg,
+        { scale: 1.18 },
+        {
+          scale: 1.02,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.vault-aperture-section',
+            start: 'top 85%',
+            end: 'center center',
+            scrub: 0.8
           }
         }
       );
     }
 
-    // 2. Horizontal Story Track on Desktop (>= 992px)
+    // 3. Horizontal Story Track on Desktop (>= 992px)
     const experienceTrack = document.getElementById('experience-track');
     const experienceSection = document.getElementById('experience');
     if (experienceTrack && experienceSection && window.innerWidth >= 992) {
@@ -1494,16 +1496,16 @@
       });
     }
 
-    // 3. Visual Pause Scale Reveal
+    // 4. Visual Pause Typographic Breathing Reveal
     const pauseHeadline = document.querySelector('.pause-headline');
     if (pauseHeadline) {
       gsap.fromTo(pauseHeadline,
-        { opacity: 0, y: 25, letterSpacing: '0.12em' },
+        { opacity: 0, y: 30, letterSpacing: '0.12em' },
         {
           opacity: 1,
           y: 0,
-          letterSpacing: '0.06em',
-          duration: 1.0,
+          letterSpacing: '0.04em',
+          duration: 1.1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: '.visual-pause-section',
@@ -1513,10 +1515,10 @@
       );
     }
 
-    // 4. Section Titles Entrance
+    // 5. Section Titles Entrance
     document.querySelectorAll('.section-title-large').forEach((title) => {
       gsap.fromTo(title,
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 22 },
         {
           opacity: 1,
           y: 0,
