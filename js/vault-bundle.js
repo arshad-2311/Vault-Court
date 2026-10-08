@@ -1321,13 +1321,29 @@
      ============================================================ */
   class ViewRouter {
     constructor() {
-      this.validRoutes = ['home', 'experience', 'about', 'booking', 'gallery', 'contact'];
+      this.validRoutes = ['home', 'experience', 'games', 'about', 'booking', 'gallery', 'contact'];
     }
 
     init() {
       this.bindNavLinks();
       this.bindMobileDrawer();
       this.bindHeaderScroll();
+    }
+
+    bindArenaActions(bookingManager) {
+      document.querySelectorAll('.arena-action-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetFilter = btn.getAttribute('data-filter-target') || 'all';
+          const tabBtn = document.querySelector(`.game-filter-bar .filter-tab-btn[data-filter="${targetFilter}"]`);
+          if (tabBtn) {
+            tabBtn.click();
+          } else if (bookingManager) {
+            bookingManager.state.activeCategory = targetFilter;
+            bookingManager.renderUnits();
+          }
+          this.navigateTo('booking', true);
+        });
+      });
     }
 
     navigateTo(routeId, smooth = true) {
@@ -1443,39 +1459,56 @@
     }
 
     // 2. SIGNATURE VAULT APERTURE TRANSITION
-    // The hero visually opens into the next section as if entering an architectural vault
+    // Physical vault opening / camera iris dilation with calipers & clip-path scrub
     const apertureFrame = document.getElementById('vault-aperture-frame');
+    const apertureShutter = document.querySelector('.aperture-shutter-layer');
     const apertureInnerImg = document.querySelector('.aperture-inner-img');
+    const apertureCrosshair = document.querySelector('.aperture-crosshair');
+    const cornerTL = document.querySelector('.aperture-corner-tl');
+    const cornerTR = document.querySelector('.aperture-corner-tr');
+    const cornerBL = document.querySelector('.aperture-corner-bl');
+    const cornerBR = document.querySelector('.aperture-corner-br');
+
     if (apertureFrame) {
-      gsap.fromTo(apertureFrame,
-        { scale: 0.88, opacity: 0.55 },
-        {
-          scale: 1.0,
-          opacity: 1.0,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.vault-aperture-section',
-            start: 'top 85%',
-            end: 'center center',
-            scrub: 0.8
-          }
+      const apertureTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.vault-aperture-section',
+          start: 'top 85%',
+          end: 'center 45%',
+          scrub: 0.8
         }
+      });
+
+      apertureTl.fromTo(apertureFrame,
+        { scale: 0.92, opacity: 0.6 },
+        { scale: 1.0, opacity: 1.0, ease: 'power2.out' },
+        0
       );
-    }
-    if (apertureInnerImg) {
-      gsap.fromTo(apertureInnerImg,
-        { scale: 1.18 },
-        {
-          scale: 1.02,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.vault-aperture-section',
-            start: 'top 85%',
-            end: 'center center',
-            scrub: 0.8
-          }
-        }
-      );
+
+      if (apertureShutter) {
+        apertureTl.fromTo(apertureShutter,
+          { clipPath: 'inset(16% 16% round 4px)' },
+          { clipPath: 'inset(0% 0% round 0px)', ease: 'power2.inOut' },
+          0
+        );
+      }
+
+      if (apertureInnerImg) {
+        apertureTl.fromTo(apertureInnerImg,
+          { scale: 1.22, filter: 'brightness(0.65) contrast(1.15)' },
+          { scale: 1.02, filter: 'brightness(0.95) contrast(1.05)', ease: 'power2.out' },
+          0
+        );
+      }
+
+      if (cornerTL) apertureTl.fromTo(cornerTL, { x: 24, y: 24 }, { x: 0, y: 0, ease: 'power2.out' }, 0);
+      if (cornerTR) apertureTl.fromTo(cornerTR, { x: -24, y: 24 }, { x: 0, y: 0, ease: 'power2.out' }, 0);
+      if (cornerBL) apertureTl.fromTo(cornerBL, { x: 24, y: -24 }, { x: 0, y: 0, ease: 'power2.out' }, 0);
+      if (cornerBR) apertureTl.fromTo(cornerBR, { x: -24, y: -24 }, { x: 0, y: 0, ease: 'power2.out' }, 0);
+
+      if (apertureCrosshair) {
+        apertureTl.to(apertureCrosshair, { opacity: 0.1, scale: 0.85, ease: 'power2.out' }, 0);
+      }
     }
 
     // 3. Horizontal Story Track on Desktop (>= 992px)
@@ -1497,15 +1530,15 @@
     }
 
     // 4. Visual Pause Typographic Breathing Reveal
-    const pauseHeadline = document.querySelector('.pause-headline');
-    if (pauseHeadline) {
-      gsap.fromTo(pauseHeadline,
-        { opacity: 0, y: 30, letterSpacing: '0.12em' },
+    const pauseLines = document.querySelectorAll('.pause-headline .pause-line');
+    if (pauseLines.length) {
+      gsap.fromTo(pauseLines,
+        { opacity: 0, y: 36 },
         {
           opacity: 1,
           y: 0,
-          letterSpacing: '0.04em',
-          duration: 1.1,
+          duration: 1.0,
+          stagger: 0.18,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: '.visual-pause-section',
@@ -1515,7 +1548,45 @@
       );
     }
 
-    // 5. Section Titles Entrance
+    // 5. Arena Comparison Entrance
+    const arenaCols = document.querySelectorAll('.arena-editorial-col');
+    if (arenaCols.length) {
+      gsap.fromTo(arenaCols,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.arena-comparison-section',
+            start: 'top 80%'
+          }
+        }
+      );
+    }
+
+    // 6. Architectural Differentiator Sequence Entrance
+    const diffItems = document.querySelectorAll('.diff-seq-item');
+    if (diffItems.length) {
+      gsap.fromTo(diffItems,
+        { opacity: 0, x: -24 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.pillars-editorial-sequence',
+            start: 'top 80%'
+          }
+        }
+      );
+    }
+
+    // 7. Section Titles Entrance
     document.querySelectorAll('.section-title-large').forEach((title) => {
       gsap.fromTo(title,
         { opacity: 0, y: 22 },
@@ -1549,6 +1620,7 @@
 
     const router = new ViewRouter();
     router.init();
+    router.bindArenaActions(booking);
 
     const prologueEl = document.getElementById('vault-prologue');
     const heroVideo = document.getElementById('hero-bg-video');

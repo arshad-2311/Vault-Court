@@ -21,20 +21,20 @@
   <link rel="preconnect" href="https://api.fontshare.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=6" />
-  <link rel="stylesheet" href="css/base.css?v=6" />
-  <link rel="stylesheet" href="css/cursor.css?v=6" />
-  <link rel="stylesheet" href="css/loader.css?v=6" />
-  <link rel="stylesheet" href="css/nav-footer.css?v=6" />
-  <link rel="stylesheet" href="css/home.css?v=6" />
-  <link rel="stylesheet" href="css/booking.css?v=6" />
-  <link rel="stylesheet" href="css/about.css?v=6" />
-  <link rel="stylesheet" href="css/gallery.css?v=6" />
-  <link rel="stylesheet" href="css/contact.css?v=6" />
+  <link rel="stylesheet" href="css/variables.css?v=7" />
+  <link rel="stylesheet" href="css/base.css?v=7" />
+  <link rel="stylesheet" href="css/cursor.css?v=7" />
+  <link rel="stylesheet" href="css/loader.css?v=7" />
+  <link rel="stylesheet" href="css/nav-footer.css?v=7" />
+  <link rel="stylesheet" href="css/home.css?v=7" />
+  <link rel="stylesheet" href="css/booking.css?v=7" />
+  <link rel="stylesheet" href="css/about.css?v=7" />
+  <link rel="stylesheet" href="css/gallery.css?v=7" />
+  <link rel="stylesheet" href="css/contact.css?v=7" />
 
   <!-- GSAP, ScrollTrigger, Flip & Lenis SDKs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -89,7 +89,8 @@
       <nav class="nav-menu-desktop" aria-label="Main Navigation">
         <a href="#home" class="nav-link active">HOME</a>
         <a href="#about" class="nav-link">ABOUT</a>
-        <a href="#booking" class="nav-link">GAMES</a>
+        <a href="#games" class="nav-link">ARENAS</a>
+        <a href="#booking" class="nav-link">RESERVATION</a>
         <a href="#gallery" class="nav-link">GALLERY</a>
         <a href="#contact" class="nav-link">CONTACT</a>
       </nav>
@@ -123,17 +124,21 @@
         <span>ABOUT</span>
         <span class="nav-num">[02]</span>
       </a>
-      <a href="#booking" class="mobile-nav-link">
-        <span>GAMES & BOOKING</span>
+      <a href="#games" class="mobile-nav-link">
+        <span>THE ARENAS</span>
         <span class="nav-num">[03]</span>
+      </a>
+      <a href="#booking" class="mobile-nav-link">
+        <span>RESERVATIONS</span>
+        <span class="nav-num">[04]</span>
       </a>
       <a href="#gallery" class="mobile-nav-link">
         <span>GALLERY</span>
-        <span class="nav-num">[04]</span>
+        <span class="nav-num">[05]</span>
       </a>
       <a href="#contact" class="mobile-nav-link">
-        <span>CONTACT</span>
-        <span class="nav-num">[05]</span>
+        <span>CONTACT & LOCATION</span>
+        <span class="nav-num">[06]</span>
       </a>
     </nav>
     <div class="mobile-drawer-bottom">
@@ -181,11 +186,11 @@
       </div>
 
       <div class="container hero-content">
-        <!-- Subtle 147 Telemetry Tag -->
+        <!-- Precise 147 Telemetry Tag -->
         <div class="hero-telemetry-badge">
           <span class="telemetry-live-dot"></span>
           <span class="telemetry-id">[147]</span>
-          <span>ROYAPURAM, CHENNAI · OPEN DAILY 10:00 AM – 12:00 AM</span>
+          <span>13.1147° N, 80.2925° E // ROYAPURAM · CHENNAI · 10:00 — 00:00</span>
         </div>
 
         <!-- Monolithic Left-Aligned Architectural Headline -->
@@ -201,10 +206,6 @@
           THE GAME STARTS HERE.
         </div>
 
-        <p class="hero-subtext">
-          A premium underground gaming destination built for players who come to play, compete, and unwind. Championship snooker tables, PlayStation 5 stations, and pure competitive focus.
-        </p>
-
         <div class="hero-cta-group">
           <a href="#booking" class="btn btn-primary" data-magnetic data-cursor="book">
             <span>BOOK A SESSION</span>
@@ -214,7 +215,7 @@
             </svg>
           </a>
           <a href="#about" class="btn btn-secondary" data-magnetic>
-            <span>EXPLORE THE VAULT</span>
+            <span>EXPLORE THE ARENA</span>
           </a>
         </div>
       </div>
@@ -231,20 +232,25 @@
     <section class="vault-aperture-section" aria-label="Vault Aperture Transition">
       <div class="aperture-viewport">
         <div class="aperture-frame" id="vault-aperture-frame">
-          <span class="aperture-corner aperture-corner-tl"></span>
-          <span class="aperture-corner aperture-corner-tr"></span>
-          <span class="aperture-corner aperture-corner-bl"></span>
-          <span class="aperture-corner aperture-corner-br"></span>
-          <span class="aperture-crosshair"></span>
+          <div class="aperture-iris-stage">
+            <span class="aperture-corner aperture-corner-tl"></span>
+            <span class="aperture-corner aperture-corner-tr"></span>
+            <span class="aperture-corner aperture-corner-bl"></span>
+            <span class="aperture-corner aperture-corner-br"></span>
+            <span class="aperture-crosshair"></span>
 
-          <img src="assets/images/vault147-panorama-lounge.webp" alt="Vault 147 Arena Interior" class="aperture-inner-img" />
-          
-          <div class="aperture-content-overlay">
-            <span class="meta-tag accent-crimson">[ VAULT 147 // ARCHITECTURAL APERTURE ]</span>
-            <h3 class="aperture-headline">STEP INTO THE UNDERGROUND</h3>
-            <p style="font-size:var(--text-sm);color:var(--text-secondary);max-width:540px;margin:0;">
-              Where private club discretion meets uncompromising championship snooker and PlayStation 5 match play.
-            </p>
+            <div class="aperture-shutter-layer">
+              <img src="assets/images/vault147-panorama-lounge.webp" alt="Vault 147 Arena Interior" class="aperture-inner-img" />
+              <div class="aperture-glare-effect"></div>
+            </div>
+            
+            <div class="aperture-content-overlay">
+              <span class="meta-tag accent-crimson">[ 147 // ARCHITECTURAL APERTURE ]</span>
+              <h3 class="aperture-headline">STEP INTO THE UNDERGROUND</h3>
+              <p class="aperture-desc">
+                Where private club discretion meets tournament specification snooker and PlayStation 5 match play.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -343,114 +349,99 @@
     <!-- ============================================================
          4. VISUAL PAUSE (RESPIRATION ROOM)
          ============================================================ -->
+    <!-- ============================================================
+         4. VISUAL PAUSE (RESPIRATION ROOM)
+         ============================================================ -->
     <section class="visual-pause-section" aria-label="Vault 147 Philosophy">
-      <div class="container pause-inner">
-        <span class="meta-tag accent-crimson">[ VAULT 147 CORE ETHOS ]</span>
-        <h2 class="pause-headline">PRECISION. FOCUS. CONTROL.</h2>
-        <p class="pause-location">MANNARSAMY 6/1, SOMU NAGAR · ROYAPURAM, CHENNAI 600013</p>
+      <div class="pause-inner">
+        <span class="pause-telemetry">[ 02 // ETHOS ]</span>
+        <h2 class="pause-headline">
+          <span class="pause-line">PRECISION.</span>
+          <span class="pause-line">FOCUS.</span>
+          <span class="pause-line">CONTROL.</span>
+        </h2>
       </div>
     </section>
 
     <!-- ============================================================
-         5. YOUR SESSION. YOUR RULES. (DYNAMIC DURATION STEPPERS)
+         5. THE DUAL ARENAS (EDITORIAL COMPARISON)
          ============================================================ -->
-    <section class="rules-section">
+    <section id="games" class="arena-comparison-section" aria-label="The Dual Arenas">
       <div class="container">
         <div class="section-head-wrap">
-          <span class="section-indicator">[ 02 // DYNAMIC DURATION ]</span>
-          <h2 class="section-title-large">YOUR SESSION. YOUR RULES.</h2>
+          <span class="section-indicator">[ 03 // THE DUAL ARENAS ]</span>
+          <h2 class="section-title-large">TWO DISCIPLINES. ZERO COMPROMISE.</h2>
           <p class="section-desc">
-            Direct hourly access with 1 to 4 hour sessions. Pick your table or console, lock your duration, and play.
+            Direct hourly access with 1 to 4 hour sessions. Championship tournament tables and dedicated PlayStation 5 console stations.
           </p>
         </div>
 
-        <div class="rules-grid">
-          <div class="rule-step-card">
-            <span class="rule-step-num">01</span>
-            <h3 class="rule-step-title">PICK YOUR GAME</h3>
-            <p class="rule-step-desc">
-              Choose between championship snooker tables or PlayStation 5 stations.
-            </p>
-          </div>
-
-          <div class="rule-step-card">
-            <span class="rule-step-num">02</span>
-            <h3 class="rule-step-title">SELECT DURATION</h3>
-            <p class="rule-step-desc">
-              Select your start time and choose between 1, 2, 3, or 4 hours with live interval verification.
-            </p>
-          </div>
-
-          <div class="rule-step-card">
-            <span class="rule-step-num">03</span>
-            <h3 class="rule-step-title">SHOW UP & PLAY</h3>
-            <p class="rule-step-desc">
-              Receive your digital VIP session pass instantly and enter the arena ready for game time.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         6. CHOOSE YOUR GAME PREVIEW (EDITORIAL EQUIPMENT)
-         ============================================================ -->
-    <section class="games-preview-section">
-      <div class="container">
-        <div class="section-head-wrap">
-          <span class="section-indicator">[ 03 // CHOOSE YOUR GAME ]</span>
-          <h2 class="section-title-large">SELECT AN ARENA.</h2>
-          <p class="section-desc">
-            Verified official hourly rates with zero hidden charges.
-          </p>
-        </div>
-
-        <div class="games-preview-grid">
-          <article class="game-preview-card">
-            <div class="game-preview-img-wrap">
-              <img src="assets/images/snooker-table-cues.jpg" alt="Championship Snooker Table" class="game-preview-img" loading="lazy" />
+        <div class="arena-editorial-grid">
+          <!-- ARENA 01: SNOOKER -->
+          <article class="arena-editorial-col" data-arena="snooker">
+            <div class="arena-col-meta">
+              <span class="arena-num">[ 01 / 47 ]</span>
+              <span class="arena-badge">TOURNAMENT STANDARDS</span>
             </div>
-            <div class="game-preview-content">
-              <div class="meta-tag accent-crimson">SNOOKER & BILLIARDS</div>
-              <h3 style="font-size:var(--text-2xl);color:#fff;">TOURNAMENT SNOOKER TABLES</h3>
-              <p style="font-size:var(--text-sm);color:var(--text-secondary);">
-                Full-size tournament red cloth tables, precision pendant lighting, weighted cues, and spectator seating.
-              </p>
-              <div class="game-pricing-badge">
-                <span class="game-price-val">₹250</span>
-                <span>/ HOUR (1 TO 4 HOURS)</span>
+            
+            <div class="arena-media-frame" data-cursor="view">
+              <img src="assets/images/snooker-table-cues.jpg" alt="Championship Snooker Table" class="arena-col-img" loading="lazy" />
+              <div class="arena-rate-tag">
+                <span class="rate-amount">₹250</span>
+                <span class="rate-unit">/ HOUR</span>
               </div>
-              <a href="#booking" class="btn btn-secondary" style="margin-top:0.5rem;" data-cursor="book">
-                <span>VIEW SNOOKER TABLES</span>
+            </div>
+
+            <div class="arena-col-body">
+              <h3 class="arena-col-title">CHAMPIONSHIP SNOOKER</h3>
+              <p class="arena-col-desc">
+                Full-size tournament red cloth tables, precision overhead pendant lighting, weighted match cues, and Aramith ball sets.
+              </p>
+              <div class="arena-col-specs">
+                <div class="arena-spec-pill"><span>CAPACITY:</span> 3 FULL-SIZE TABLES</div>
+                <div class="arena-spec-pill"><span>DURATION:</span> 1 TO 4 HOURS DYNAMIC</div>
+              </div>
+              <button type="button" class="btn btn-secondary arena-action-btn" data-filter-target="snooker" data-cursor="book">
+                <span>SELECT SNOOKER TABLE</span>
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </a>
+              </button>
             </div>
           </article>
 
-          <article class="game-preview-card">
-            <div class="game-preview-img-wrap">
-              <img src="assets/images/ps5-eafc-station.jpg" alt="PlayStation 5 Gaming Station" class="game-preview-img" loading="lazy" />
+          <!-- ARENA 02: PLAYSTATION 5 -->
+          <article class="arena-editorial-col" data-arena="ps5">
+            <div class="arena-col-meta">
+              <span class="arena-num">[ 02 / 47 ]</span>
+              <span class="arena-badge">CONSOLE RIGS</span>
             </div>
-            <div class="game-preview-content">
-              <div class="meta-tag accent-crimson">CONSOLE GAMING</div>
-              <h3 style="font-size:var(--text-2xl);color:#fff;">PLAYSTATION 5 STATIONS</h3>
-              <p style="font-size:var(--text-sm);color:var(--text-secondary);">
-                High-performance displays, DualSense controllers, EA FC 25 & fighting title tournaments, and squad lounge seating.
-              </p>
-              <div class="game-pricing-badge">
-                <span class="game-price-val">FROM ₹150</span>
-                <span>/ HOUR (1 TO 4 PLAYERS)</span>
+            
+            <div class="arena-media-frame" data-cursor="view">
+              <img src="assets/images/ps5-eafc-station.jpg" alt="PlayStation 5 Gaming Station" class="arena-col-img" loading="lazy" />
+              <div class="arena-rate-tag">
+                <span class="rate-amount">FROM ₹150</span>
+                <span class="rate-unit">/ HOUR</span>
               </div>
-              <a href="#booking" class="btn btn-secondary" style="margin-top:0.5rem;" data-cursor="book">
-                <span>VIEW PS5 STATIONS</span>
+            </div>
+
+            <div class="arena-col-body">
+              <h3 class="arena-col-title">PLAYSTATION 5 RIGS</h3>
+              <p class="arena-col-desc">
+                Dedicated PS5 stations with high-refresh low-latency displays, up to 4 wireless DualSense controllers, and squad lounge seating.
+              </p>
+              <div class="arena-col-specs">
+                <div class="arena-spec-pill"><span>PLAYERS:</span> 1 TO 4 SQUAD SETUP</div>
+                <div class="arena-spec-pill"><span>TITLES:</span> EA FC 25 & FIGHTING RIGS</div>
+              </div>
+              <button type="button" class="btn btn-secondary arena-action-btn" data-filter-target="ps5" data-cursor="book">
+                <span>SELECT PS5 STATION</span>
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
-              </a>
+              </button>
             </div>
           </article>
         </div>
@@ -458,75 +449,83 @@
     </section>
 
     <!-- ============================================================
-         7. ABOUT VIEW ("MORE THAN A GAME.")
+         6. ABOUT VIEW ("MORE THAN A GAME." & EDITORIAL SEQUENCE)
          ============================================================ -->
     <section id="about" class="about-view-section">
       <div class="container">
         <div class="section-head-wrap">
           <span class="section-indicator">[ 04 // ABOUT THE VAULT ]</span>
-          <h2 class="section-title-large">MORE THAN A GAME.</h2>
+          <h2 class="section-title-large">ENGINEERED FOR THE PLAYER.</h2>
         </div>
 
-        <div class="about-hero-grid">
-          <div class="about-hero-text">
-            <p class="about-lead-copy">
-              VAULT 147 is built for players who come to play, compete, and unwind.
+        <div class="about-editorial-manifesto">
+          <div class="about-statement-col">
+            <p class="about-monolith-statement">
+              Built for players who come to play, compete, and unwind.
             </p>
-            <p class="about-sub-copy">
-              Whether you're here for a focused snooker session dialing in your highest break or a high-stakes PS5 match with friends, every part of the experience is designed around the game.
+            <p class="about-supporting-paragraph">
+              Whether dialing in your highest break on competition cloth or battling through high-stakes console finals, VAULT 147 combines the discretion of a private club with modern sports precision in Royapuram, Chennai.
             </p>
-            <p class="about-sub-copy">
-              Located in the heart of Royapuram, Chennai, the arena combines the discretion of a private club with the raw energy of modern console competition.
-            </p>
-            <div style="margin-top:1rem;">
+            <div class="about-action-row">
               <a href="#booking" class="btn btn-primary" data-cursor="book">
                 <span>RESERVE YOUR SESSION</span>
               </a>
             </div>
           </div>
 
-          <div class="about-hero-img-wrap" data-cursor="view">
-            <img src="assets/images/vault147-panorama-lounge.webp" alt="VAULT 147 Arena Panorama" class="about-hero-img" loading="lazy" />
+          <div class="about-imagery-col" data-cursor="view">
+            <div class="about-image-frame">
+              <img src="assets/images/vault147-panorama-lounge.webp" alt="VAULT 147 Arena Panorama" class="about-hero-img" loading="lazy" />
+              <div class="about-image-caption">
+                <span class="font-mono">ROYAPURAM · CHENNAI</span>
+                <span class="font-mono text-crimson">ARENA REF 147</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="pillars-section">
-          <div class="section-head-wrap">
-            <span class="section-indicator">[ CORE VALUES ]</span>
-            <h3 style="font-size:var(--text-3xl);color:#fff;">WHY VAULT 147?</h3>
+        <!-- EDITORIAL DIFFERENTIATOR SEQUENCE (NO MARKETING CARDS) -->
+        <div class="pillars-editorial-sequence">
+          <div class="diff-header-row">
+            <span class="section-indicator">[ 04.1 // CORE DIFFERENTIATORS ]</span>
+            <span class="diff-header-telemetry font-mono">VERIFIED VENUE STANDARDS</span>
           </div>
 
-          <div class="pillars-grid">
-            <div class="pillar-card">
-              <span class="pillar-num">01</span>
-              <h4 class="pillar-title">CHAMPIONSHIP TABLES</h4>
-              <p class="pillar-desc">
-                Tournament specification cloth, overhead match lighting, weighted match cues, and Aramith balls.
-              </p>
+          <div class="diff-sequence-list">
+            <div class="diff-seq-item">
+              <span class="diff-item-index">01</span>
+              <div class="diff-item-main">
+                <h3 class="diff-item-title">CHAMPIONSHIP TABLES</h3>
+                <p class="diff-item-desc">Tournament specification cloth, overhead match lighting, weighted match cues, and Aramith balls.</p>
+              </div>
+              <div class="diff-item-meta font-mono">TOURNAMENT GRADE</div>
             </div>
 
-            <div class="pillar-card">
-              <span class="pillar-num">02</span>
-              <h4 class="pillar-title">PRIVATE ATMOSPHERE</h4>
-              <p class="pillar-desc">
-                Atmospheric dark carbon walls with warm overhead lamps and crimson LED ambient backlighting.
-              </p>
+            <div class="diff-seq-item">
+              <span class="diff-item-index">02</span>
+              <div class="diff-item-main">
+                <h3 class="diff-item-title">PRIVATE ATMOSPHERE</h3>
+                <p class="diff-item-desc">Atmospheric dark carbon walls, focused cone illumination, and crimson ambient backlighting.</p>
+              </div>
+              <div class="diff-item-meta font-mono">LOW DISTRACTION</div>
             </div>
 
-            <div class="pillar-card">
-              <span class="pillar-num">03</span>
-              <h4 class="pillar-title">DYNAMIC DURATION</h4>
-              <p class="pillar-desc">
-                Play for 1, 2, 3, or 4 hours with transparent hourly rates and zero subscription commitments.
-              </p>
+            <div class="diff-seq-item">
+              <span class="diff-item-index">03</span>
+              <div class="diff-item-main">
+                <h3 class="diff-item-title">DYNAMIC DURATION</h3>
+                <p class="diff-item-desc">Reserve 1, 2, 3, or 4 contiguous hours with real-time interval conflict checks and counter settlement.</p>
+              </div>
+              <div class="diff-item-meta font-mono">1 TO 4 HOURS</div>
             </div>
 
-            <div class="pillar-card">
-              <span class="pillar-num">04</span>
-              <h4 class="pillar-title">BUILT FOR SQUADS</h4>
-              <p class="pillar-desc">
-                Lounge seating, multi-controller PS5 setups, and room to celebrate every frame and victory.
-              </p>
+            <div class="diff-seq-item">
+              <span class="diff-item-index">04</span>
+              <div class="diff-item-main">
+                <h3 class="diff-item-title">BUILT FOR SQUADS</h3>
+                <p class="diff-item-desc">Dedicated player lounge seating, multi-controller PS5 rigs, and room to celebrate every match victory.</p>
+              </div>
+              <div class="diff-item-meta font-mono">UP TO 4 PLAYERS</div>
             </div>
           </div>
         </div>
@@ -944,6 +943,6 @@
     </div>
   </footer>
 
-  <script src="js/vault-bundle.js?v=6"></script>
+  <script src="js/vault-bundle.js?v=7"></script>
 </body>
 </html>

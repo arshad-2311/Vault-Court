@@ -1,6 +1,6 @@
 /* ============================================================
-   VAULT 147 — ABOUT VIEW & ARENA ETHOS
-   Architectural Split · Pure Verified Standards · Hairline Pillars
+   VAULT 147 — ABOUT VIEW & ARCHITECTURAL MANIFESTO
+   Asymmetric Split · Pure Verified Standards · Hairline Sequence
    ============================================================ */
 
 .about-view-section {
@@ -10,7 +10,7 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-.about-hero-grid {
+.about-editorial-manifesto {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: var(--space-3xl);
@@ -19,47 +19,49 @@
 }
 
 @media (max-width: 991px) {
-  .about-hero-grid {
+  .about-editorial-manifesto {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
 }
 
-.about-hero-text {
+.about-statement-col {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-lg);
 }
 
-.about-lead-copy {
+.about-monolith-statement {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.75rem);
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.15;
+  line-height: 1.12;
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 
-.about-sub-copy {
-  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+.about-supporting-paragraph {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.75;
+  max-width: 580px;
 }
 
-.about-hero-img-wrap {
+.about-action-row {
+  margin-top: var(--space-sm);
+}
+
+.about-imagery-col {
+  position: relative;
+}
+
+.about-image-frame {
   position: relative;
   border: 1px solid var(--border-medium);
-  border-radius: var(--radius-xs);
   overflow: hidden;
-  height: 480px;
+  height: clamp(380px, 50vh, 520px);
   background-color: var(--bg-sub);
-}
-
-@media (max-width: 900px) {
-  .about-hero-img-wrap {
-    height: 340px;
-  }
 }
 
 .about-hero-img {
@@ -69,71 +71,120 @@
   transition: transform var(--duration-cinematic) var(--ease-out-expo);
 }
 
-.about-hero-img-wrap:hover .about-hero-img {
+.about-image-frame:hover .about-hero-img {
   transform: scale(1.03);
 }
 
-/* --- 4 EDITORIAL PILLARS --- */
-.pillars-section {
+.about-image-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: rgba(6, 6, 8, 0.85);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   ARCHITECTURAL DIFFERENTIATORS SEQUENCE (01 — 04)
+   Typographic hairline sequence instead of generic marketing cards
+   ============================================================ */
+.pillars-editorial-sequence {
   border-top: 1px solid var(--border-subtle);
   padding-top: var(--space-3xl);
 }
 
-.pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-xl);
-  margin-top: var(--space-2xl);
+.diff-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
 }
 
-@media (max-width: 1100px) {
-  .pillars-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.diff-header-telemetry {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
-@media (max-width: 640px) {
-  .pillars-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.pillar-card {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xs);
-  padding: var(--space-2xl) var(--space-xl);
+.diff-sequence-list {
   display: flex;
   flex-direction: column;
-  transition: border-color var(--duration-ui) var(--ease-out-expo), transform var(--duration-ui) var(--ease-out-expo);
 }
 
-.pillar-card:hover {
+.diff-seq-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--space-2xl);
+  align-items: baseline;
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: border-color var(--duration-ui) var(--ease-out-expo), background-color var(--duration-ui);
+}
+
+.diff-seq-item:first-child {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.diff-seq-item:hover {
   border-color: var(--border-medium);
-  transform: translateY(-3px);
 }
 
-.pillar-num {
+.diff-item-index {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0.14em;
   color: var(--crimson-bright);
-  letter-spacing: 0.12em;
-  margin-bottom: var(--space-md);
-  display: block;
 }
 
-.pillar-title {
+.diff-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.diff-item-title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
   font-weight: 800;
+  letter-spacing: -0.01em;
   color: #ffffff;
-  margin-bottom: var(--space-xs);
-  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
 }
 
-.pillar-desc {
+.diff-item-desc {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  line-height: 1.65;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0;
+}
+
+.diff-item-meta {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .diff-seq-item {
+    grid-template-columns: 48px 1fr;
+    gap: var(--space-md);
+  }
+  .diff-item-meta {
+    grid-column: 2;
+    margin-top: 0.25rem;
+  }
 }

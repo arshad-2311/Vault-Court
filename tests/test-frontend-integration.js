@@ -6,12 +6,12 @@ async function verifyFrontend() {
 
   assert(html.includes('id="cust-email"'), 'Missing #cust-email in index.html');
   assert(html.includes('id="pass-email-val"'), 'Missing #pass-email-val in index.html');
-  assert(html.includes('vault-bundle.js?v=6'), 'Missing vault-bundle.js?v=6 in index.html');
+  assert(/vault-bundle\.js\?v=\d+/.test(html), 'Missing vault-bundle.js in index.html');
   assert(!html.includes('checkout.razorpay.com'), 'Razorpay checkout script must be absent from index.html');
   assert(html.includes('PAY DIRECTLY AT FRONT COUNTER'), 'Missing counter payment notice in index.html');
   console.log('✓ index.html has required counter payment and email elements (zero Razorpay scripts).');
 
-  const bundleRes = await fetch('http://localhost:8080/js/vault-bundle.js?v=6');
+  const bundleRes = await fetch('http://localhost:8080/js/vault-bundle.js?v=7');
   const bundleJs = await bundleRes.text();
 
   assert(bundleJs.includes('cust-email'), 'vault-bundle.js missing cust-email');

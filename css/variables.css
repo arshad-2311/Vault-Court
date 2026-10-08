@@ -48,7 +48,7 @@
 
   /* --- TYPOGRAPHY (3 DISTINCT FAMILIES ONLY) --- */
   /* 1. DISPLAY: Muscular, architectural neo-grotesk with high-tension letterforms */
-  --font-display: 'Cabinet Grotesk', 'Barlow Semi Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   /* 2. BODY: Clean, contemporary editorial sans */
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   /* 3. TECHNICAL: Coordinates, telemetry, prices, timers, pass barcodes */
