@@ -494,8 +494,8 @@ export class BookingEngine {
 
       const statusPill = document.getElementById('pass-status-pill');
       if (statusPill) {
-        statusPill.textContent = '[SLOT RESERVED · PAY AT COUNTER]';
-        statusPill.style.color = '#f59e0b';
+        statusPill.textContent = 'SESSION UNLOCKED · PAY AT VENUE COUNTER';
+        statusPill.style.color = 'var(--crimson-bright)';
       }
 
       const idEl = document.getElementById('pass-id-val');

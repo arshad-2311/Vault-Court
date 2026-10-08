@@ -61,7 +61,7 @@
       image: 'assets/images/snooker-arena-3tables.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Full-size championship table with tournament red cloth, overhead match lighting, and Aramith match balls.',
+      oneLineDesc: 'Full-size snooker table with red cloth, overhead match lighting, and playing cues.',
       status: 'AVAILABLE'
     },
     {
@@ -72,7 +72,7 @@
       image: 'assets/images/snooker-table-cues.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Championship-specification table equipped with anti-glare cone lamps and balanced match cues.',
+      oneLineDesc: 'Full-size snooker table equipped with overhead lighting and playing cues.',
       status: 'AVAILABLE'
     },
     {
@@ -83,7 +83,7 @@
       image: 'assets/images/snooker-solo-table.jpg',
       basePrice: 250,
       priceLabel: '₹250 / HOUR',
-      oneLineDesc: 'Dedicated match table featuring focused overhead illumination engineered for 1v1 match play.',
+      oneLineDesc: 'Full-size match snooker table featuring focused overhead illumination.',
       status: 'AVAILABLE'
     },
     {
@@ -94,7 +94,7 @@
       image: 'assets/images/ps5-eafc-station.jpg',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'PlayStation 5 console station with high-refresh display and DualSense wireless controllers.',
+      oneLineDesc: 'PlayStation 5 console station with HD display and DualSense wireless controllers.',
       status: 'AVAILABLE'
     },
     {
@@ -105,7 +105,7 @@
       image: 'assets/images/vault147-panorama-lounge.webp',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'Multiplayer battle station supporting 1 to 4 players for EA Sports FC and head-to-head competition.',
+      oneLineDesc: 'PlayStation 5 console station supporting 1 to 4 players for EA Sports FC and multiplayer gaming.',
       status: 'AVAILABLE'
     },
     {
@@ -116,7 +116,7 @@
       image: 'assets/images/ps5-eafc-station.jpg',
       basePrice: 150,
       priceLabel: 'FROM ₹150 / HOUR',
-      oneLineDesc: 'Console station with comfortable squad seating and signature ambient crimson lighting.',
+      oneLineDesc: 'PlayStation 5 console station with squad lounge seating and ambient lighting.',
       status: 'AVAILABLE'
     }
   ];
@@ -141,7 +141,7 @@
   const GALLERY_CATALOG = [
     {
       id: 'g-01',
-      title: 'Championship 3-Table Arena',
+      title: 'Snooker Arena (3 Full Tables)',
       category: 'snooker',
       categoryLabel: 'SNOOKER ARENA',
       image: 'assets/images/snooker-arena-3tables.jpg',
@@ -149,7 +149,7 @@
     },
     {
       id: 'g-02',
-      title: 'Match Cues & Precision Rails',
+      title: 'Snooker Table & Playing Cues',
       category: 'snooker',
       categoryLabel: 'SNOOKER ARENA',
       image: 'assets/images/snooker-table-cues.jpg',
@@ -157,7 +157,7 @@
     },
     {
       id: 'g-03',
-      title: 'Aramith Crimson Ball Rack',
+      title: 'Red Cloth & Snooker Balls',
       category: 'snooker',
       categoryLabel: 'SNOOKER ARENA',
       image: 'assets/images/snooker-balls-racked.jpg',
@@ -165,7 +165,7 @@
     },
     {
       id: 'g-04',
-      title: 'PlayStation 5 Competitive Station',
+      title: 'PlayStation 5 Gaming Station',
       category: 'ps5',
       categoryLabel: 'PS5 ARENA',
       image: 'assets/images/ps5-eafc-station.jpg',
@@ -173,7 +173,7 @@
     },
     {
       id: 'g-05',
-      title: 'Arena Perspective Panorama',
+      title: 'Arena Lounge Panorama',
       category: 'the-lounge',
       categoryLabel: 'THE LOUNGE',
       image: 'assets/images/vault147-panorama-lounge.webp',
@@ -181,7 +181,7 @@
     },
     {
       id: 'g-06',
-      title: 'Solo Match Table Illumination',
+      title: 'Solo Snooker Table Illumination',
       category: 'snooker',
       categoryLabel: 'SNOOKER ARENA',
       image: 'assets/images/snooker-solo-table.jpg',
@@ -1092,8 +1092,8 @@
 
         const statusPill = document.getElementById('pass-status-pill');
         if (statusPill) {
-          statusPill.textContent = '[SLOT RESERVED · PAY AT COUNTER]';
-          statusPill.style.color = '#f59e0b';
+          statusPill.textContent = 'SESSION UNLOCKED · PAY AT VENUE COUNTER';
+          statusPill.style.color = 'var(--crimson-bright)';
         }
 
         const idEl = document.getElementById('pass-id-val');
@@ -1567,23 +1567,53 @@
       );
     }
 
-    // 6. Architectural Differentiator Sequence Entrance
-    const diffItems = document.querySelectorAll('.diff-seq-item');
-    if (diffItems.length) {
-      gsap.fromTo(diffItems,
-        { opacity: 0, x: -24 },
+    // 6. Editorial About Showcase & Narrative Rows
+    const aboutHeroFrame = document.querySelector('.about-hero-frame');
+    if (aboutHeroFrame) {
+      gsap.fromTo(aboutHeroFrame,
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
-          x: 0,
-          duration: 0.75,
-          stagger: 0.12,
+          y: 0,
+          duration: 0.9,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: '.pillars-editorial-sequence',
-            start: 'top 80%'
+            trigger: aboutHeroFrame,
+            start: 'top 82%'
           }
         }
       );
+    }
+
+    const narrativeRows = document.querySelectorAll('.narrative-row');
+    if (narrativeRows.length) {
+      narrativeRows.forEach((row) => {
+        const content = row.querySelector('.narrative-content');
+        const media = row.querySelector('.narrative-media');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 82%'
+          }
+        });
+
+        if (content) {
+          tl.fromTo(content,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+            0
+          );
+        }
+
+        if (media) {
+          tl.fromTo(media,
+            { opacity: 0, scale: 0.96 },
+            { opacity: 1, scale: 1.0, duration: 0.85, ease: 'power2.out' },
+            0.1
+          );
+        }
+      });
     }
 
     // 7. Section Titles Entrance

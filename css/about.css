@@ -1,6 +1,6 @@
 /* ============================================================
-   VAULT 147 — ABOUT VIEW & ARCHITECTURAL MANIFESTO
-   Asymmetric Split · Pure Verified Standards · Hairline Sequence
+   VAULT 147 — ABOUT VIEW & EDITORIAL NARRATIVE
+   Awwwards Editorial Layout · Verified Venue Photography · Dynamic Narrative
    ============================================================ */
 
 .about-view-section {
@@ -10,57 +10,41 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-.about-editorial-manifesto {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: var(--space-3xl);
-  align-items: center;
-  margin-bottom: var(--space-4xl);
-}
-
-@media (max-width: 991px) {
-  .about-editorial-manifesto {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-  }
-}
-
-.about-statement-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+/* 09 — ONE STRONG STATEMENT, ONE SUPPORTING PARAGRAPH */
+.about-manifesto-header {
+  max-width: 860px;
+  margin-bottom: var(--space-3xl);
 }
 
 .about-monolith-statement {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.4vw, 2.75rem);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
+  margin-bottom: var(--space-md);
 }
 
 .about-supporting-paragraph {
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   color: var(--text-secondary);
-  line-height: 1.75;
-  max-width: 580px;
+  line-height: 1.7;
+  max-width: 680px;
 }
 
-.about-action-row {
-  margin-top: var(--space-sm);
+/* 09 — ONE POWERFUL IMAGE SHOWCASE */
+.about-imagery-showcase {
+  margin-bottom: var(--space-4xl);
 }
 
-.about-imagery-col {
+.about-hero-frame {
   position: relative;
-}
-
-.about-image-frame {
-  position: relative;
-  border: 1px solid var(--border-medium);
+  width: 100%;
+  height: clamp(380px, 54vh, 600px);
+  border: 1px solid var(--border-subtle);
   overflow: hidden;
-  height: clamp(380px, 50vh, 520px);
   background-color: var(--bg-sub);
 }
 
@@ -71,11 +55,11 @@
   transition: transform var(--duration-cinematic) var(--ease-out-expo);
 }
 
-.about-image-frame:hover .about-hero-img {
-  transform: scale(1.03);
+.about-hero-frame:hover .about-hero-img {
+  transform: scale(1.02);
 }
 
-.about-image-caption {
+.about-hero-meta {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -83,108 +67,118 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 14px;
-  background: rgba(6, 6, 8, 0.85);
+  padding: 10px var(--space-lg);
+  background: rgba(5, 5, 7, 0.88);
   backdrop-filter: blur(8px);
   border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .about-hero-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px var(--space-md);
+  }
 }
 
 /* ============================================================
-   ARCHITECTURAL DIFFERENTIATORS SEQUENCE (01 — 04)
-   Typographic hairline sequence instead of generic marketing cards
+   10 — WHY VAULT EDITORIAL NARRATIVE (01 — 04)
+   Alternating large photography with verified venue facts
    ============================================================ */
-.pillars-editorial-sequence {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: var(--space-3xl);
-}
-
-.diff-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-2xl);
-}
-
-.diff-header-telemetry {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.diff-sequence-list {
+.why-vault-narrative {
   display: flex;
   flex-direction: column;
-}
-
-.diff-seq-item {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  gap: var(--space-2xl);
-  align-items: baseline;
-  padding: var(--space-xl) 0;
-  border-bottom: 1px solid var(--border-subtle);
-  transition: border-color var(--duration-ui) var(--ease-out-expo), background-color var(--duration-ui);
-}
-
-.diff-seq-item:first-child {
+  gap: var(--space-4xl);
+  margin-top: var(--space-4xl);
   border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-4xl);
 }
 
-.diff-seq-item:hover {
-  border-color: var(--border-medium);
+.narrative-row {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: var(--space-3xl);
+  align-items: center;
 }
 
-.diff-item-index {
+.narrative-row.narrative-reverse {
+  grid-template-columns: 1.25fr 1fr;
+}
+
+.narrative-row.narrative-reverse .narrative-content {
+  order: 2;
+}
+
+.narrative-row.narrative-reverse .narrative-media {
+  order: 1;
+}
+
+@media (max-width: 900px) {
+  .narrative-row,
+  .narrative-row.narrative-reverse {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .narrative-row.narrative-reverse .narrative-content {
+    order: 1;
+  }
+  .narrative-row.narrative-reverse .narrative-media {
+    order: 2;
+  }
+}
+
+.narrative-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.narrative-index {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--crimson-bright);
 }
 
-.diff-item-main {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.diff-item-title {
+.narrative-title {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   color: #ffffff;
+  line-height: 1.05;
   text-transform: uppercase;
-  margin: 0;
 }
 
-.diff-item-desc {
-  font-size: var(--text-sm);
+.narrative-desc {
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
   color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0;
+  line-height: 1.7;
+  max-width: 520px;
 }
 
-.diff-item-meta {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  white-space: nowrap;
+.narrative-media {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 44vh, 460px);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  background-color: var(--bg-sub);
 }
 
-@media (max-width: 768px) {
-  .diff-seq-item {
-    grid-template-columns: 48px 1fr;
-    gap: var(--space-md);
-  }
-  .diff-item-meta {
-    grid-column: 2;
-    margin-top: 0.25rem;
-  }
+.narrative-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-cinematic) var(--ease-out-expo);
+}
+
+.narrative-media:hover .narrative-img {
+  transform: scale(1.03);
 }

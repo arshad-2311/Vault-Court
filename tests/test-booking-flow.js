@@ -5,18 +5,24 @@ async function testFullBookingEmailSuite() {
   console.log('VAULT 147 — END-TO-END RESEND EMAIL & BOOKING FLOW TEST');
   console.log('============================================================');
 
+  // Dynamic future test date to prevent database collision on re-runs
+  const randYear = 2030 + Math.floor(Math.random() * 50);
+  const randMonth = String(1 + Math.floor(Math.random() * 12)).padStart(2, '0');
+  const randDay = String(1 + Math.floor(Math.random() * 28)).padStart(2, '0');
+  const testDate = `${randYear}-${randMonth}-${randDay}`;
+
   // Test 1: Counter Reservation with Email
-  console.log('\n[TEST 1] Testing Pay at Counter reservation with customerEmail...');
+  console.log(`\n[TEST 1] Testing Pay at Counter reservation with customerEmail (Date: ${testDate})...`);
   const counterPayload = {
     unitId: 'snooker-02',
-    date: '2026-10-07',
+    date: testDate,
     startTime: '03:00 PM',
     durationHours: 3,
     playerCount: 1,
     customerName: 'Marcus Snooker',
     customerPhone: '08825975491',
     customerEmail: 'marcus@vault147.in',
-    notes: 'Please prepare 18oz cue with chalk',
+    notes: 'Please prepare cue with chalk',
     paymentMethod: 'counter'
   };
 
@@ -39,7 +45,7 @@ async function testFullBookingEmailSuite() {
   console.log('\n[TEST 2] Testing interval conflict prevention on same unit & overlapping time...');
   const overlapPayload = {
     unitId: 'snooker-02',
-    date: '2026-10-07',
+    date: testDate,
     startTime: '04:00 PM',
     durationHours: 1,
     playerCount: 1,
@@ -61,7 +67,7 @@ async function testFullBookingEmailSuite() {
   console.log('\n[TEST 3] Testing PS5 Station Counter reservation with customerEmail & 4 players...');
   const ps5Payload = {
     unitId: 'ps5-station-03',
-    date: '2026-10-07',
+    date: testDate,
     startTime: '08:00 PM',
     durationHours: 2,
     playerCount: 4, // 500/hr * 2 = 1000

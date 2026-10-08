@@ -11,7 +11,7 @@ async function verifyFrontend() {
   assert(html.includes('PAY DIRECTLY AT FRONT COUNTER'), 'Missing counter payment notice in index.html');
   console.log('✓ index.html has required counter payment and email elements (zero Razorpay scripts).');
 
-  const bundleRes = await fetch('http://localhost:8080/js/vault-bundle.js?v=7');
+  const bundleRes = await fetch('http://localhost:8080/js/vault-bundle.js?v=8');
   const bundleJs = await bundleRes.text();
 
   assert(bundleJs.includes('cust-email'), 'vault-bundle.js missing cust-email');

@@ -545,35 +545,24 @@
   border-color: var(--border-medium);
 }
 
-.arena-col-meta {
+.arena-col-head-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-md) var(--space-xl);
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(6, 6, 8, 0.4);
+  align-items: baseline;
+  gap: 0.85rem;
 }
 
-.arena-num {
+.arena-col-head-row .arena-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0.14em;
   color: var(--crimson-bright);
-  font-weight: 700;
-}
-
-.arena-badge {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-transform: uppercase;
 }
 
 .arena-media-frame {
   position: relative;
   width: 100%;
-  height: clamp(320px, 42vh, 440px);
+  height: clamp(340px, 46vh, 480px);
   overflow: hidden;
   background-color: var(--bg-sub);
 }
