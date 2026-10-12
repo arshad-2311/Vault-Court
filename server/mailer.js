@@ -39,7 +39,8 @@ const UNIT_LABELS = {
 /**
  * Generates the Customer Session Pass Email HTML
  */
-function buildCustomerEmailHtml(booking) {
+function buildCustomerEmailHtml(booking, options = {}) {
+  const isOwnerCopy = Boolean(options.isOwnerCopy);
   const unitName = UNIT_LABELS[booking.unitId] || booking.unitId;
 
   const paymentBadge = '<span style="display:inline-block;padding:4px 10px;background:#3b2d13;color:#fbbf24;border:1px solid #78350f;border-radius:4px;font-family:monospace;font-size:12px;font-weight:bold;">PAY AT COUNTER (DUE ON ARRIVAL)</span>';
@@ -47,9 +48,24 @@ function buildCustomerEmailHtml(booking) {
   const paymentNotice = `<div style="background:#1e1a12;border-left:4px solid #f59e0b;padding:12px 16px;margin:20px 0;border-radius:4px;">
         <strong style="color:#fbbf24;font-size:14px;">Pay at Counter Instructions:</strong>
         <p style="color:#d1d5db;margin:6px 0 0 0;font-size:13px;line-height:1.5;">
-          Your slot is strictly reserved and held for you. Please present this pass or your Booking ID (<strong>${booking.bookingId}</strong>) at the front desk upon arrival and settle <strong>₹${booking.amount}</strong> via Cash or UPI.
+          ${isOwnerCopy ? `Collect <strong>₹${booking.amount}</strong> from the guest via Cash or UPI upon arrival at the desk.` : `Your slot is strictly reserved and held for you. Please present this pass or your Booking ID (<strong>${booking.bookingId}</strong>) at the front desk upon arrival and settle <strong>₹${booking.amount}</strong> via Cash or UPI.`}
         </p>
       </div>`;
+
+  const ownerBanner = isOwnerCopy ? `
+    <div style="background:#1b1214;border:1px solid #dc2626;padding:16px 20px;margin-bottom:24px;border-radius:8px;">
+      <div style="font-family:monospace;font-size:11px;color:#ef4444;font-weight:bold;letter-spacing:1px;margin-bottom:6px;">[VENUE OWNER & DESK CONFIRMATION COPY]</div>
+      <div style="color:#ffffff;font-size:15px;font-weight:bold;margin-bottom:4px;">Guest: ${booking.customerName}</div>
+      <div style="color:#d1d5db;font-size:13px;line-height:1.5;">
+        Phone: <a href="tel:${booking.customerPhone}" style="color:#38bdf8;text-decoration:none;font-weight:bold;">${booking.customerPhone}</a> · 
+        Email: <a href="mailto:${booking.customerEmail}" style="color:#38bdf8;text-decoration:none;">${booking.customerEmail || 'Not provided'}</a>
+      </div>
+      ${booking.notes ? `<div style="color:#fde047;font-size:12px;margin-top:6px;font-style:italic;">Customer Note: "${booking.notes}"</div>` : ''}
+      <div style="color:#fbbf24;font-size:12px;font-weight:bold;margin-top:8px;">
+        ⚠️ Total Payable at Counter: ₹${booking.amount} (Due on arrival)
+      </div>
+    </div>
+  ` : '';
 
   return `
   <!DOCTYPE html>
@@ -57,7 +73,7 @@ function buildCustomerEmailHtml(booking) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your VAULT 147 Session Pass</title>
+    <title>${isOwnerCopy ? `[OWNER COPY] Booking Confirmed: ${booking.bookingId}` : `Your VAULT 147 Session Pass`}</title>
   </head>
   <body style="margin:0;padding:0;background-color:#050507;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#ffffff;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#050507;padding:30px 15px;">
@@ -71,7 +87,7 @@ function buildCustomerEmailHtml(booking) {
                 <table width="100%" cellspacing="0" cellpadding="0">
                   <tr>
                     <td>
-                      <span style="font-family:monospace;font-size:11px;color:#dc2626;letter-spacing:2px;font-weight:bold;">[SESSION CONFIRMED]</span>
+                      <span style="font-family:monospace;font-size:11px;color:#dc2626;letter-spacing:2px;font-weight:bold;">${isOwnerCopy ? '[OWNER CONFIRMED COPY]' : '[SESSION CONFIRMED]'}</span>
                       <h1 style="margin:6px 0 0 0;font-size:24px;font-weight:800;letter-spacing:1px;color:#ffffff;">VAULT 147</h1>
                       <div style="font-size:12px;color:#a1a1aa;margin-top:2px;">CHAMPIONSHIP SNOOKER & PLAYSTATION 5 DESTINATION</div>
                     </td>
@@ -88,11 +104,13 @@ function buildCustomerEmailHtml(booking) {
             <!-- BODY CONTENT -->
             <tr>
               <td style="padding:30px;">
+                ${ownerBanner}
+
                 <p style="margin:0 0 16px 0;font-size:16px;color:#ffffff;">
-                  Hello <strong>${booking.customerName}</strong>,
+                  ${isOwnerCopy ? `Hello <strong>VAULT 147 Management</strong>,` : `Hello <strong>${booking.customerName}</strong>,`}
                 </p>
                 <p style="margin:0 0 24px 0;font-size:14px;color:#a1a1aa;line-height:1.6;">
-                  Your gaming session at <strong>VAULT 147</strong> has been reserved. Please find your official digital session pass details below.
+                  ${isOwnerCopy ? `A new gaming session has been confirmed by <strong>${booking.customerName}</strong>. Below is the confirmed ticket issued for this reservation.` : `Your gaming session at <strong>VAULT 147</strong> has been reserved. Please find your official digital session pass details below.`}
                 </p>
 
                 <!-- TICKET SUMMARY GRID -->
@@ -294,39 +312,41 @@ function buildManagerAlertEmailHtml(booking) {
 export async function sendBookingConfirmationEmails(booking) {
   const result = {
     customerSent: false,
+    ownerSent: false,
     managerSent: false,
     errors: []
   };
 
-  const customerHtml = buildCustomerEmailHtml(booking);
-  const managerHtml = buildManagerAlertEmailHtml(booking);
+  const customerHtml = buildCustomerEmailHtml(booking, { isOwnerCopy: false });
+  const ownerTicketHtml = buildCustomerEmailHtml(booking, { isOwnerCopy: true });
   const unitLabel = UNIT_LABELS[booking.unitId] || booking.unitId;
 
   const resend = getResendClient();
   const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL || 'VAULT 147 <onboarding@resend.dev>';
-  const MANAGER_EMAIL = process.env.MANAGER_EMAIL || 'beastboy231128@gmail.com';
+  const OWNER_EMAIL = (process.env.OWNER_EMAIL || process.env.MANAGER_EMAIL || 'beastboy231128@gmail.com').trim();
+  const customerEmail = booking.customerEmail ? booking.customerEmail.trim() : '';
 
   // 1. Dispatch through Resend if API Key is configured
   if (resend) {
-    // Send to Customer (if valid email present)
-    if (booking.customerEmail && booking.customerEmail.includes('@')) {
+    // A. Send Confirmed Ticket to Booked User (Customer)
+    if (customerEmail && customerEmail.includes('@')) {
       try {
         const customerRes = await resend.emails.send({
           from: SENDER_EMAIL,
-          to: [booking.customerEmail.trim()],
+          to: [customerEmail],
           subject: `🎟️ Your VAULT 147 Session Pass [${booking.bookingId}] — ${unitLabel}`,
           html: customerHtml
         });
 
         if (customerRes.error) {
           if (customerRes.error.statusCode === 403 && customerRes.error.message?.includes('testing emails')) {
-            console.warn(`[Resend Notice] In test mode with onboarding@resend.dev, Resend delivers to your registered account (beastboy231128@gmail.com). Customer email "${booking.customerEmail}" was blocked by Resend unverified test domain policy.`);
+            console.warn(`[Resend Notice] In test mode with onboarding@resend.dev, Resend delivers to your registered account (${OWNER_EMAIL}). Customer email "${customerEmail}" was blocked by Resend unverified test domain policy.`);
           } else {
             console.warn('[Resend] Customer email error:', customerRes.error);
           }
           result.errors.push({ recipient: 'customer', error: customerRes.error });
         } else {
-          console.log(`[Resend] Customer session pass dispatched live to ${booking.customerEmail} (ID: ${customerRes.data?.id})`);
+          console.log(`[Resend] Confirmed ticket dispatched live to booked user ${customerEmail} (ID: ${customerRes.data?.id})`);
           result.customerSent = true;
         }
       } catch (err) {
@@ -337,26 +357,27 @@ export async function sendBookingConfirmationEmails(booking) {
       console.log(`[Resend] No customer email provided for booking ${booking.bookingId}`);
     }
 
-    // Send to Manager
-    if (MANAGER_EMAIL && MANAGER_EMAIL.includes('@')) {
+    // B. Send Confirmed Ticket to Owner (Venue Management)
+    if (OWNER_EMAIL && OWNER_EMAIL.includes('@')) {
       try {
-        const managerRes = await resend.emails.send({
+        const ownerRes = await resend.emails.send({
           from: SENDER_EMAIL,
-          to: [MANAGER_EMAIL.trim()],
-          subject: `🚨 [NEW BOOKING] ${unitLabel} · ${booking.date} ${booking.startTime} (${booking.bookingId})`,
-          html: managerHtml
+          to: [OWNER_EMAIL],
+          subject: `🎟️ [CONFIRMED TICKET] ${booking.customerName} · ${unitLabel} [${booking.bookingId}]`,
+          html: ownerTicketHtml
         });
 
-        if (managerRes.error) {
-          console.warn('[Resend] Manager email error:', managerRes.error);
-          result.errors.push({ recipient: 'manager', error: managerRes.error });
+        if (ownerRes.error) {
+          console.warn('[Resend] Owner ticket email error:', ownerRes.error);
+          result.errors.push({ recipient: 'owner', error: ownerRes.error });
         } else {
-          console.log(`[Resend] Manager alert dispatched live to ${MANAGER_EMAIL} (ID: ${managerRes.data?.id})`);
+          console.log(`[Resend] Confirmed ticket dispatched live to owner ${OWNER_EMAIL} (ID: ${ownerRes.data?.id})`);
+          result.ownerSent = true;
           result.managerSent = true;
         }
       } catch (err) {
-        console.error('[Resend] Failed to send manager alert:', err.message);
-        result.errors.push({ recipient: 'manager', error: err.message });
+        console.error('[Resend] Failed to send owner ticket email:', err.message);
+        result.errors.push({ recipient: 'owner', error: err.message });
       }
     }
 

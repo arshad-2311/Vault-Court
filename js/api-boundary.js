@@ -165,7 +165,7 @@ export const BookingAPI = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }, 800);
+      }, 12000);
 
       if (res.status === 409) {
         const errData = await res.json();

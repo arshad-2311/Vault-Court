@@ -144,13 +144,16 @@ INSERT INTO games (id, name, slug, description, active) VALUES
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO booking_units (id, game_id, name, slug, description, image_url, base_price_per_hour, active) VALUES
-('snooker-01', 'snooker', 'SNOOKER TABLE 01', 'snooker-table-01', 'Championship red cloth table with precision overhead drop lighting', 'assets/images/snooker-arena-3tables.jpg', 250, true),
-('snooker-02', 'snooker', 'SNOOKER TABLE 02', 'snooker-table-02', 'Tournament-spec table with anti-glare cone lamps and weighted cues', 'assets/images/snooker-table-cues.jpg', 250, true),
-('snooker-03', 'snooker', 'SNOOKER TABLE 03', 'snooker-table-03', 'Low-key isolated accent lighting designed for high-focus 1v1 match play', 'assets/images/snooker-solo-table.jpg', 250, true),
-('ps5-01', 'ps5', 'PS5 COCKPIT STATION 01', 'ps5-cockpit-01', 'Logitech G-Series force-feedback racing wheel, pedals, and 4K HDR display', 'assets/images/ps5-racing-cockpit.jpg', 150, true),
-('ps5-02', 'ps5', 'PS5 DUALSENSE ARENA 02', 'ps5-arena-02', 'EA FC 25, Mortal Kombat & top action titles with DualSense controllers', 'assets/images/ps5-eafc-station.jpg', 150, true),
-('ps5-03', 'ps5', 'PS5 SQUAD LOUNGE 03', 'ps5-lounge-03', 'Plush red and black beanbag lounge setup engineered for squad sessions', 'assets/images/ps5-lounge-beanbags.jpg', 150, true)
-ON CONFLICT (id) DO NOTHING;
+('snooker-01', 'snooker', 'SNOOKER TABLE 01', 'snooker-table-01', 'Full-size snooker table with red cloth, overhead match lighting, and playing cues.', 'assets/images/snooker-arena-3tables.jpg', 250, true),
+('snooker-02', 'snooker', 'SNOOKER TABLE 02', 'snooker-table-02', 'Full-size snooker table equipped with overhead lighting and playing cues.', 'assets/images/snooker-table-cues.jpg', 250, true),
+('snooker-03', 'snooker', 'SNOOKER TABLE 03', 'snooker-table-03', 'Full-size match snooker table featuring focused overhead illumination.', 'assets/images/snooker-solo-table.jpg', 250, true),
+('ps5-01', 'ps5', 'PLAYSTATION 5 STATION 01', 'ps5-station-01', 'PlayStation 5 console station with HD display and DualSense wireless controllers.', 'assets/images/ps5-eafc-station.jpg', 150, true),
+('ps5-02', 'ps5', 'PLAYSTATION 5 STATION 02', 'ps5-station-02', 'PlayStation 5 console station supporting 1 to 4 players for EA FC 25.', 'assets/images/vault147-panorama-lounge.webp', 150, true),
+('ps5-03', 'ps5', 'PLAYSTATION 5 STATION 03', 'ps5-station-03', 'PlayStation 5 console station with squad seating and ambient arena lighting.', 'assets/images/ps5-eafc-station.jpg', 150, true)
+ON CONFLICT (id) DO UPDATE SET 
+    name = EXCLUDED.name,
+    description = EXCLUDED.description,
+    image_url = EXCLUDED.image_url;
 
 -- 10. ROW LEVEL SECURITY (RLS) POLICIES
 ALTER TABLE games ENABLE ROW LEVEL SECURITY;

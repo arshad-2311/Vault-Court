@@ -22,14 +22,17 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // 1. Supabase Initialization
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const SUPABASE_KEY = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '';
 
 let supabase = null;
-if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
-  supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+if (SUPABASE_URL && SUPABASE_KEY) {
+  supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { persistSession: false }
   });
+  console.log('[Supabase] Initialized client with URL:', SUPABASE_URL);
+} else {
+  console.log('[Supabase] Running in local in-memory simulation mode (no Supabase credentials provided).');
 }
 
 // --- TIME & INTERVAL HELPERS ---
