@@ -2,6 +2,22 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/api/health",
+      "destination": "/api/health.js"
+    },
+    {
+      "source": "/api/bookings/availability",
+      "destination": "/api/bookings/availability.js"
+    },
+    {
+      "source": "/api/bookings/create-hold",
+      "destination": "/api/bookings/create-hold.js"
+    },
+    {
+      "source": "/api/bookings/confirm-counter",
+      "destination": "/api/bookings/confirm-counter.js"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/index.js"
     }

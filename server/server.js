@@ -94,7 +94,7 @@ const inMemoryBookings = new Map();
 // API ENDPOINTS
 // ============================================================
 
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'ONLINE',
     venue: 'VAULT 147',
@@ -107,7 +107,7 @@ app.get('/api/health', (req, res) => {
  * GET /api/bookings/availability
  * Returns 1-hour slot availability states and max consecutive available hours
  */
-app.get('/api/bookings/availability', async (req, res) => {
+app.get(['/api/bookings/availability', '/bookings/availability'], async (req, res) => {
   const { date, unitId } = req.query;
 
   if (!date || !unitId) {
@@ -219,7 +219,7 @@ app.get('/api/bookings/availability', async (req, res) => {
  * POST /api/bookings/create-hold
  * Atomically validates interval overlap, calculates price, and creates confirmed Counter reservation
  */
-app.post('/api/bookings/create-hold', async (req, res) => {
+app.post(['/api/bookings/create-hold', '/bookings/create-hold'], async (req, res) => {
   const {
     unitId,
     date,
@@ -290,22 +290,26 @@ app.post('/api/bookings/create-hold', async (req, res) => {
           hold_expires_at: null
         }).eq('booking_id', holdRecord.booking_id);
 
-        sendBookingConfirmationEmails({
-          bookingId: holdRecord.booking_id,
-          customerName,
-          customerPhone,
-          customerEmail,
-          unitId,
-          date,
-          startTime,
-          endTime: holdRecord.end_time,
-          durationHours: duration,
-          playerCount,
-          notes,
-          amount: holdRecord.total_amount,
-          paymentMethod: 'COUNTER',
-          paymentStatus: 'PAY_AT_COUNTER'
-        }).catch(err => console.error('[Resend Mailer Error]:', err));
+        try {
+          await sendBookingConfirmationEmails({
+            bookingId: holdRecord.booking_id,
+            customerName,
+            customerPhone,
+            customerEmail,
+            unitId,
+            date,
+            startTime,
+            endTime: holdRecord.end_time,
+            durationHours: duration,
+            playerCount,
+            notes,
+            amount: holdRecord.total_amount,
+            paymentMethod: 'COUNTER',
+            paymentStatus: 'PAY_AT_COUNTER'
+          });
+        } catch (err) {
+          console.error('[Resend Mailer Error]:', err);
+        }
 
         return res.status(201).json({
           success: true,
@@ -382,22 +386,26 @@ app.post('/api/bookings/create-hold', async (req, res) => {
     created_at: new Date().toISOString()
   });
 
-  sendBookingConfirmationEmails({
-    bookingId,
-    customerName,
-    customerPhone,
-    customerEmail,
-    unitId,
-    date,
-    startTime,
-    endTime,
-    durationHours: duration,
-    playerCount,
-    notes,
-    amount: priceObj.total,
-    paymentMethod: 'COUNTER',
-    paymentStatus: 'PAY_AT_COUNTER'
-  }).catch(err => console.error('[Resend Mailer Error]:', err));
+  try {
+    await sendBookingConfirmationEmails({
+      bookingId,
+      customerName,
+      customerPhone,
+      customerEmail,
+      unitId,
+      date,
+      startTime,
+      endTime,
+      durationHours: duration,
+      playerCount,
+      notes,
+      amount: priceObj.total,
+      paymentMethod: 'COUNTER',
+      paymentStatus: 'PAY_AT_COUNTER'
+    });
+  } catch (err) {
+    console.error('[Resend Mailer Error]:', err);
+  }
 
   res.status(201).json({
     success: true,
@@ -418,7 +426,7 @@ app.post('/api/bookings/create-hold', async (req, res) => {
  * POST /api/bookings/confirm-counter
  * Confirms a held booking for direct in-person payment at the arena counter
  */
-app.post('/api/bookings/confirm-counter', async (req, res) => {
+app.post(['/api/bookings/confirm-counter', '/bookings/confirm-counter'], async (req, res) => {
   const { bookingId } = req.body;
 
   if (!bookingId) {
@@ -448,22 +456,26 @@ app.post('/api/bookings/confirm-counter', async (req, res) => {
   bkg.payment_method = 'COUNTER';
   bkg.hold_expires_at = null;
 
-  sendBookingConfirmationEmails({
-    bookingId: bkg.booking_id,
-    customerName: bkg.customer_name,
-    customerPhone: bkg.customer_phone,
-    customerEmail: bkg.customer_email,
-    unitId: bkg.unit_id,
-    date: bkg.booking_date,
-    startTime: bkg.start_time,
-    endTime: bkg.end_time,
-    durationHours: bkg.duration_hours,
-    playerCount: bkg.player_count,
-    notes: bkg.notes,
-    amount: bkg.amount,
-    paymentMethod: 'COUNTER',
-    paymentStatus: 'PAY_AT_COUNTER'
-  }).catch(err => console.error('[Resend Mailer Error]:', err));
+  try {
+    await sendBookingConfirmationEmails({
+      bookingId: bkg.booking_id,
+      customerName: bkg.customer_name,
+      customerPhone: bkg.customer_phone,
+      customerEmail: bkg.customer_email,
+      unitId: bkg.unit_id,
+      date: bkg.booking_date,
+      startTime: bkg.start_time,
+      endTime: bkg.end_time,
+      durationHours: bkg.duration_hours,
+      playerCount: bkg.player_count,
+      notes: bkg.notes,
+      amount: bkg.amount,
+      paymentMethod: 'COUNTER',
+      paymentStatus: 'PAY_AT_COUNTER'
+    });
+  } catch (err) {
+    console.error('[Resend Mailer Error]:', err);
+  }
 
   res.json({
     success: true,
@@ -473,7 +485,8 @@ app.post('/api/bookings/confirm-counter', async (req, res) => {
   });
 });
 
-if (!process.env.VERCEL) {
+const isDirectExecution = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isDirectExecution && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`[VAULT 147 Server] Running on http://localhost:${PORT}`);
   });

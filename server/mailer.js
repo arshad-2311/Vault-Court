@@ -14,7 +14,11 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 function getResendClient() {
   const key = process.env.RESEND_API_KEY || '';
-  return key ? new Resend(key) : null;
+  if (!key) {
+    console.warn('[Resend Mailer] RESEND_API_KEY environment variable is not defined. Set RESEND_API_KEY in Vercel to dispatch live emails.');
+    return null;
+  }
+  return new Resend(key);
 }
 
 const VENUE_DETAILS = {
@@ -389,11 +393,11 @@ export async function sendBookingConfirmationEmails(booking) {
   console.log('[Resend Mailer — Test/Simulated Mode]');
   console.log(`Booking ID: ${booking.bookingId}`);
   console.log(`Target Customer Email: ${booking.customerEmail || 'None'}`);
-  console.log(`Target Manager Email: ${MANAGER_EMAIL}`);
+  console.log(`Target Owner Email: ${OWNER_EMAIL}`);
   console.log(`Unit: ${unitLabel}`);
   console.log(`Interval: ${booking.date} @ ${booking.startTime} — ${booking.endTime}`);
   console.log(`Payment: ${booking.paymentMethod} (₹${booking.amount})`);
-  console.log('(To enable live delivery, set RESEND_API_KEY in your .env file)');
+  console.log('(To enable live delivery, set RESEND_API_KEY in your Vercel Environment Variables)');
   console.log('============================================================');
 
   return {
