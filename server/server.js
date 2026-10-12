@@ -473,6 +473,10 @@ app.post('/api/bookings/confirm-counter', async (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`[VAULT 147 Server] Running on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[VAULT 147 Server] Running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;

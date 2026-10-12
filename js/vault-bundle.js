@@ -245,7 +245,7 @@
      2. ISOLATED BOOKING API PROVIDER
      Zero-lag fallback cache with authoritative server-side math
      ============================================================ */
-  const API_BASE_URL = window.VAULT_API_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = window.VAULT_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/api' : '/api');
   const localHoldCache = new Map();
 
   async function fetchWithQuickTimeout(url, options = {}, timeoutMs = 300) {

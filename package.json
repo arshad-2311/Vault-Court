@@ -1,0 +1,17 @@
+{
+  "name": "vault147",
+  "version": "1.0.0",
+  "description": "VAULT 147 — Snooker & PS5 Destination",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node tests/test-dom-audit.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "resend": "^6.32.0"
+  }
+}

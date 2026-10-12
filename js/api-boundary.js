@@ -5,7 +5,7 @@
 
 import { TIME_SLOTS, PRICING_RULES } from './data.js';
 
-const API_BASE_URL = window.VAULT_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = window.VAULT_API_URL || (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000/api' : '/api');
 
 export function parseTimeToMinutes(timeStr) {
   const parts = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
