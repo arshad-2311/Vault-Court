@@ -4,7 +4,7 @@
   "description": "VAULT 147 — Snooker & PS5 Destination",
   "type": "module",
   "scripts": {
-    "build": "echo 'Build successful'",
+    "build": "node scripts/build.js",
     "start": "node server/server.js",
     "test": "node tests/test-dom-audit.js"
   },

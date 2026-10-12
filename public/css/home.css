@@ -1,0 +1,682 @@
+/* ============================================================
+   VAULT 147 — HOME VIEW & CINEMATIC ARCHITECTURE (AWWWARDS TIER)
+   Hero · Vault Aperture · Horizontal Storytelling · Visual Pause · Editorial Equipment
+   ============================================================ */
+
+/* ============================================================
+   1. HERO SECTION (CINEMATIC PACING & ASYMMETRIC SCALE)
+   ============================================================ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 0 var(--space-3xl);
+  overflow: hidden;
+  background-color: var(--bg-void);
+}
+
+.hero-video-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.55) contrast(1.15) saturate(1.1);
+  transform: scale(1.02);
+  transition: transform var(--duration-cinematic) var(--ease-smooth);
+}
+
+/* Cinematic Edge Vignette & Deep Void Gradient */
+.hero-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 75% 35%,
+    rgba(5, 5, 7, 0.2) 0%,
+    rgba(5, 5, 7, 0.65) 60%,
+    rgba(5, 5, 7, 0.95) 100%
+  ),
+  linear-gradient(
+    180deg,
+    rgba(5, 5, 7, 0.7) 0%,
+    transparent 30%,
+    rgba(5, 5, 7, 0.5) 70%,
+    rgba(5, 5, 7, 1) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 980px;
+}
+
+/* Subtle 147 Identity & Verified Telemetry */
+.hero-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.hero-telemetry-badge .telemetry-live-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--crimson);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--crimson-bright);
+}
+
+.hero-telemetry-badge .telemetry-id {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Monolithic Architectural Typography */
+.hero-monolith-title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.hero-monolith-title .title-row-1 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
+.hero-monolith-title .title-accent {
+  color: var(--crimson-bright);
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: -0.02em;
+}
+
+.hero-tagline-statement {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.8vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.15;
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+}
+
+.hero-tagline-statement .text-crimson {
+  color: var(--crimson-bright);
+}
+
+.hero-subtext {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 620px;
+  margin-bottom: var(--space-xl);
+  font-weight: 400;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Scroll Telemetry Indicator */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: var(--container-padding);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero-scroll-indicator .scroll-indicator-arrow {
+  color: var(--crimson-bright);
+  font-size: 14px;
+  animation: heroArrowBounce 2s infinite ease-in-out;
+}
+
+@keyframes heroArrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ============================================================
+   2. SIGNATURE VAULT APERTURE TRANSITION
+   ============================================================ */
+.vault-aperture-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-void);
+  padding: var(--space-4xl) 0;
+  overflow: hidden;
+}
+
+.aperture-viewport {
+  position: relative;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.aperture-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(480px, 72vh, 760px);
+  border: 1px solid var(--border-medium);
+  background-color: var(--bg-sub);
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* Architectural Calipers */
+.aperture-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--crimson-bright);
+  border-style: solid;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.aperture-corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.aperture-corner-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+.aperture-corner-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+.aperture-corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.aperture-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.4;
+}
+
+.aperture-crosshair::before,
+.aperture-crosshair::after {
+  content: '';
+  position: absolute;
+  background: #ffffff;
+}
+.aperture-crosshair::before { top: 11px; left: 0; width: 24px; height: 1px; }
+.aperture-crosshair::after { top: 0; left: 11px; width: 1px; height: 24px; }
+
+.aperture-shutter-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  clip-path: inset(16% 16% round 4px);
+  will-change: clip-path, transform;
+}
+
+.aperture-glare-effect {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.aperture-inner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.08);
+  transition: transform var(--duration-cinematic) var(--ease-smooth);
+}
+
+.aperture-content-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 7, 0.1) 0%,
+    rgba(5, 5, 7, 0.4) 40%,
+    rgba(5, 5, 7, 0.94) 100%
+  );
+  z-index: 4;
+}
+
+.aperture-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin: var(--space-xs) 0 var(--space-sm);
+  line-height: 1.05;
+}
+
+/* ============================================================
+   3. HORIZONTAL STORYTELLING ("THE VAULT EXPERIENCE")
+   ============================================================ */
+.experience-horizontal-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-void);
+}
+
+.experience-track {
+  display: flex;
+  width: 300%;
+  height: 100vh;
+  will-change: transform;
+}
+
+@media (max-width: 991px) {
+  .experience-horizontal-container {
+    overflow: visible;
+  }
+  .experience-track {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+  }
+}
+
+.experience-story-panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl) var(--container-padding);
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .experience-story-panel {
+    flex: none;
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    padding: var(--space-3xl) var(--container-padding);
+  }
+}
+
+.story-panel-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--space-3xl);
+  width: 100%;
+  max-width: var(--container-max);
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .story-panel-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.story-panel-media {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 58vh, 600px);
+  border: 1px solid var(--border-medium);
+  overflow: hidden;
+  background-color: var(--bg-sub);
+}
+
+.story-panel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-cinematic) var(--ease-out-expo);
+}
+
+.story-panel-media:hover .story-panel-img {
+  transform: scale(1.04);
+}
+
+.story-panel-badge {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background-color: rgba(6, 6, 8, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-medium);
+  padding: 4px 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.story-panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.story-panel-desc {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-xl);
+  max-width: 520px;
+}
+
+.story-panel-specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.spec-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   4. VISUAL PAUSE (RESPIRATION ROOM)
+   ============================================================ */
+.visual-pause-section {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-void);
+  padding: var(--space-4xl) 0;
+  position: relative;
+  text-align: center;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.pause-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 960px;
+  padding: 0 var(--container-padding);
+}
+
+.pause-telemetry {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--crimson-bright);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xl);
+}
+
+.pause-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7.2rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.pause-line {
+  display: block;
+  transition: transform var(--duration-cinematic) var(--ease-out-expo), opacity var(--duration-cinematic);
+}
+
+.pause-line:nth-child(2) {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.pause-line:nth-child(3) {
+  color: var(--crimson-bright);
+}
+
+/* ============================================================
+   5. THE DUAL ARENAS (EDITORIAL COMPARISON)
+   ============================================================ */
+.arena-comparison-section {
+  padding: var(--space-4xl) 0;
+  background-color: var(--bg-void);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.arena-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2xl);
+}
+
+@media (max-width: 960px) {
+  .arena-editorial-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.arena-editorial-col {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--duration-ui) var(--ease-out-expo), transform var(--duration-ui) var(--ease-out-expo);
+}
+
+.arena-editorial-col:hover {
+  border-color: var(--border-medium);
+}
+
+.arena-col-head-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+}
+
+.arena-col-head-row .arena-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--crimson-bright);
+}
+
+.arena-media-frame {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 46vh, 480px);
+  overflow: hidden;
+  background-color: var(--bg-sub);
+}
+
+.arena-col-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-cinematic) var(--ease-out-expo);
+}
+
+.arena-editorial-col:hover .arena-col-img {
+  transform: scale(1.04);
+}
+
+.arena-rate-tag {
+  position: absolute;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  background-color: rgba(6, 6, 8, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-medium);
+  padding: 6px 14px;
+}
+
+.arena-rate-tag .rate-amount {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.arena-rate-tag .rate-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.arena-col-body {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  flex-grow: 1;
+}
+
+.arena-col-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.05;
+}
+
+.arena-col-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.arena-col-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.arena-spec-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.arena-spec-pill span {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.arena-action-btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Section Header Shared Standards */
+.section-head-wrap {
+  margin-bottom: var(--space-3xl);
+  position: relative;
+}
+
+.section-title-large {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 0.98;
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+}
+
+.section-desc {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 620px;
+  line-height: 1.65;
+}

@@ -1,0 +1,274 @@
+/* ============================================================
+   VAULT 147 — 12-COLUMN ASYMMETRIC EDITORIAL GALLERY & LIGHTBOX
+   True Awwwards Editorial Direction · Asymmetric Scale · GSAP Flip Stage
+   ============================================================ */
+
+.gallery-view-section {
+  padding: var(--space-4xl) 0;
+  background-color: var(--bg-void);
+  min-height: 100vh;
+  position: relative;
+}
+
+.gallery-filter-bar {
+  display: inline-flex;
+  gap: 0;
+  margin-bottom: var(--space-3xl);
+  border: 1px solid var(--border-medium);
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-xs);
+  padding: 3px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   12-COLUMN ASYMMETRIC EDITORIAL GRID
+   ============================================================ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-xl);
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  background-color: var(--bg-sub);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: border-color var(--duration-ui) var(--ease-out-expo), transform var(--duration-ui) var(--ease-out-expo);
+}
+
+.gallery-item:hover {
+  border-color: var(--border-medium);
+}
+
+/* Editorial Span Classes on 12-Column Grid */
+@media (min-width: 901px) {
+  .gallery-item.span-col-8 {
+    grid-column: span 8;
+    height: 520px;
+  }
+  .gallery-item.span-col-4 {
+    grid-column: span 4;
+    height: 520px;
+  }
+  .gallery-item.span-col-5 {
+    grid-column: span 5;
+    height: 440px;
+  }
+  .gallery-item.span-col-7 {
+    grid-column: span 7;
+    height: 440px;
+  }
+  .gallery-item.span-col-6 {
+    grid-column: span 6;
+    height: 480px;
+  }
+}
+
+@media (max-width: 900px) {
+  .gallery-item {
+    height: 340px !important;
+  }
+}
+
+.gallery-img-layer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9) contrast(1.05);
+  transform: scale(1.01);
+  transition: transform var(--duration-cinematic) var(--ease-out-expo), filter var(--duration-ui) ease;
+}
+
+.gallery-item:hover .gallery-img-layer {
+  transform: scale(1.04);
+  filter: brightness(1) contrast(1.1);
+}
+
+/* Minimal Editorial Tag Overlay */
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-xl);
+  background: linear-gradient(0deg, rgba(5, 5, 7, 0.9) 0%, rgba(5, 5, 7, 0.2) 50%, transparent 100%);
+  transition: background var(--duration-ui) ease;
+}
+
+.gallery-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--crimson-bright);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.gallery-caption {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+/* Floating View Hover Badge */
+.gallery-view-hover-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+  background: rgba(6, 6, 8, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-medium);
+  padding: 8px 18px;
+  border-radius: var(--radius-xs);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-ui) var(--ease-out-expo), transform var(--duration-ui) var(--ease-out-expo);
+}
+
+.gallery-item:hover .gallery-view-hover-badge {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ============================================================
+   2. FULLSCREEN LIGHTBOX STAGE (GSAP FLIP TARGET)
+   ============================================================ */
+#gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 5, 7, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: var(--z-lightbox);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem var(--container-padding);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-ui) var(--ease-out-expo);
+}
+
+#gallery-lightbox.lightbox-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-close-btn {
+  align-self: flex-end;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-micro) ease;
+  z-index: 10;
+}
+
+.lightbox-close-btn:hover {
+  color: #ffffff;
+  border-color: var(--border-medium);
+  background: var(--bg-surface-elevated);
+}
+
+.lightbox-stage {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.lightbox-img-active {
+  max-width: calc(100% - 140px);
+  max-height: 75vh;
+  object-fit: contain;
+  margin: 0 auto;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
+}
+
+@media (max-width: 768px) {
+  .lightbox-img-active {
+    max-width: 100%;
+  }
+}
+
+.lightbox-nav-btn {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--duration-micro) ease;
+  z-index: 10;
+}
+
+.lightbox-nav-btn:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-strong);
+}
+
+.lightbox-footer-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.lightbox-meta-index {
+  font-size: 11px;
+  color: var(--crimson-bright);
+  letter-spacing: 0.1em;
+}
+
+.lightbox-meta-title {
+  font-size: 12px;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
